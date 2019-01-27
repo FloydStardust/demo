@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Description: demo
  * Created by VKC on 2019/1/25 11:04
  */
-@Entity
+
 @Getter
 @Table(name = "fund")
 public class Fund {

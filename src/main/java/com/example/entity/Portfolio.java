@@ -5,13 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Description: demo
  * Created by Floyd on 2019/1/25 10:59
  */
-@Entity
+
 @Getter
 @Setter
 @Table(name = "portfolio")

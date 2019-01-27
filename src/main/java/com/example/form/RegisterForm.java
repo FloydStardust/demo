@@ -1,14 +1,20 @@
-package com.example.entity;
+package com.example.form;
 
-public class User extends Entity {
+/**
+ * Created by IntelliJ IDEA.
+ * User: xxh
+ * Date: 2019/1/27
+ * Time: 11:13 AM
+ */
+public class RegisterForm {
 
-    private String userName;
+	private String userName;
 
-    private String phone;
+	private String phone;
 
-    private String email;
+	private String email;
 
-    private String password;
+	private String password;
 
 	public String getUserName() {
 		return userName;
@@ -40,15 +46,5 @@ public class User extends Entity {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public User(String userName, String phone, String email, String password) {
-		this.userName = userName;
-		this.phone = phone;
-		this.email = email;
-		this.password = password;
-	}
-
-	public User() {
 	}
 }
