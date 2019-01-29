@@ -51,4 +51,9 @@ public class ScheduleController {
 		return scheduleService.fetchSchedule(param);
 	}
 
+	@PostMapping("list/weekly")
+	public ResultData list() {
+		return scheduleService.fetchScheduleWeekly();
+	}
+
 }

@@ -29,4 +29,6 @@ public interface ScheduleService {
 	ResultData updateSchedule(Schedule schedule);
 
 	ResultData fetchSchedule(ScheduleQueryParam param);
+
+	ResultData fetchScheduleWeekly();
 }

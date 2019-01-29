@@ -10,9 +10,14 @@ import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -86,6 +91,29 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleDao.select(condition);
 	}
 
+	@Override
+	public ResultData fetchScheduleWeekly() {
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("creatorId", currentUserHelper.currentUser().getId());
+		LocalDate today = LocalDate.now();
+		LocalDate monday = today.with(DayOfWeek.MONDAY);
+		LocalDate friday = today.with(DayOfWeek.FRIDAY);
+		ResultData result = new ResultData();
+		Map<String, List<Schedule>> schedules = new HashMap<>();
+
+		for (LocalDate date = monday; date.compareTo(friday) <= 0; date = date.plusDays(1)) {
+			condition.put("date", date);
+			result = scheduleDao.select(condition);
+			if (result.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+				schedules.put(formateDate(date), new ArrayList<>());
+			} else {
+				schedules.put(formateDate(date), (List<Schedule>) result.getData());
+			}
+		}
+
+		result.setData(schedules);
+		return result;
+	}
 
 	private boolean permissionCheck(int scheduleId) {
 		ResultData result = scheduleDao.selectByUid(scheduleId);
@@ -95,7 +123,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		} else {
 			return true;
 		}
+	}
 
+	private String formateDate(LocalDate date) {
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String day = date.format(dateFormat);
+		String week = LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CHINA);
+		return day + " " + week;
 	}
 
 }

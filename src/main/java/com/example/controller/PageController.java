@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class RegisterController {
+public class PageController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "register")
 	public String register(ModelMap model) {
@@ -23,6 +23,11 @@ public class RegisterController {
 	@RequestMapping(method = RequestMethod.GET, value = "login")
 	public String login(ModelMap model) {
 		return "login";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "schedule")
+	public String schedule(ModelMap model) {
+		return "schedule";
 	}
 
 }
