@@ -22,7 +22,7 @@ function login() {
         }
     });
 
-    xhr.open("POST", "http://localhost:8080/oauth/token");
+    xhr.open("POST  ", "http://localhost:8080/oauth/token");
 
     xhr.send(data);
 }
