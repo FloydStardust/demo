@@ -6,5 +6,7 @@ import com.example.util.ResultData;
 public interface UserService {
     ResultData findByName(String name);
 
+    ResultData findByEmail(String email);
+
     ResultData create(User user);
 }

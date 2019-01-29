@@ -3,54 +3,80 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>VKC-CRM</title>
-    <link rel="stylesheet" href="static/css/style1.css">
+  <head>
+    <title>Bootstrap Admin Theme v3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- styles -->
+    <link href="css/styles.css" rel="stylesheet">
 
-    <!-- For-Mobile-Apps-and-Meta-Tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Impressive Multiple Form  Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //For-Mobile-Apps-and-Meta-Tags -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="login-bg">
+  	<div class="header">
+	     <div class="container">
+	        <div class="row">
+	           <div class="col-md-12">
+	              <!-- Logo -->
+	              <div class="logo">
+	                 <h1><a href="index.html">Bootstrap Admin Theme</a></h1>
+	              </div>
+	           </div>
+	        </div>
+	     </div>
+	</div>
 
-</head>
-<body>
+	<div class="page-content container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="login-wrapper">
+			        <div class="box">
+			            <div class="content-wrap">
+			                <h6>Sign In</h6>
+			                <div class="social">
+	                            <a class="face_login" href="#">
+	                                <span class="face_icon">
+	                                    <img src="images/facebook.png" alt="fb">
+	                                </span>
+	                                <span class="text">Sign in with Facebook</span>
+	                            </a>
+	                            <div class="division">
+	                                <hr class="left">
+	                                <span>or</span>
+	                                <hr class="right">
+	                            </div>
+	                        </div>
+			                <input id="email" class="form-control" type="text" placeholder="E-mail address">
+			                <input id="password" class="form-control" type="password" placeholder="Password">
+			                <div class="action">
+			                    <button class="btn btn-primary signup" onclick="login()">Login</button>
+			                </div>                
+			            </div>
+			        </div>
 
-<div class="container">
+			        <div class="already">
+			            <p>Don't have an account yet?</p>
+			            <a href="signup.html">Sign Up</a>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
 
-    <div class="right" style="padding-left:230px">
-        <h3>用户登录</h3>
-        <div class="sign-in">
-            <form action="/login" method="post">
-                <input type="text" class="name" name="username" placeholder="Username" required="">
-                <input type="password" class="password" name="password" placeholder="Password" required="">
-                <ul>
-                    <li>
-                        <input type="checkbox" id="brand1" value="">
-                        <label for="brand1"><span></span>Remember me</label>
-                    </li>
-                </ul>
-                <input type="submit" value="登录">
-                <div class="clear"></div>
-            </form>
-        </div>
 
-        <div class="socialicons w3">
-            <ul>
-                <li><a class="facebook" href="#"></a></li>
-                <li><a class="twitter" href="#"></a></li>
-                <li><a class="google" href="#"></a></li>
-                <li><a class="pinterest" href="#"></a></li>
-                <li><a class="linkedin" href="#"></a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="clear"></div>
 
-</div>
-<div class="footer agile">
-    <p> &copy; All Rights Reserved | Design by Floyd </p>
-</div>
-</body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/cookieHelper.js"></script>
+  </body>
 </html>

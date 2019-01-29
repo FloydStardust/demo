@@ -24,7 +24,7 @@ public class SessionController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResultData create(RegisterForm form) {
         ResultData result = new ResultData();
-        if (!StringUtils.isEmpty(form.getUserName()) && !StringUtils.isEmpty(form.getPassword())) {
+        if (!StringUtils.isEmpty(form.getUserName()) && !StringUtils.isEmpty(form.getPassword()) && !StringUtils.isEmpty(form.getEmail())) {
             User user = new User(form.getUserName(), form.getPhone(), form.getEmail(), Encryption.md5(form.getPassword()));
             ResultData response = userService.create(user);
             if (response.getResponseCode() == ResponseCode.RESPONSE_OK) {
@@ -34,6 +34,9 @@ public class SessionController {
                 result.setResponseCode(ResponseCode.RESPONSE_ERROR);
                 result.setDescription(new StringBuilder("Fail to create user with info: ").append(JSON.toJSONString(user)).toString());
             }
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            result.setDescription("参数错误");
         }
         return result;
     }

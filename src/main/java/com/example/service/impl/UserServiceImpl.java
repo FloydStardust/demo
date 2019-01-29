@@ -31,6 +31,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public ResultData findByEmail(String email) {
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("email", email);
+		return userDao.queryUser(condition);
+	}
+
+	@Override
 	public ResultData create(User user) {
 		return userDao.insertUser(user);
 	}
