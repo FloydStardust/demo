@@ -27,7 +27,7 @@ public class CurrentUserHelper {
 
 	public User currentUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getPrincipal().toString();
+		String username = ((org.springframework.security.core.userdetails.User) authentication.getPrincipal()).getUsername();
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("userName", username);
 		ResultData result = userDao.queryUser(condition);

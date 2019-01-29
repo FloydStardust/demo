@@ -3,9 +3,12 @@ package com.example.controller;
 import com.example.entity.Schedule;
 import com.example.form.ScheduleQueryParam;
 import com.example.service.ScheduleService;
+import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,6 +26,13 @@ public class ScheduleController {
 
 	@PostMapping
 	public ResultData create(@RequestBody Schedule schedule) {
+		if (Objects.isNull(schedule.getDate()) || Objects.isNull(schedule.getStart())
+				|| Objects.isNull(schedule.getEnd()) || Objects.isNull(schedule.getContent())) {
+			ResultData result = new ResultData();
+			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+			result.setDescription("参数错误");
+			return result;
+		}
 		return scheduleService.addSchedule(schedule);
 	}
 

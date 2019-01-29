@@ -37,3 +37,17 @@ CREATE TABLE `vkc`.`schedule` (
   UNIQUE INDEX `start_UNIQUE` (`start` ASC),
   UNIQUE INDEX `end_UNIQUE` (`end` ASC));
 
+drop table `schedule`;
+
+CREATE TABLE `schedule` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `start` int(11) NOT NULL,
+  `end` int(11) NOT NULL,
+  `creatorId` varchar(45) NOT NULL,
+  `content` longtext NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
+

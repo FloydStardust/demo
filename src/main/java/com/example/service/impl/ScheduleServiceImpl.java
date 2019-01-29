@@ -38,7 +38,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public ResultData deleteSchedule(int id) {
-		if (permissionCheck(id)) {
+		if (!permissionCheck(id)) {
 			ResultData result = new ResultData();
 			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
 			result.setDescription("无权限操作");
@@ -49,7 +49,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public ResultData updateSchedule(Schedule schedule) {
-		if (permissionCheck(schedule.getUid())) {
+		if (!permissionCheck(schedule.getUid())) {
 			ResultData result = new ResultData();
 			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
 			result.setDescription("无权限操作");
@@ -91,7 +91,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		ResultData result = scheduleDao.selectByUid(scheduleId);
 		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
 			Schedule schedule = (Schedule) result.getData();
-			return !(schedule.getCreatorId() == currentUserHelper.currentUser().getId());
+			return schedule.getCreatorId() == currentUserHelper.currentUser().getId();
 		} else {
 			return true;
 		}
