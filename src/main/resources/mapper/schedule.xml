@@ -1,0 +1,79 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.schedule">
+    <resultMap id="schedule" type="com.example.entity.Schedule">
+        <result property="uid" column="uid" />
+        <result property="date" column="date" />
+        <result property="start" column="start" />
+        <result property="end" column="end" />
+        <result property="creator" column="creator" />
+        <result property="content" column="content" />
+        <result property="createAt" column="create_time" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Schedule">
+      insert into `vkc`.`schedule`
+      (`date`, start, `end`, creator, content)
+      values
+      (#{date}, #{start}, #{end}, #{creator}, #{content})
+    </insert>
+    
+    <update id="update" parameterType="com.example.entity.Schedule">
+        update `vkc`.`schedule`
+        set
+        <if test="date != null">
+            `date` = #{date},
+        </if>
+        <if test="start != null">
+            start = #{start},
+        </if>
+        <if test="end != null">
+            `end` = #{end},
+        </if>
+        <if test="content != null">
+            `content` = #{content}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <select id="select" resultMap="schedule" parameterType="java.util.Map">
+        select `uid`, `date`, `start`, `end`, `creator`, `content`, `create_time`
+        from
+        `vkc`.`schedule`
+        where block_flag = 0
+        <if test="creator != null">
+            and creator = #{creator}
+        </if>
+        <if test="date != null">
+            and `date` = #{date}
+        </if>
+        <if test="start != null">
+            and `start` = #{start}
+        </if>
+        <if test="end != null">
+            and `end` = #{end}
+        </if>
+        <if test="startDate != null">
+            and `date` >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            <![CDATA[
+               and `date` <= #{endDate}
+            ]]>
+        </if>
+        order by `date`, start
+    </select>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update set `vkc`.`schedule`
+        block_flag = 1
+        where uid = #{uid}
+    </update>
+
+    <select id="selectByUid" resultMap="schedule">
+        select `uid`, `date`, `start`, `end`, `creator`, `content`, `create_time`
+        from
+        `vkc`.`schedule`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>
