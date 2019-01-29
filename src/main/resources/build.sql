@@ -28,7 +28,7 @@ CREATE TABLE `vkc`.`schedule` (
   `date` DATETIME NULL,
   `start` INT NULL,
   `end` INT NULL,
-  `creator` VARCHAR(45) NOT NULL,
+  `creatorId` VARCHAR(45) NOT NULL,
   `content` LONGBLOB NOT NULL,
   `create_time` VARCHAR(45) NOT NULL DEFAULT 'now()',
   `block_flag` TINYINT(1) NOT NULL DEFAULT 0,

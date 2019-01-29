@@ -5,14 +5,14 @@
         <result property="date" column="date" />
         <result property="start" column="start" />
         <result property="end" column="end" />
-        <result property="creator" column="creator" />
+        <result property="creatorId" column="creatorId" />
         <result property="content" column="content" />
         <result property="createAt" column="create_time" />
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.Schedule">
       insert into `vkc`.`schedule`
-      (`date`, start, `end`, creator, content)
+      (`date`, start, `end`, creatorId, content)
       values
       (#{date}, #{start}, #{end}, #{creator}, #{content})
     </insert>
@@ -40,8 +40,8 @@
         from
         `vkc`.`schedule`
         where block_flag = 0
-        <if test="creator != null">
-            and creator = #{creator}
+        <if test="creatorId != null">
+            and creator = #{creatorId}
         </if>
         <if test="date != null">
             and `date` = #{date}
@@ -70,7 +70,7 @@
     </update>
 
     <select id="selectByUid" resultMap="schedule">
-        select `uid`, `date`, `start`, `end`, `creator`, `content`, `create_time`
+        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `create_time`
         from
         `vkc`.`schedule`
         where block_flag = 0 and uid = #{uid}

@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Schedule;
+import com.example.form.ScheduleQueryParam;
 import com.example.util.ResultData;
 
 /**
@@ -27,5 +28,5 @@ public interface ScheduleService {
 	 */
 	ResultData updateSchedule(Schedule schedule);
 
-	ResultData fetchSchedule();
+	ResultData fetchSchedule(ScheduleQueryParam param);
 }

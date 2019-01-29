@@ -1,12 +1,11 @@
 package com.example.controller;
 
+import com.example.entity.Schedule;
 import com.example.form.ScheduleQueryParam;
 import com.example.service.ScheduleService;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,23 +22,23 @@ public class ScheduleController {
 	private ScheduleService scheduleService;
 
 	@PostMapping
-	public ResultData create() {
-		return null;
+	public ResultData create(@RequestBody Schedule schedule) {
+		return scheduleService.addSchedule(schedule);
 	}
 
 	@DeleteMapping("/{uid}")
-	public ResultData delete(@PathVariable String uid) {
-		return null;
+	public ResultData delete(@PathVariable int uid) {
+		return scheduleService.deleteSchedule(uid);
 	}
 
 	@PutMapping()
-	public ResultData update() {
-		return null;
+	public ResultData update(@RequestBody Schedule schedule) {
+		return scheduleService.updateSchedule(schedule);
 	}
 
 	@PostMapping("list")
 	public ResultData list(@RequestBody ScheduleQueryParam param) {
-		return null;
+		return scheduleService.fetchSchedule(param);
 	}
 
 }
