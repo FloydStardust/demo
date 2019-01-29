@@ -21,7 +21,7 @@ public class SessionController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/user/create")
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResultData create(RegisterForm form) {
         ResultData result = new ResultData();
         if (!StringUtils.isEmpty(form.getUserName()) && !StringUtils.isEmpty(form.getPassword())) {
