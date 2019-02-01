@@ -1,0 +1,24 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.fund">
+    <resultMap id="fund" type="com.example.entity.Fund">
+        <result property="uid" column="uid" />
+        <result property="name" column="name" />
+        <result property="account" column="account" />
+        <result property="startDate" column="start_date" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Fund">
+      insert into `vkc`.`fund`
+      (`name`, account, start_date)
+      values
+      (#{name}, #{account}, #{startDate})
+    </insert>
+
+    <select id="selectByUid" resultMap="fund">
+        select `uid`, `name`
+        from
+        `vkc`.`fund`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>

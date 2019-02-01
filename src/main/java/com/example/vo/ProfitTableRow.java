@@ -2,51 +2,54 @@ package com.example.vo;
 
 
 /**
- * Description: demo
- * Created by VKC on 2019/1/29 20:10
+ * Description: profit table view object
+ * Created by Floyd on 2019/1/29 20:10
  */
 public class ProfitTableRow {
     private String rowName;
-    private String date;
-    private int currentMonth;
-    private int lastMonth;
+    private String currentDate;
+    private String lastDate;
+    private int currentMonthValue;
+    private int lastMonthValue;
     private double MoM;
     private double YoY;
     private int currentYTD;
     private int lastYTD;
     private double YTD_YoY;
-    private int currentEsimate;
+    private int currentEstimate;
     private double completeRatio;
 
     public ProfitTableRow(String rowName){
         this.rowName = rowName;
     }
-    public ProfitTableRow(String rowName, String date, int currentMonth, int lastMonth, double MoM, double YoY, int currentYTD,
-                          int lastYTD, double YTD_YoY, int currentEsimate, double completeRatio){
+    public ProfitTableRow(String rowName, String currentDate, String lastDate, int currentMonthValue, int lastMonth, double MoM, double YoY, int currentYTD,
+                          int lastYTD, double YTD_YoY, int currentEstimate, double completeRatio){
         this.rowName = rowName;
-        this.date = date;
-        this.currentMonth = currentMonth;
-        this.lastMonth = lastMonth;
+        this.currentDate = currentDate;
+        this.lastDate = lastDate;
+        this.currentMonthValue = currentMonthValue;
+        this.lastMonthValue = lastMonth;
         this.MoM = MoM;
         this.YoY = YoY;
         this.currentYTD = currentYTD;
         this.lastYTD = lastYTD;
         this.YTD_YoY = YTD_YoY;
-        this.currentEsimate = currentEsimate;
+        this.currentEstimate = currentEstimate;
         this.completeRatio = completeRatio;
     }
 
-    public void addNumbers(String date, int currentMonth, int lastMonth, double MoM, double YoY, int currentYTD,
-                            int lastYTD, double YTD_YoY, int currentEsimate, double completeRatio){
-        this.date = date;
-        this.currentMonth = currentMonth;
-        this.lastMonth = lastMonth;
+    public void addNumbers(String currentDate, String lastDate, int currentMonthValue, int lastMonth, double MoM, double YoY, int currentYTD,
+                            int lastYTD, double YTD_YoY, int currentEstimate, double completeRatio){
+        this.currentDate = currentDate;
+        this.lastDate = lastDate;
+        this.currentMonthValue = currentMonthValue;
+        this.lastMonthValue = lastMonth;
         this.MoM = MoM;
         this.YoY = YoY;
         this.currentYTD = currentYTD;
         this.lastYTD = lastYTD;
         this.YTD_YoY = YTD_YoY;
-        this.currentEsimate = currentEsimate;
+        this.currentEstimate = currentEstimate;
         this.completeRatio = completeRatio;
     }
 
@@ -56,23 +59,29 @@ public class ProfitTableRow {
     public void setRowName(String rowName){
         this.rowName = rowName;
     }
-    public String getDate(){
-        return date;
+    public String getCurrentDate(){
+        return currentDate;
     }
-    public void setDate(String date){
-        this.date = date;
+    public void setCurrentDate(String currentDate){
+        this.currentDate = currentDate;
     }
-    public int getCurrentMonth(){
-        return this.currentMonth;
+    public String getLastDate(){
+        return lastDate;
     }
-    public void setCurrentMonth(int currentMonth){
-        this.currentMonth = currentMonth;
+    public void setLastDate(String lastDate){
+        this.lastDate = lastDate;
     }
-    public int getLastMonth(){
-        return this.lastMonth;
+    public int getCurrentMonthValue(){
+        return this.currentMonthValue;
     }
-    public void setLastMonth(int lastMonth){
-        this.lastMonth = lastMonth;
+    public void setCurrentMonthValue(int currentMonthValue){
+        this.currentMonthValue = currentMonthValue;
+    }
+    public int getLastMonthValue(){
+        return this.lastMonthValue;
+    }
+    public void setLastMonthValue(int lastMonthValue){
+        this.lastMonthValue = lastMonthValue;
     }
     public double getMoM(){
         return this.MoM;
@@ -104,11 +113,11 @@ public class ProfitTableRow {
     public void setYTD_YoY(double YTD_YoY){
         this.YTD_YoY = YTD_YoY;
     }
-    public int getCurrentEsimate(){
-        return this.currentEsimate;
+    public int getCurrentEstimate(){
+        return this.currentEstimate;
     }
-    public void setCurrentEsimate(int currentEsimate){
-        this.currentEsimate = currentEsimate;
+    public void setCurrentEstimate(int currentEstimate){
+        this.currentEstimate = currentEstimate;
     }
     public double getCompleteRatio(){
         return this.completeRatio;

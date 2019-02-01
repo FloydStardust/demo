@@ -7,6 +7,7 @@ import com.example.vo.ProfitTableRow;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -31,20 +32,30 @@ public class ProfitTableServiceImpl implements ProfitTableService {
     public ResultData getProfitTable(int projectId) {
         ResultData resultData = new ResultData();
         List<Object> profitTable = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        String date = today.getYear()+"-"+today.getMonthValue();
+        LocalDate last = today.minus(1, ChronoUnit.MONTHS);
+        String lastDate = last.getYear()+"-"+last.getMonthValue();
         for(String item: left_header){
             ProfitTableRow row = new ProfitTableRow(item);
             Map<String, Object> tableRow = new HashMap<>();
-            LocalDate today = LocalDate.now();
-            String date = today.getYear()+"-"+today.getMonthValue();
-            row.addNumbers(date,1000, 200, 0.3342, 0.8933, 1100,
+
+            row.addNumbers(date, lastDate, 1000, 200, 0.3342, 0.8933, 1100,
                     900,0.7902,3000,0.2300);
 
             profitTable.add(row);
         }
         resultData.setData(profitTable);
         resultData.setResponseCode(ResponseCode.RESPONSE_OK);
-        resultData.setDescription("desciption");
+        resultData.setDescription("");
         return resultData;
+    }
+
+    @Override
+    public ResultData getProfitHistoryData(int projectId) {
+        List<Object> history = new ArrayList<>();
+//        for(i in)
+        return null;
     }
 
 }

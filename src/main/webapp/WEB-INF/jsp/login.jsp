@@ -25,7 +25,7 @@
 	           <div class="col-md-12">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="index.html">Bootstrap Admin Theme</a></h1>
+	                 <h1><a href="index.html">VKC-CRM管理系统</a></h1>
 	              </div>
 	           </div>
 	        </div>
@@ -39,19 +39,6 @@
 			        <div class="box">
 			            <div class="content-wrap">
 			                <h6>Sign In</h6>
-			                <div class="social">
-	                            <a class="face_login" href="#">
-	                                <span class="face_icon">
-	                                    <img src="images/facebook.png" alt="fb">
-	                                </span>
-	                                <span class="text">Sign in with Facebook</span>
-	                            </a>
-	                            <div class="division">
-	                                <hr class="left">
-	                                <span>or</span>
-	                                <hr class="right">
-	                            </div>
-	                        </div>
 			                <input id="email" class="form-control" type="text" placeholder="E-mail address">
 			                <input id="password" class="form-control" type="password" placeholder="Password">
 			                <div class="action">
@@ -62,7 +49,7 @@
 
 			        <div class="already">
 			            <p>Don't have an account yet?</p>
-			            <a href="signup.html">Sign Up</a>
+			            <a href="#">Email to floyd@vkc-partners.com</a>
 			        </div>
 			    </div>
 			</div>

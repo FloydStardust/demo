@@ -1,33 +1,48 @@
 package com.example.entity;
 
-import lombok.Getter;
 
 import javax.persistence.*;
 
 /**
  * Description: demo
- * Created by VKC on 2019/1/25 11:04
+ * Created by Floyd on 2019/1/25 11:04
  */
+public class Fund extends Entity{
 
-@Getter
-@Table(name = "fund")
-public class Fund {
+    private int uid;
+    private String name;
+    private long account;
+    private String startDate;
 
-    @Id
-    @GeneratedValue
-    Long id;
-
-    @Column(unique = true)
-    String name;
-
-    public static Fund build(String name) {
-        final Fund fund = new Fund();
-        fund.name = name;
-        return fund;
+    public int getUid() {
+        return uid;
     }
 
-    @Override
-    public String toString() {
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public long getAccount() {
+        return account;
+    }
+
+    public void setAccount(long account) {
+        this.account = account;
     }
 }

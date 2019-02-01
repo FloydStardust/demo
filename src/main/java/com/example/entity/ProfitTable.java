@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "profit")
-public class ProfitTable {
+public class ProfitTable extends Entity{
 
     @Id
     @GeneratedValue

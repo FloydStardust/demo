@@ -82,7 +82,7 @@ public class ScheduleDaoImpl extends BaseDao implements ScheduleDao {
 	public ResultData delete(int uid) {
 		ResultData result = new ResultData();
 		try {
-			sqlSession.insert("vkc.schedule.delete", uid);
+			sqlSession.delete("vkc.schedule.delete", uid);
 		} catch (Exception e) {
 			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
 			result.setDescription(e.getMessage());

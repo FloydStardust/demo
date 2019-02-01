@@ -49,5 +49,48 @@ CREATE TABLE `schedule` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
+);
+CREATE TABLE `portfolio` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `fund_id` int(11) NOT NULL,
+  `date` varchar(45) NOT NULL,
+  `share_type` int(11) NOT NULL,
+  `invest_type` int(11) NOT NULL,
+  `board_num` int(11) NOT NULL,
+  `partner` varchar(45),
+  `money_type` int(11),
+  `invest_num` int(11) UNSIGNED,
+  `invest_ratio` double,
+  `current_ratio` double ,
+  `source` varchar ,
+  `director` varchar ,
+  `manager` varchar ,
+  `boarder` varchar ,
+  `industry` varchar,
+  `sector` varchar ,
+  `location` varchar ,
+  `register_location` varchar ,
+  `exit_status` int ,
+  `exit_type` int,
+  `exit_time` varchar ,
+  `value_achieved` int UNSIGNED,
+  `value_achieving` int UNSIGNED,
+  `total_value` int UNSIGNED,
+  `return_multiple` double ,
+  `irr` double ,
+  `value_evidence` longtext,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+);
+CREATE TABLE `fund` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `account` integer NOT NULL,
+  `start_date` varchar(45),
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+);
+ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
 

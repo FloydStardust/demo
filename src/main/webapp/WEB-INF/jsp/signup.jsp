@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap Admin Theme v3</title>
+    <title>VKC CRM v1.1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 	           <div class="col-md-12">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="index.html">Bootstrap Admin Theme</a></h1>
+	                 <h1><a href="index.html">VKC-CRM管理系统</a></h1>
 	              </div>
 	           </div>
 	        </div>
@@ -57,7 +57,6 @@
 			</div>
 		</div>
 	</div>
-
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

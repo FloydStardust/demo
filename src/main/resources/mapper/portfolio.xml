@@ -1,0 +1,122 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.portfolio">
+    <resultMap id="portfolio" type="com.example.entity.Portfolio">
+        <result property="uid" column="uid" />
+        <result property="name" column="name" />
+        <result property="fundId" column="fund_id" />
+        <result property="date" column="date" />
+        <result property="shareType" column="share_type" />
+        <result property="investType" column="invest_type" />
+        <result property="boardNum" column="board_num" />
+        <result property="roundNum" column="round_num" />
+        <result property="partner" column="partner" />
+        <result property="moneyType" column="money_type" />
+        <result property="investNum" column="invest_num" />
+        <result property="investRatio" column="invest_ratio" />
+        <result property="currentRatio" column="current_ratio" />
+        <result property="source" column="source" />
+        <result property="director" column="director" />
+        <result property="manager" column="manager" />
+        <result property="boarder" column="boarder" />
+        <result property="industry" column="industry" />
+        <result property="sector" column="sector" />
+        <result property="location" column="location" />
+        <result property="registerLocation" column="register_location" />
+        <result property="exitStatus" column="exit_status" />
+        <result property="exitType" column="exit_type" />
+        <result property="exitTime" column="exit_time" />
+        <result property="valueAchieved" column="value_achieved" />
+        <result property="valueAchieving" column="value_achieving" />
+        <result property="totalValue" column="total_value" />
+        <result property="returnMultiple" column="return_multiple" />
+        <result property="irr" column="irr" />
+        <result property="valueEvidence" column="value_evidence" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Portfolio">
+      insert into `vkc`.`portfolio`
+      (`name`, fund_id, `date`, share_type, invest_type, board_num, round_num, partner, money_type, invest_num, invest_ratio,
+      current_ratio, `source`, director, manager, boarder, industry, sector, location, register_location, exit_status,
+      exit_type, exit_time, value_achieved, value_achieving, total_value, return_multiple, irr, value_evidence)
+      values
+      (#{name}, #{fundId}, #{date}, #{shareType}, #{investType}, #{boardNum}, #{roundNum}, #{partner}, #{moneyType},
+      #{investNum}, #{investRatio}, #{currentRatio}, #{source}, #{director}, #{manager}, #{boarder}, #{industry}, #{sector},
+      #{location}, #{registerLocation}, #{exitStatus}, #{exitType}, #{exitTime}, #{valueAchieved}, #{valueAchieving},
+      #{totalValue}, #{returnMultiple}, #{irr}, #{valueEvidence})
+    </insert>
+
+    <update id="update" parameterType="com.example.entity.Portfolio">
+        update `vkc`.`portfolio`
+        set
+        <if test="name != null">
+            `name` = #{name},
+        </if>
+        <if test="fundId != null">
+            fund_id = #{fundId},
+        </if>
+        <if test="date != null">
+            `date` = #{date},
+        </if>
+            share_type = #{shareType},
+            invest_type = #{investType},
+            board_num = #{boardNum},
+            round_num = #{roundNum},
+            partner = #{partner},
+            money_type = #{moneyType},
+            invest_num = #{investNum},
+            invest_ratio = #{investRatio},
+            current_ratio = #{currentRatio},
+            `source` = #{source},
+            director = #{director},
+            manager = #{manager},
+            boarder = #{boarder},
+            industry = #{industry},
+            sector = #{sector},
+            location = #{location},
+            register_location = #{registerLocation},
+            exit_status = #{exitStatus},
+            exit_type = #{exitType},
+            exit_time = #{exitTime},
+            value_achieved = #{valueAchieved},
+            value_achieving = #{valueAchieving},
+            total_value = #{totalValue},
+            return_multiple = #{returnMultiple},
+            irr = #{irr},
+            value_evidence = #{valueEvidence}
+        where uid = #{uid}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`portfolio` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+    <select id="select" resultMap="portfolio" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`portfolio`
+        where block_flag = 0
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+        <if test="fundId != null">
+            and fund_id = #{fundId}
+        </if>
+        <if test="manager != null">
+            and `manager` = #{manager}
+        </if>
+        <if test="director != null">
+            and director = #{director}
+        </if>
+        order by `date`
+    </select>
+
+    <select id="selectByUid" resultMap="schedule">
+        select *
+        from
+        `vkc`.`portfolio`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>

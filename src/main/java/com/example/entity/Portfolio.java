@@ -1,159 +1,411 @@
 package com.example.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
 /**
- * Description: demo
+ * Description: Portfolio Entity with an uid
  * Created by Floyd on 2019/1/25 10:59
  */
+public class Portfolio extends Entity{
 
-@Getter
-@Setter
-@Table(name = "portfolio")
-public class Portfolio {
+    private int uid;
+    private String name;
+    private Long fundId;
+    private String date;
+    private int shareType;
+    private int investType;
+    private int boardNum;
+    private int roundNum;
+    private String partner;
+    private int moneyType;
+    private int investNum;
+    private double investRatio;
+    private double currentRatio;
+    private String source;
+    private String director;
+    private String manager;
+    private String boarder;
+    private String industry;
+    private String sector;
+    private String location;
+    private String registerLocation;
+    private int exitStatus;
+    private int exitType;
+    private String exitTime;
+    private int valueAchieved;
+    private int valueAchieving;
+    private int totalValue;
+    private double returnMultiple;
+    private double irr;
+    private String valueEvidence;
 
-    @Id
-    @GeneratedValue
-    Long id;
-
-    String name;    // 项目名
-    @ManyToOne
-    Fund fund;      // 所属基金
-
-    LocalDateTime date;      // 初投时间
-    @Enumerated(EnumType.STRING)
-    ShareType shareType;    // 股权性质
-    @Enumerated(EnumType.STRING)
-    InvestType investType;  // 领投/跟投
-
-    int boardNum;           // 董事会席位
-
-    String investRound;     // 投资轮次
-
-    String investPartner;   // 共同投资人
-    @Enumerated(EnumType.STRING)
-    MoneyType moneyType;    // 币种
-
-    int investAccount;      // 投资金额
-
-    float investShareRatio; // 投资时股权比例
-
-    float currentShareRatio;// 最新股权比例
-
-    String source;          // 项目来源
-
-    String director;        // 项目执行人
-
-    String manager;         // 项目管理人
-
-    String boarder;         // 董事席位
-
-    String industry;        // 一级行业
-
-    String industrySub;     // 二级行业
-
-    String projectLocation; // 所在地域
-
-    String registerLocation;// 注册地
-
-    String intro;           // 公司介绍
-    @Enumerated(EnumType.STRING)
-    ExitStatus exitStatus;  // 退出状态
-    @Enumerated(EnumType.STRING)
-    ExitTye exitTye;        // 退出方式
-
-    LocalDateTime exitTime;          // 退出时间
-
-    int valueAchieved;      // 已实现价值
-
-    int valueAchieving;     // 未实现简直
-
-    int totalValue;         // 总价值
-
-    float returnMultiple;   // 回报倍数
-
-    float IRR;              // Gross IRR
-
-    String valueEvidence;   // 估值依据
-
-    LocalDateTime lastChangeAt;
-
-    @PrePersist
-    public void prePersist() {
-        lastChangeAt = LocalDateTime.now();
+    public int getUid() {
+        return uid;
     }
 
-    public static Portfolio build(String name, Fund fund, LocalDateTime date,
-                                  ShareType shareType, InvestType investType,
-                                  int boardNum, String investRound, String investPartner,
-                                  MoneyType moneyType, int investAccount, float investShareRatio,
-                                  float currentShareRatio, String source, String director,
-                                  String manager, String boarder, String industry, String industrySub,
-                                  String projectLocation, String registerLocation, String intro,
-                                  ExitStatus exitStatus, ExitTye exitTye, LocalDateTime exitTime,
-                                  int valueAchieved, int valueAchieving, int totalValue, float returnMultiple,
-                                  float IRR, String valueEvidence){
-        Portfolio portfolio = new Portfolio();
-        portfolio.name = name;
-        portfolio.fund = fund;
-        portfolio.date = date;
-        portfolio.shareType = shareType;
-        portfolio.investType = investType;
-        portfolio.boardNum = boardNum;
-        portfolio.investRound = investRound;
-        portfolio.investPartner = investPartner;
-        portfolio.moneyType = moneyType;
-        portfolio.investAccount = investAccount;
-        portfolio.investShareRatio = investShareRatio;
-        portfolio.currentShareRatio = currentShareRatio;
-        portfolio.source = source;
-        portfolio.director = director;
-        portfolio.manager = manager;
-        portfolio.boarder = boarder;
-        portfolio.industry = industry;
-        portfolio.industrySub = industrySub;
-        portfolio.projectLocation = projectLocation;
-        portfolio.registerLocation = registerLocation;
-        portfolio.intro = intro;
-        portfolio.exitStatus = exitStatus;
-        portfolio.exitTye = exitTye;
-        portfolio.exitTime = exitTime;
-        portfolio.valueAchieved = valueAchieved;
-        portfolio.valueAchieving = valueAchieving;
-        portfolio.totalValue = totalValue;
-        portfolio.returnMultiple = returnMultiple;
-        portfolio.IRR = IRR;
-        portfolio.valueEvidence = valueEvidence;
-
-        return portfolio;
-    }
-    public static enum ShareType {
-        COMMON,     // 普通股
-        PREFERRED,  // 优先股
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
-    public static enum InvestType {
-        LEAD,       // 领投
-        FOLLOW,     // 跟投
+    public enum ShareType {
+        COMMON("普通人", 1), PREFERRED("优先股", 2);
+        private String name;
+        private int index;
+
+        private ShareType(String name, int index){
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
     }
 
-    public static enum MoneyType {
-        DOLLAR,
-        RMB,
+    public enum InvestType {
+        LEAD("领投",1), FOLLOW("跟投",2);
+        private String name;
+        private int index;
+        private InvestType(String name, int index) {
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
     }
 
-    public static enum ExitStatus {
-        I,          // 未退出
-        O,          // 已退出
+    public enum MoneyType {
+        DOLLAR("美元", 1), RMB("人民币",2);
+        private String name;
+        private int index;
+        private MoneyType(String name, int index){
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
     }
 
-    public static enum ExitTye {
-        IPO,          // IPO
-        MERGE,        // 并购
+    public enum ExitStatus {
+        EXIT("已退出",1), PART_EXIT("部分退出",2), NOT_EXIT("未退出",3);
+
+        private String name;
+        private int index;
+        private ExitStatus(String name, int index){
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
     }
 
+    public enum ExitTye {
+        IPO("IPO", 1), MERGE("并购",2);
+        private String name;
+        private int index;
+        private ExitTye(String name, int index){
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getFundId() {
+        return fundId;
+    }
+
+    public void setFundId(Long fundId) {
+        this.fundId = fundId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getShareType() {
+        return shareType;
+    }
+
+    public void setShareType(int shareType) {
+        this.shareType = shareType;
+    }
+
+    public int getInvestType() {
+        return investType;
+    }
+
+    public void setInvestType(int investType) {
+        this.investType = investType;
+    }
+
+    public int getBoardNum() {
+        return boardNum;
+    }
+
+    public void setBoardNum(int boardNum) {
+        this.boardNum = boardNum;
+    }
+
+    public int getRoundNum() {
+        return roundNum;
+    }
+
+    public void setRoundNum(int roundNum) {
+        this.roundNum = roundNum;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
+    }
+
+    public int getMoneyType() {
+        return moneyType;
+    }
+
+    public void setMoneyType(int moneyType) {
+        this.moneyType = moneyType;
+    }
+
+    public int getInvestNum() {
+        return investNum;
+    }
+
+    public void setInvestNum(int investNum) {
+        this.investNum = investNum;
+    }
+
+    public double getInvestRatio() {
+        return investRatio;
+    }
+
+    public void setInvestRatio(double investRatio) {
+        this.investRatio = investRatio;
+    }
+
+    public double getCurrentRatio() {
+        return currentRatio;
+    }
+
+    public void setCurrentRatio(double currentRatio) {
+        this.currentRatio = currentRatio;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
+    }
+
+    public String getBoarder() {
+        return boarder;
+    }
+
+    public void setBoarder(String boarder) {
+        this.boarder = boarder;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getRegisterLocation() {
+        return registerLocation;
+    }
+
+    public void setRegisterLocation(String registerLocation) {
+        this.registerLocation = registerLocation;
+    }
+
+    public int getExitStatus() {
+        return exitStatus;
+    }
+
+    public void setExitStatus(int exitStatus) {
+        this.exitStatus = exitStatus;
+    }
+
+    public int getExitType() {
+        return exitType;
+    }
+
+    public void setExitType(int exitType) {
+        this.exitType = exitType;
+    }
+
+    public String getExitTime() {
+        return exitTime;
+    }
+
+    public void setExitTime(String exitTime) {
+        this.exitTime = exitTime;
+    }
+
+    public int getValueAchieved() {
+        return valueAchieved;
+    }
+
+    public void setValueAchieved(int valueAchieved) {
+        this.valueAchieved = valueAchieved;
+    }
+
+    public int getValueAchieving() {
+        return valueAchieving;
+    }
+
+    public void setValueAchieving(int valueAchieving) {
+        this.valueAchieving = valueAchieving;
+    }
+
+    public int getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(int totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    public double getReturnMultiple() {
+        return returnMultiple;
+    }
+
+    public void setReturnMultiple(double returnMultiple) {
+        this.returnMultiple = returnMultiple;
+    }
+
+    public double getIrr() {
+        return irr;
+    }
+
+    public void setIrr(double irr) {
+        this.irr = irr;
+    }
+
+    public String getValueEvidence() {
+        return valueEvidence;
+    }
+
+    public void setValueEvidence(String valueEvidence) {
+        this.valueEvidence = valueEvidence;
+    }
 }
