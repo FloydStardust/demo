@@ -52,6 +52,7 @@ function addSchedule() {
     });
 
     xhr.open("POST", "http://localhost:8080/schedule");
+    xhr.setRequestHeader("content-type", "application/json");
     var token = getCookie("access_token");
     xhr.setRequestHeader("authorization", "Bearer " + token);
 
@@ -88,6 +89,31 @@ function updateSchedule() {
     });
 
     xhr.open("PUT", "http://localhost:8080/schedule");
+    xhr.setRequestHeader("content-type", "application/json");
+    var token = getCookie("access_token");
+    xhr.setRequestHeader("authorization", "Bearer " + token);
+
+    xhr.send(data);
+}
+
+/**
+ * 删除
+ * @param id
+ */
+function deleteSchedule(id) {
+    var data = null;
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            console.log(this.responseText);
+        }
+    });
+
+    xhr.open("DELETE", "http://localhost:8080/schedule/" + id);
+    xhr.setRequestHeader("content-type", "application/json");
     var token = getCookie("access_token");
     xhr.setRequestHeader("authorization", "Bearer " + token);
 
