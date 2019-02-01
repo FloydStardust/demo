@@ -1,18 +1,13 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.entity.Portfolio;
-import com.example.entity.ProfitTable;
-import com.example.repository.PortfolioRepository;
 import com.example.service.ProfitTableService;
 import com.example.util.ResultData;
-import com.example.vo.ProfitTableRow;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Description: demo
@@ -24,14 +19,14 @@ public class ProjectController {
 
     @Autowired
     ProfitTableService profitTableService;
-    @Autowired
-    PortfolioRepository portfolioRepository;
+//    @Autowired
+//    PortfolioRepository portfolioRepository;
 
-    @GetMapping("")
-    public String getAll(){
-        Set<Portfolio> allPortfolios = (Set<Portfolio>) portfolioRepository.findAll();
-        return JSON.toJSONString(allPortfolios);
-    }
+//    @GetMapping("")
+//    public String getAll(){
+//        Set<Portfolio> allPortfolios = (Set<Portfolio>) portfolioRepository.findAll();
+//        return JSON.toJSONString(allPortfolios);
+//    }
 
 
     @GetMapping("/{projectId}")

@@ -14,12 +14,21 @@ import java.util.Locale;
  * Time: 8:32 PM
  */
 public class ScheduleVO {
+	private int id;
 	private String username;
 	private String date;
 	private int start;
 	private int end;
 	private String venue;
 	private String event;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getUsername() {
 		return username;
@@ -73,6 +82,7 @@ public class ScheduleVO {
 	}
 
 	public ScheduleVO(Schedule schedule) {
+		this.id = schedule.getUid();
 		this.date = formatDate(schedule.getDate().toLocalDate());
 		this.event = schedule.getContent();
 		this.venue = schedule.getVenue();
