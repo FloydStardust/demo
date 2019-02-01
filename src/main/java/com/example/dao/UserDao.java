@@ -3,6 +3,7 @@ package com.example.dao;
 import com.example.entity.User;
 import com.example.util.ResultData;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,4 +17,6 @@ public interface UserDao {
 	ResultData queryUser(Map<String, Object> condition);
 
 	ResultData insertUser(User user);
+
+	ResultData queryUsers(List<Integer> ids);
 }

@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import com.example.service.ScheduleService;
+import com.example.util.ResultData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class PageController {
 
+	@Autowired
+	private ScheduleService scheduleService;
+
 	@RequestMapping(method = RequestMethod.GET, value = "register")
 	public String register(ModelMap model) {
 		return "signup";
@@ -30,6 +36,8 @@ public class PageController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "schedule")
 	public String schedule(ModelMap model) {
+//		ResultData result = scheduleService.fetchScheduleWeekly();
+//		model.put("schedules", result.getData());
 		return "schedule";
 	}
 

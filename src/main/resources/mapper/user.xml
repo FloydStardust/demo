@@ -33,4 +33,14 @@
         </if>
     </select>
 
+    <select id="queryByUids" parameterType="java.util.List" resultMap="user">
+        SELECT id, email, phone, user_name, password, block_flag, create_time
+        FROM `vkc`.`user`
+        WHERE 1 = 1 and block_flag = 0
+        and id in
+        <foreach collection="list" separator="," open="(" close=")" index="index" item="item">
+          #{item}
+        </foreach>
+    </select>
+
 </mapper>

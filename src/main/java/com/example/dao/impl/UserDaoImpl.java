@@ -49,4 +49,20 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		}
 		return result;
 	}
+
+	@Override
+	public ResultData queryUsers(List<Integer> ids) {
+		ResultData result = new ResultData();
+		try {
+			List<User> list = sqlSession.selectList("vkc.user.queryByUids", ids);
+			if (list.isEmpty()) {
+				result.setResponseCode(ResponseCode.RESPONSE_NULL);
+			}
+			result.setData(list);
+		} catch (Exception e) {
+			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+			result.setDescription(e.getMessage());
+		}
+		return result;
+	}
 }

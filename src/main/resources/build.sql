@@ -94,3 +94,6 @@ CREATE TABLE `fund` (
 );
 ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
 
+ALTER TABLE `vkc`.`schedule`
+ADD COLUMN `venue` VARCHAR(45) NULL AFTER `creatorId`;
+

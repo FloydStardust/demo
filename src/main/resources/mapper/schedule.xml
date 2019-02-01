@@ -7,14 +7,15 @@
         <result property="end" column="end" />
         <result property="creatorId" column="creatorId" />
         <result property="content" column="content" />
+        <result property="venue" column="venue" />
         <result property="createAt" column="create_time" />
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.Schedule">
       insert into `vkc`.`schedule`
-      (`date`, start, `end`, creatorId, content)
+      (`date`, start, `end`, creatorId, content, venue)
       values
-      (#{date}, #{start}, #{end}, #{creatorId}, #{content})
+      (#{date}, #{start}, #{end}, #{creatorId}, #{content}, #{venue})
     </insert>
     
     <update id="update" parameterType="com.example.entity.Schedule">
@@ -32,11 +33,14 @@
         <if test="content != null">
             `content` = #{content}
         </if>
+        <if test="venue != null">
+            `venue` = #{venue}
+        </if>
         where uid = #{uid}
     </update>
 
     <select id="select" resultMap="schedule" parameterType="java.util.Map">
-        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `create_time`
+        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `venue`, `create_time`
         from
         `vkc`.`schedule`
         where block_flag = 0
@@ -70,7 +74,7 @@
     </update>
 
     <select id="selectByUid" resultMap="schedule">
-        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `create_time`
+        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `venue`, `create_time`
         from
         `vkc`.`schedule`
         where block_flag = 0 and uid = #{uid}

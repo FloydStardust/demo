@@ -2,21 +2,23 @@ package com.example.service.impl;
 
 import com.example.dao.ScheduleDao;
 import com.example.entity.Schedule;
+import com.example.entity.User;
 import com.example.form.ScheduleQueryParam;
 import com.example.service.ScheduleService;
+import com.example.service.UserService;
 import com.example.util.CurrentUserHelper;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
+import com.example.vo.ScheduleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.time.temporal.WeekFields;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +36,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Autowired
 	private CurrentUserHelper currentUserHelper;
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public ResultData addSchedule(Schedule schedule) {
@@ -87,31 +92,33 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public ResultData fetchSchedule(ScheduleQueryParam param) {
 		Map<String, Object> condition = new HashMap<>();
-		condition.put("creatorId", currentUserHelper.currentUser().getId());
 		return scheduleDao.select(condition);
 	}
 
 	@Override
 	public ResultData fetchScheduleWeekly() {
 		Map<String, Object> condition = new HashMap<>();
-		condition.put("creatorId", currentUserHelper.currentUser().getId());
+
 		LocalDate today = LocalDate.now();
 		LocalDate monday = today.with(DayOfWeek.MONDAY);
 		LocalDate friday = today.with(DayOfWeek.FRIDAY);
-		ResultData result = new ResultData();
-		Map<String, List<Schedule>> schedules = new HashMap<>();
+		condition.put("dateStart", monday);
+		condition.put("dateEnd", friday);
+		ResultData result = scheduleDao.select(condition);
 
-		for (LocalDate date = monday; date.compareTo(friday) <= 0; date = date.plusDays(1)) {
-			condition.put("date", date);
-			result = scheduleDao.select(condition);
-			if (result.getResponseCode() == ResponseCode.RESPONSE_NULL) {
-				schedules.put(formateDate(date), new ArrayList<>());
-			} else {
-				schedules.put(formateDate(date), (List<Schedule>) result.getData());
+		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+			List<Schedule> list = (List<Schedule>) result.getData();
+			List<Integer> userIds = list.stream().map(Schedule::getCreatorId).collect(Collectors.toList());
+			Map<Integer, String> userMap = ((List<User>) userService.findByIds(userIds).getData()).stream()
+					.collect(Collectors.toMap(User::getId, User::getUserName));
+			List<ScheduleVO> data = new ArrayList<>();
+			for (Schedule schedule : list) {
+				ScheduleVO scheduleVO = new ScheduleVO(schedule);
+				scheduleVO.setUsername(userMap.get(schedule.getCreatorId()));
+				data.add(scheduleVO);
 			}
+			result.setData(data);
 		}
-
-		result.setData(schedules);
 		return result;
 	}
 
@@ -125,11 +132,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 	}
 
-	private String formateDate(LocalDate date) {
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String day = date.format(dateFormat);
-		String week = LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CHINA);
-		return day + " " + week;
-	}
+
 
 }

@@ -17,6 +17,7 @@ public class Schedule extends Entity {
 
 	private int creatorId;
 	private String content;
+	private String venue;
 
 	public int getUid() {
 		return uid;
@@ -64,5 +65,13 @@ public class Schedule extends Entity {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getVenue() {
+		return venue;
+	}
+
+	public void setVenue(String venue) {
+		this.venue = venue;
 	}
 }

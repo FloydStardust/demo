@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +29,11 @@ public class UserServiceImpl implements UserService {
 		Map<String, Object> condition = new HashMap<>();
 		condition.put("userName", name);
 		return userDao.queryUser(condition);
+	}
+
+	@Override
+	public ResultData findByIds(List<Integer> ids) {
+		return userDao.queryUsers(ids);
 	}
 
 	@Override
