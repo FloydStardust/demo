@@ -102,8 +102,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 		LocalDate today = LocalDate.now();
 		LocalDate monday = today.with(DayOfWeek.MONDAY);
 		LocalDate friday = today.with(DayOfWeek.FRIDAY);
-		condition.put("dateStart", monday);
-		condition.put("dateEnd", friday);
+		condition.put("startDate", monday);
+		condition.put("endDate", friday);
 		ResultData result = scheduleDao.select(condition);
 
 		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
