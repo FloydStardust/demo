@@ -558,6 +558,9 @@
 
     });
 
+    /**
+     *  添加一条portfolio记录
+     */
     function addPortfolio() {
         let formData = new FormData();
         formData.append("name", $("#addModalProjectName").val());
@@ -598,6 +601,9 @@
             cache: false,                      // 不缓存
             processData: false,                // jQuery不要去处理发送的数据
             contentType: false,                // jQuery不要去设置Content-Type请求头
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
         }).done(function (data) {
             console.log(data)
         })

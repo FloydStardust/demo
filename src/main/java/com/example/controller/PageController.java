@@ -43,6 +43,11 @@ public class PageController {
 		return "login";
 	}
 
+	@GetMapping("home")
+	public String home(){
+		return "forward:/schedule";
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "schedule")
 	public String schedule(ModelMap model) {
 //		ResultData result = scheduleService.fetchScheduleWeekly();
