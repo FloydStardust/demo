@@ -41,7 +41,7 @@ public class OAuth2ServerConfig {
                     .authorizeRequests()
                     .antMatchers("/auth/user/create").permitAll()
                     .antMatchers("/auth/admin/**").authenticated()
-//                    .antMatchers("/schedule/**").authenticated()
+                    .antMatchers("/api/**").authenticated()
             ;
             // @formatter:on
         }
