@@ -14,6 +14,20 @@
       (#{name}, #{account}, #{startDate})
     </insert>
 
+    <select id="select" resultMap="fund" parameterType="java.util.Map">
+        select `uid`, `name`, `account`, `start_date`
+        from
+        `vkc`.`fund`
+        where block_flag = 0
+        <if test="name != null">
+            and name = #{name}
+        </if>
+        <if test="startDate != null">
+            and `start_date` = #{startDate}
+        </if>
+        order by `name`
+    </select>
+
     <select id="selectByUid" resultMap="fund">
         select `uid`, `name`
         from

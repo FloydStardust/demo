@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,18 +25,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .requestMatchers().anyRequest()
+        http.authorizeRequests()
+                .antMatchers("/", "/register", "/logout", "/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
-                .antMatchers("/oauth/*").permitAll();
-        // @formatter:on
-        http
-                .cors();
+                .formLogin().loginPage("/login").defaultSuccessUrl("/home")
+                .and()
+                .logout().logoutSuccessUrl("/login")
+                .and()
+                .csrf().disable()
+        ;
+    }
 
+    /**
+     * 排除不经过 spring security 的路径匹配
+     * @param web WebSecurity实例
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/static")
+                .antMatchers("/**/*.css", "/**/*.js");
     }
 
     //不定义没有password grant_type

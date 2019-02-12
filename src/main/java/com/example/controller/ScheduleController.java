@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 
 @RestController
-@RequestMapping("schedule")
+@RequestMapping("api/schedule")
 public class ScheduleController {
 
 	@Autowired
@@ -51,7 +51,7 @@ public class ScheduleController {
 		return scheduleService.fetchSchedule(param);
 	}
 
-	@PostMapping("list/weekly")
+	@GetMapping("week")
 	public ResultData list() {
 		return scheduleService.fetchScheduleWeekly();
 	}

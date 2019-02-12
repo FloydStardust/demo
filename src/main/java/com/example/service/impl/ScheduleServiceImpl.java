@@ -128,7 +128,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 			Schedule schedule = (Schedule) result.getData();
 			return schedule.getCreatorId() == currentUserHelper.currentUser().getId();
 		} else {
-			return true;
+			return false;
 		}
 	}
 

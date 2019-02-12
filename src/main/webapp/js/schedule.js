@@ -11,11 +11,13 @@ function tableCreator() {
         if (this.readyState === 4) {
             var response = JSON.parse(this.responseText);
             var schedules = response.data;
+            console.log(response);
         }
     });
 
-    xhr.open("POST", "http://localhost:8080/schedule/list/weekly");
+    xhr.open("GET", "http://localhost:8080/api/schedule/week");
     var token = getCookie("access_token");
+    console.log(token)
     xhr.setRequestHeader("authorization", "Bearer " + token);
     xhr.setRequestHeader("content-type", "application/json");
 

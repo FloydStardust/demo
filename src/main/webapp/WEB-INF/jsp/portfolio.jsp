@@ -245,10 +245,6 @@
                         <label for="addModalFundName" class="col-sm-2 col-form-label">基金名称</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalFundName">
-                                <option>VKC USD Fund I</option>
-                                <option>VKC USD Fund II</option>
-                                <option>VKC RMB Fund I</option>
-                                <option>VKC RMB Fund II</option>
                             </select>
                         </div>
                     </div>
@@ -271,8 +267,6 @@
                         <label for="addModalShareType" class="col-sm-2 col-form-label">股权性质</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalShareType">
-                                <option>普通股</option>
-                                <option>优先股</option>
                             </select>
                         </div>
                     </div>
@@ -281,8 +275,6 @@
                         <label for="addModalInvestType" class="col-sm-2 col-form-label">领头/跟投</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalInvestType">
-                                <option>领投</option>
-                                <option>跟投</option>
                             </select>
                         </div>
                     </div>
@@ -316,8 +308,6 @@
                         <label for="addModalMoneyType" class="col-sm-2 col-form-label">币种</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalMoneyType">
-                                <option>美元</option>
-                                <option>人民币</option>
                             </select>
                         </div>
                     </div>
@@ -388,19 +378,21 @@
                     <div class="form-group row">
                         <label for="addModalProjectLocation" class="col-sm-2 col-form-label">所在地域</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalProjectLocation">
-                                <option>北京</option>
-                                <option>上海</option>
-                                <option>广州</option>
-                                <option>深圳</option>
-                                <option>成都</option>
-                                <option>重庆</option>
-                                <option>武汉</option>
-                                <option>南京</option>
-                                <option>杭州</option>
-                                <option>郑州</option>
-                                <option>济南</option>
-                            </select>
+                            <input type="text" class="form-control" id="addModalProjectLocation" placeholder="城市名">
+                            <%--<select class="form-control" id="addModalProjectLocation">--%>
+                                <%----%>
+                                <%--<option>北京</option>--%>
+                                <%--<option>上海</option>--%>
+                                <%--<option>广州</option>--%>
+                                <%--<option>深圳</option>--%>
+                                <%--<option>成都</option>--%>
+                                <%--<option>重庆</option>--%>
+                                <%--<option>武汉</option>--%>
+                                <%--<option>南京</option>--%>
+                                <%--<option>杭州</option>--%>
+                                <%--<option>郑州</option>--%>
+                                <%--<option>济南</option>--%>
+                            <%--</select>--%>
                         </div>
                     </div>
 
@@ -422,8 +414,6 @@
                         <label for="addModalExitStatus" class="col-sm-2 col-form-label">退出状态</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalExitStatus">
-                                <option>已退出</option>
-                                <option>未退出</option>
                             </select>
                         </div>
                     </div>
@@ -432,8 +422,6 @@
                         <label for="addModalExitType" class="col-sm-2 col-form-label">退出方式</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalExitType">
-                                <option>IPO</option>
-                                <option>并购</option>
                             </select>
                         </div>
                     </div>
@@ -486,11 +474,11 @@
                         </div>
                     </div>
                 </form>
-                <!-- <div class="float-right"><h3>提交前请再次检查</h3></div> -->
+                <div class="float-right"><h3>提交前请再次检查</h3></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" onclick="addPortfolio()">保存</button>
             </div>
         </div>
     </div>
@@ -512,7 +500,7 @@
 <!-- jQuery UI -->
 <!-- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- <script src="vendors/datatables/js/jquery.dataTables.min.js"></script> -->
 <!-- <script src="vendors/datatables/dataTables.bootstrap.js"></script> -->
@@ -522,10 +510,18 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
 
-<script src="js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/js/cookieHelper.js"></script>
 <script type="text/javascript">
+    let basepath = "<%=request.getContextPath()%>";
+    let token = getCookie("access_token");
+    let fields = ${fields};
+    // console.log(fields);
 
     $(document).ready(function(){
+
+        loadAddModalFields();
+
         var table = $('#portfolioTable').DataTable({
             // 以下列不可搜索
             // "columnDefs": [ {
@@ -561,6 +557,92 @@
         });
 
     });
+
+    function addPortfolio() {
+        let formData = new FormData();
+        formData.append("name", $("#addModalProjectName").val());
+        formData.append("fundId", $("#addModalFundName").val());
+        formData.append("date", $("#addModalInitialTime").val());
+        formData.append("shareType", $("#addModalShareType").val());
+        formData.append("investType", $("#addModalInvestType").val());
+        formData.append("boardNum", $("#addModalBoardNum").val());
+        formData.append("round", $("#addModalInvestRound").val());
+        formData.append("partner", $("#addModalInvestPartner").val());
+        formData.append("moneyType", $("#addModalMoneyType").val());
+        formData.append("investNum", $("#addModalInvestAccount").val());
+        formData.append("investRatio", $("#addModalInvestShareRatio").val());
+        formData.append("currentRatio", $("#addModalCurrentShareRatio").val());
+        formData.append("source", $("#addModalSource").val());
+        formData.append("director", $("#addModalDirector").val());
+        formData.append("manager", $("#addModalManager").val());
+        formData.append("boarder", $("#addModalBoarder").val());
+        formData.append("industry", $("#addModalIndustry").val());
+        formData.append("sector", $("#addModalIndustrySub").val());
+        formData.append("location", $("#addModalProjectLocation"));
+        formData.append("registerLocation", $("#addModalRegisterLocation").val());
+        formData.append("exitStatus", $("#addModalExitStatus").val());
+        formData.append("exitType", $("#addModalExitType").val());
+        formData.append("exitTime", $("#addModalExitTime").val());
+        formData.append("valueAchieved", $("#addModalValueAchieved").val());
+        formData.append("valueAchieving", $("#addModalValueAchieving").val());
+        formData.append("totalValue", $("#addModalTotalValue").val());
+        formData.append("returnMultiple", $("#addModalReturnMultiple").val());
+        formData.append("irr", $("#addModalGrossIRR"));
+        formData.append("valueEvidence", $("#addModalValueEvidence").val());
+
+        $.ajax({
+            url: basepath + '/api/portfolio',
+            type: 'POST',
+            data: formData,                    // 上传formdata封装的数据
+            dataType: 'JSON',
+            cache: false,                      // 不缓存
+            processData: false,                // jQuery不要去处理发送的数据
+            contentType: false,                // jQuery不要去设置Content-Type请求头
+        }).done(function (data) {
+            console.log(data)
+        })
+
+    }
+
+
+    function loadAddModalFields() {
+        // 加载添加portfolio模态框中的各个<select>字段
+        let options = []
+        $.each(fields.funds, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalFundName").html(options.join(''));
+
+        options=[]
+        $.each(fields.shareType, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalShareType").html(options.join(''));
+
+        options=[]
+        $.each(fields.investType, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalInvestType").html(options.join(''));
+
+        options=[]
+        $.each(fields.moneyType, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalMoneyType").html(options.join(''));
+
+        options=[]
+        $.each(fields.exitStatus, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalExitStatus").html(options.join(''));
+
+        options=[]
+        $.each(fields.exitType, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalExitType").html(options.join(''));
+    }
 </script>
 </body>
 </html>

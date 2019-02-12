@@ -8,6 +8,7 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.EnumSet;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,6 +29,7 @@ public class DemoTest {
 	@Test
 	public void test2(){
 		EnumSet<InvestType> types = EnumSet.allOf(InvestType.class);
+		System.out.println( types.stream().collect(Collectors.toMap(InvestType::getIndex, InvestType::getName)) );
 		for(InvestType item: types){
 			System.out.println(item.getName());
 		}

@@ -18,7 +18,8 @@
 
     <!-- datatable-css引入-Floyd -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.bootstrap.min.css" type="text/css"/>
+	  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.bootstrap.min.css" type="text/css"/>
 	  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/editor.bootstrap.min.css" type="text/css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -88,7 +89,7 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <li><a href="index.html"> Dashboard</a></li>
-                    <li><a href="portfolio.html"> Portfolio</a></li>
+                    <li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li>
                          <a href="#" id="PLW"> PLW
                             <span class="glyphicon glyphicon-triangle-bottom pull-right"></span>
@@ -106,15 +107,23 @@
 		  <div class="col-md-10">
   			<div class="content-box-large">
   				<div class="panel-heading clearfix">
-					<div class="panel-title pull-left"><h3>2019/01/28-2019/02/01 VKC日程安排</h3></div>
+					<div class="panel-title pull-left"><h3 id="scheduleDate">VKC日程安排</h3></div>
 					<div class="pull-right">
 						<button type="button" class="btn btn-primary" id="addModalBtn" data-toggle="modal" data-target="#addModal">录入下周日程</button>
 					</div>
 				</div>
   				<div class="panel-body" id="container">
   					<!-- 已投项目表格 -->
-  					<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered" id="scheduleTable" style="width: 100%;">
-
+  					<table class="table table-striped table-bordered" id="scheduleTable" style="width: 100%;">
+						<thead>
+							<tr>
+								<th>姓名</th>
+								<th>日期</th>
+								<th>时间</th>
+								<th>地点</th>
+								<th>事件</th>
+							</tr>
+						</thead>
 					</table>
   				</div>
   			</div>
@@ -138,10 +147,7 @@
     <!-- jQuery UI -->
     <!-- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- <script src="vendors/datatables/js/jquery.dataTables.min.js"></script> -->
-    <!-- <script src="vendors/datatables/dataTables.bootstrap.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- datables-js引入-Floyd -->
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -149,11 +155,86 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/editor.bootstrap.min.js"></script>
+	<%--一定要按顺序引入！！！--%>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTables.editor.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/editor.bootstrap.min.js"></script>
+
 
     <script src="<%=request.getContextPath()%>/js/custom.js"></script>
+	<script src="<%=request.getContextPath()%>/js/cookieHelper.js"></script>
     <script type="text/javascript">
+		var editor;
+		var basepath = "<%=request.getContextPath()%>";
+		var token = getCookie("access_token");
+
+		$(document).ready( function () {
+
+			editor = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: basepath + '/api/schedule/week',
+					type: "GET",
+					contentType : 'application/json;charset=utf-8',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("authorization", "Bearer " + token);
+					}
+				},
+				table: "#scheduleTable",
+				idSrc: 'id',
+				fields: [ {
+					label: "姓名:",
+					name: "username"
+				}, {
+					label: "日期:",
+					name: "date"
+				}, {
+					label: "开始时间:",
+					name: "start"
+				}, {
+					label: "结束时间:",
+					name: "end"
+				}, {
+					label: "地点:",
+					name: "venue"
+				}, {
+					label: "事件:",
+					name: "event"
+				}
+				]
+			} );
+
+			var table = $('#scheduleTable').DataTable( {
+				lengthChange: false,
+				ajax: {
+					url: basepath + '/api/schedule/week',
+					type: "GET",
+					contentType : 'application/json;charset=utf-8',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader("authorization", "Bearer " + token);
+					}
+				},
+				columns: [
+					{ data: "username"},
+					{ data: "date" },
+					{ data:  null, render: function ( data, type, row ) {
+							return data.start+' - '+data.end;
+						} } ,
+					{ data: "venue" },
+					{ data: "event" },
+					// { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
+				],
+				select: true
+			} );
+
+			// Display the buttons
+			new $.fn.dataTable.Buttons( table, [
+				{ extend: "create", editor: editor },
+				{ extend: "edit",   editor: editor },
+				{ extend: "remove", editor: editor }
+			] );
+
+			table.buttons().container()
+					.appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+		})
 
     </script>
   </body>

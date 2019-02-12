@@ -6,5 +6,7 @@
     <mappers>
         <mapper resource="mapper/user.xml" />
         <mapper resource="mapper/schedule.xml" />
+        <mapper resource="mapper/portfolio.xml"/>
+        <mapper resource="mapper/fund.xml"/>
     </mappers>
 </configuration>

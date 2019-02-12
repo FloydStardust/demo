@@ -1,0 +1,112 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.leads">
+    <resultMap id="leads" type="com.example.entity.Leads">
+        <result property="uid" column="uid" />
+        <result property="name" column="name" />
+        <result property="source" column="source" />
+        <result property="director" column="director" />
+        <result property="manager" column="manager" />
+        <result property="companyName" column="company_name" />
+        <result property="industry" column="industry" />
+        <result property="location" column="location" />
+        <result property="summary" column="summary" />
+        <result property="description" column="description" />
+        <result property="status" column="status" />
+        <result property="lastChange" column="last_change" />
+        <result property="nextStep" column="next_step" />
+        <result property="reason" column="reason" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Leads">
+      insert into `vkc`.`leads`
+      (`name`, source, director, manager, company_name, industry, `location`, summary, description, `status`, last_change,
+      next_step, `reason`)
+      values
+      (#{name}, #{source}, #{director}, #{manager}, #{companyName}, #{industry}, #{location}, #{summary}, #{description},
+      #{status}, #{lastChange}, #{nextStep}, #{reason})
+    </insert>
+
+    <update id="update" parameterType="com.example.entity.Leads">
+        update `vkc`.`leads`
+        set
+        <if test="name != null">
+            `name` = #{name},
+        </if>
+        source = #{source},
+        director = #{director},
+        manager = #{manager},
+        <if test="companyName != null">
+            company_name = #{companyName},
+        </if>
+        industry = #{industry},
+        `location` = #{location},
+        summary = #{summary},
+        description = #{description},
+        `status` = #{status},
+        last_change = #{lastChange},
+        next_step = #{nextStep},
+        `reason` = #{reason}
+        where uid = #{uid}
+    </update>
+
+    <select id="select" resultMap="leads" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`leads`
+        where block_flag = 0
+        <if test="name != null">
+            and name = #{name}
+        </if>
+        <if test="source != null">
+            and `source` = #{source}
+        </if>
+        <if test="director != null">
+            and `director` = #{director}
+        </if>
+        <if test="manager != null">
+            and `manager` = #{manager}
+        </if>
+        <if test="companyName != null">
+            and `company_name` >= #{companyName}
+        </if>
+        <if test="industry != null">
+            and `industry` >= #{industry}
+        </if>
+        <if test="location != null">
+            and `location` >= #{location}
+        </if>
+        <if test="summary != null">
+            and `summary` >= #{summary}
+        </if>
+        <if test="description != null">
+            and `description` >= #{description}
+        </if>
+        <if test="status != null">
+            and `status` >= #{status}
+        </if>
+        <if test="lastChange != null">
+            and `last_change` >= #{lastChange}
+        </if>
+        <if test="nextStep != null">
+            and `next_step` >= #{nextStep}
+        </if>
+        <if test="reason != null">
+            and `reason` >= #{reason}
+        </if>
+        order by last_change
+    </select>
+
+    <select id="selectByUid" resultMap="leads">
+        select *
+        from
+        `vkc`.`leads`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+    <update id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`leads` set
+        block_flag = 1
+        where uid = #{uid}
+    </update>
+
+</mapper>
