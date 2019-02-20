@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class AddPortfolioFieldsVo {
     private Map<Integer, String> funds;
+    private Map<Integer, String> IPOStatus;
     private Map<Integer, String> shareType;
     private Map<Integer, String> investType;
     private Map<Integer, String> moneyType;
@@ -63,5 +64,13 @@ public class AddPortfolioFieldsVo {
 
     public void setExitType(Map<Integer, String> exitType) {
         this.exitType = exitType;
+    }
+
+    public Map<Integer, String> getIPOStatus() {
+        return IPOStatus;
+    }
+
+    public void setIPOStatus(Map<Integer, String> IPOStatus) {
+        this.IPOStatus = IPOStatus;
     }
 }

@@ -7,7 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -17,6 +19,13 @@ import java.util.stream.Collectors;
  * Time: 11:22 PM
  */
 public class DemoTest {
+	public static Map<Object, Object> IPO_STATUS = new HashMap<Object, Object>(){
+		{
+			put(0, "未上市");
+			put(1, "HY");
+			put(2, "NYSE");
+		}
+	};
 
 	@Test
 	public void test1() {
@@ -28,11 +37,14 @@ public class DemoTest {
 
 	@Test
 	public void test2(){
+		System.out.println(IPO_STATUS);
 		EnumSet<InvestType> types = EnumSet.allOf(InvestType.class);
 		System.out.println( types.stream().collect(Collectors.toMap(InvestType::getIndex, InvestType::getName)) );
 		for(InvestType item: types){
-			System.out.println(item.getName());
+			System.out.println(item);
 		}
+
+
 	}
 
 	public enum InvestType {

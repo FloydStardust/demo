@@ -75,8 +75,8 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
                                 <ul class="dropdown-menu animated fadeInUp">
-                                    <li><a href="profile.html">Profile</a></li>
-                                    <li><a href="login.html">Logout</a></li>
+                                    <li><a href="profile">Profile</a></li>
+                                    <li><a href="logout">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -92,8 +92,8 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index.html"> Dashboard</a></li>
-                    <li class="current"><a href="portfolio.html"> Portfolio</a></li>
+                    <li><a href="index"> Dashboard</a></li>
+                    <li class="current"><a href="portfolio"> Portfolio</a></li>
                     <li class="submenu open">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
@@ -101,12 +101,12 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a href="pipeline.html">Pipeline</a></li>
-                            <li><a href="leads.html">Leads</a></li>
-                            <li><a href="watchlist.html">Watchlist</a></li>
+                            <li><a href="pipeline">Pipeline</a></li>
+                            <li><a href="leads">Leads</a></li>
+                            <li><a href="watchlist">Watchlist</a></li>
                         </ul>
                     </li>
-                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="schedule">Schedule</a></li>
                 </ul>
             </div>
         </div>
@@ -158,72 +158,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <!-- <td></td> -->
-                            <td><a href="project_detail.html">500万彩票</a></td>
-                            <td>VKC USD Fund I</td>
-                            <td>2013/10</td>
-                            <td>普通股</td>
-                            <td>领投</td>
-                            <td>1</td>
-                            <td>Pre-IPO</td>
-                            <td>Sequoia</td>
-                            <td>美元</td>
-                            <td>16.00</td>
-                            <td>4.68%</td>
-                            <td>已退出</td>
-                            <td>朱海龙</td>
-                            <td>朱海龙</td>
-                            <td>朱海龙</td>
-                            <td>卫哲</td>
-                            <td>互联网</td>
-                            <td>彩票</td>
-                            <td>深圳</td>
-                            <td>上海</td>
-                            <!-- <td>公司基本介绍</td> -->
-                            <td>已退出</td>
-                            <td>IPO</td>
-                            <td>2015/2/1</td>
-                            <td>30.58</td>
-                            <td>已退出</td>
-                            <td>30.58</td>
-                            <td>1.9x</td>
-                            <td><a style="color: red;" class="float-right">94.15%</a></td>
-                            <td>已退出</td>
-                        </tr>
-                        <tr>
-                            <!-- <td></td> -->
-                            <td><a href="project_detail.html">500万彩票</a></td>
-                            <td>VKC USD Fund I</td>
-                            <td>2013/10</td>
-                            <td>普通股</td>
-                            <td>领投</td>
-                            <td>1</td>
-                            <td>Pre-IPO</td>
-                            <td>Sequoia</td>
-                            <td>美元</td>
-                            <td>16.00</td>
-                            <td>4.68%</td>
-                            <td>已退出</td>
-                            <td>朱海龙</td>
-                            <td>朱海龙</td>
-                            <td>朱海龙</td>
-                            <td>卫哲</td>
-                            <td>互联网</td>
-                            <td>彩票</td>
-                            <td>深圳</td>
-                            <td>上海</td>
-                            <!-- <td>公司基本介绍</td> -->
-                            <td>已退出</td>
-                            <td>IPO</td>
-                            <td>2015/2/1</td>
-                            <td>30.58</td>
-                            <td>已退出</td>
-                            <td>30.58</td>
-                            <td>1.9x</td>
-                            <td><a style="color: red;" class="float-right">94.15%</a></td>
-                            <td>已退出</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -260,6 +194,14 @@
                         <label for="addModalInitialTime" class="col-sm-2 col-form-label">初投时间</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addModalInitialTime" placeholder="YYYY/MM">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="addModalShareType" class="col-sm-2 col-form-label">目前状态</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="addModalIPOStatus">
+                            </select>
                         </div>
                     </div>
 
@@ -516,31 +458,49 @@
     let basepath = "<%=request.getContextPath()%>";
     let token = getCookie("access_token");
     let fields = ${fields};
-    // console.log(fields);
+    let table;
+    console.log(fields);
 
     $(document).ready(function(){
-
+        loadPortfolioTable();
         loadAddModalFields();
+    });
 
-        var table = $('#portfolioTable').DataTable({
-            // 以下列不可搜索
-            // "columnDefs": [ {
-            //     "orderable": false,
-            //     "targets": [0,1,2,4,5,6,7,8,9,13,14,15,16,17,18,19,20,21,22,29]
-            // } ],
-            "columnDefs": [
+
+    /**
+     *  加载portfolio大表格
+     */
+    function loadPortfolioTable() {
+        table = $('#portfolioTable').DataTable({
+            ajax:  {
+                url: basepath + '/api/portfolio',
+                type: "GET",
+                contentType : 'application/json;charset=utf-8',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("authorization", "Bearer " + token);
+                }
+            },
+            columns: [
+                { data: null ,"render": function(data, type, row){
+                        return '<a href="'+basepath+'/portfolio/' + row.uid + '">'+ row.name+ '</a>';
+                    }},
+                { data: "fundName" }, { data: "date" }, { data: "shareType" }, { data: "investType" },
+                { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, { data: "investNum" },
+                { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "director" }, { data: "manager" },
+                { data: "boarder" }, { data: "industry" }, { data: "sector" }, { data: "location" }, { data: "registerLocation" },
+                { data: "exitStatus" }, { data: "exitType" }, { data: "exitTime" }, { data: "valueAchieved" }, { data: "valueAchieving" },
+                { data: "totalValue" }, { data: "returnMultiple" }, { data: "irr" }, { data: "valueEvidence" }
+            ],
+            columnDefs: [
                 // {
-                //     "orderable": false,
-                //     "targets": [3,4,5,6,7,8,12,13,14,15,16,17,18,19,20,21,28]
+                //     orderable: false,
+                //     targets: [3,4,5,6,7,8,12,13,14,15,16,17,18,19,20,21,28]
                 // },
                 { width: '20%', targets: 0 } ],
-            'fixedColumns': true,
-            'searching': true, // 可搜索
-            'order': [[2, 'asc']],
-            'scrollX': true,	// 水平滚动条
-            'scrollCollapse': true,
-            'autoWidth': true,
-            'fixedColumns': true,
+            fixedColumns: true, searching: true, // 可搜索
+            order: [[2, 'asc']], scrollX: true,	// 水平滚动条
+            scrollCollapse: true, autoWidth: true,
+            fixedColumns: true,
         });
 
         // 在第一列添加序号
@@ -556,68 +516,80 @@
             // alert( 'You clicked on '+data[0]+'\'s row' );
         });
 
-    });
+
+    }
 
     /**
      *  添加一条portfolio记录
      */
     function addPortfolio() {
-        let formData = new FormData();
-        formData.append("name", $("#addModalProjectName").val());
-        formData.append("fundId", $("#addModalFundName").val());
-        formData.append("date", $("#addModalInitialTime").val());
-        formData.append("shareType", $("#addModalShareType").val());
-        formData.append("investType", $("#addModalInvestType").val());
-        formData.append("boardNum", $("#addModalBoardNum").val());
-        formData.append("round", $("#addModalInvestRound").val());
-        formData.append("partner", $("#addModalInvestPartner").val());
-        formData.append("moneyType", $("#addModalMoneyType").val());
-        formData.append("investNum", $("#addModalInvestAccount").val());
-        formData.append("investRatio", $("#addModalInvestShareRatio").val());
-        formData.append("currentRatio", $("#addModalCurrentShareRatio").val());
-        formData.append("source", $("#addModalSource").val());
-        formData.append("director", $("#addModalDirector").val());
-        formData.append("manager", $("#addModalManager").val());
-        formData.append("boarder", $("#addModalBoarder").val());
-        formData.append("industry", $("#addModalIndustry").val());
-        formData.append("sector", $("#addModalIndustrySub").val());
-        formData.append("location", $("#addModalProjectLocation"));
-        formData.append("registerLocation", $("#addModalRegisterLocation").val());
-        formData.append("exitStatus", $("#addModalExitStatus").val());
-        formData.append("exitType", $("#addModalExitType").val());
-        formData.append("exitTime", $("#addModalExitTime").val());
-        formData.append("valueAchieved", $("#addModalValueAchieved").val());
-        formData.append("valueAchieving", $("#addModalValueAchieving").val());
-        formData.append("totalValue", $("#addModalTotalValue").val());
-        formData.append("returnMultiple", $("#addModalReturnMultiple").val());
-        formData.append("irr", $("#addModalGrossIRR"));
-        formData.append("valueEvidence", $("#addModalValueEvidence").val());
+        let formData = JSON.stringify({
+            "name": $("#addModalProjectName").val(),
+            "fundName": $("#addModalFundName").val(),
+            "date": $("#addModalInitialTime").val(),
+            "ipoStatus": $("#addModalIPOStatus").val(),
+            "shareType": $("#addModalShareType").val(),
+            "investType": $("#addModalInvestType").val(),
+            "boardNum": $("#addModalBoardNum").val(),
+            "round": $("#addModalInvestRound").val(),
+            "partner": $("#addModalInvestPartner").val(),
+            "moneyType": $("#addModalMoneyType").val(),
+            "investNum": $("#addModalInvestAccount").val(),
+            "investRatio": $("#addModalInvestShareRatio").val(),
+            "currentRatio": $("#addModalCurrentShareRatio").val(),
+            "source": $("#addModalSource").val(),
+            "director": $("#addModalDirector").val(),
+            "manager": $("#addModalManager").val(),
+            "boarder": $("#addModalBoarder").val(),
+            "industry": $("#addModalIndustry").val(),
+            "sector": $("#addModalIndustrySub").val(),
+            "location": $("#addModalProjectLocation").val(),
+            "registerLocation": $("#addModalRegisterLocation").val(),
+            "exitStatus": $("#addModalExitStatus").val(),
+            "exitType": $("#addModalExitType").val(),
+            "exitTime": $("#addModalExitTime").val(),
+            "valueAchieved": $("#addModalValueAchieved").val(),
+            "valueAchieving": $("#addModalValueAchieving").val(),
+            "totalValue": $("#addModalTotalValue").val(),
+            "returnMultiple": $("#addModalReturnMultiple").val(),
+            "irr": $("#addModalGrossIRR").val(),
+            "valueEvidence": $("#addModalValueEvidence").val()
+        });
 
         $.ajax({
             url: basepath + '/api/portfolio',
             type: 'POST',
-            data: formData,                    // 上传formdata封装的数据
-            dataType: 'JSON',
-            cache: false,                      // 不缓存
-            processData: false,                // jQuery不要去处理发送的数据
-            contentType: false,                // jQuery不要去设置Content-Type请求头
+            data: formData,
+            dataType: 'json',
+            contentType:"application/json",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("authorization", "Bearer " + token);
             }
         }).done(function (data) {
-            console.log(data)
-        })
-
+            if (data.responseCode == "RESPONSE_OK"){
+                alert("添加成功！");
+                window.location.reload();
+            } else {
+                alert(data.desciption);
+            }
+        });
     }
 
-
+    /**
+     * 加载add portfolio modal 中的各个<select>字段
+     */
     function loadAddModalFields() {
-        // 加载添加portfolio模态框中的各个<select>字段
         let options = []
         $.each(fields.funds, function (k, v) {
             options.push("<option value='" + k + "'>" + v + "</option>");
         });
         $("#addModalFundName").html(options.join(''));
+
+        options=[]
+        $.each(fields.iPOStatus, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalIPOStatus").html(options.join(''));
 
         options=[]
         $.each(fields.shareType, function (k, v) {

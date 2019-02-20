@@ -22,6 +22,7 @@
         <result property="sector" column="sector" />
         <result property="location" column="location" />
         <result property="registerLocation" column="register_location" />
+        <result property="intro" column="intro" />
         <result property="exitStatus" column="exit_status" />
         <result property="exitType" column="exit_type" />
         <result property="exitTime" column="exit_time" />
@@ -36,12 +37,12 @@
     <insert id="insert" parameterType="com.example.entity.Portfolio">
       insert into `vkc`.`portfolio`
       (`name`, fund_id, `date`, share_type, invest_type, board_num, round, partner, money_type, invest_num, invest_ratio,
-      current_ratio, `source`, director, manager, boarder, industry, sector, location, register_location, exit_status,
+      current_ratio, `source`, director, manager, boarder, industry, sector, location, register_location, `intro`, exit_status,
       exit_type, exit_time, value_achieved, value_achieving, total_value, return_multiple, irr, value_evidence)
       values
       (#{name}, #{fundId}, #{date}, #{shareType}, #{investType}, #{boardNum}, #{round}, #{partner}, #{moneyType},
       #{investNum}, #{investRatio}, #{currentRatio}, #{source}, #{director}, #{manager}, #{boarder}, #{industry}, #{sector},
-      #{location}, #{registerLocation}, #{exitStatus}, #{exitType}, #{exitTime}, #{valueAchieved}, #{valueAchieving},
+      #{location}, #{registerLocation}, #{intro}, #{exitStatus}, #{exitType}, #{exitTime}, #{valueAchieved}, #{valueAchieving},
       #{totalValue}, #{returnMultiple}, #{irr}, #{valueEvidence})
     </insert>
 
@@ -74,6 +75,7 @@
             sector = #{sector},
             location = #{location},
             register_location = #{registerLocation},
+            `intro` = #{intro},
             exit_status = #{exitStatus},
             exit_type = #{exitType},
             exit_time = #{exitTime},

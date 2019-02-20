@@ -1,26 +1,28 @@
-package com.example.entity;
+package com.example.vo;
+
+import com.example.entity.Portfolio;
+import com.example.util.PortfolioUtils;
+
+import java.util.EnumSet;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Description: Portfolio Entity with an uid, transfer these fields from string to int:
- *      shareType, investType, moneyType, exitStatus, exitType,
- * Created by Floyd on 2019/1/25 10:59
+ * Description: portfolio view object, see fields:
+ *     shareType, investType, moneyType, exitStatus, exitType,
+ * Created by Floyd on 2019/2/12 16:28
  */
-public class Portfolio extends Entity{
-
+public class PortfolioVo {
     private int uid;
     private String name;
-    private int fundId;
+    private String fundName;
     private String date;
-    /**
-     * The portfolio's type: 0 for normal, 1 for HK_IPO, 2 for NYSE_IPO
-     */
-    private int ipoStatus;
-    private int shareType;
-    private int investType;
+    private String shareType;
+    private String investType;
     private int boardNum;
     private String round;
     private String partner;
-    private int moneyType;
+    private String moneyType;
     private int investNum;
     private double investRatio;
     private double currentRatio;
@@ -33,8 +35,8 @@ public class Portfolio extends Entity{
     private String location;
     private String registerLocation;
     private String intro;
-    private int exitStatus;
-    private int exitType;
+    private String exitStatus;
+    private String exitType;
     private String exitTime;
     private int valueAchieved;
     private int valueAchieving;
@@ -42,6 +44,51 @@ public class Portfolio extends Entity{
     private double returnMultiple;
     private double irr;
     private String valueEvidence;
+
+    static Map<Integer, String> shareTypes = EnumSet.allOf(PortfolioUtils.ShareType.class).stream().
+            collect(Collectors.toMap(PortfolioUtils.ShareType::getIndex, PortfolioUtils.ShareType::getName));
+    static Map<Integer, String> investTypes = EnumSet.allOf(PortfolioUtils.InvestType.class).stream().
+            collect(Collectors.toMap(PortfolioUtils.InvestType::getIndex, PortfolioUtils.InvestType::getName));
+    static Map<Integer, String> exitStatuses =  EnumSet.allOf(PortfolioUtils.ExitStatus.class).stream().
+            collect(Collectors.toMap(PortfolioUtils.ExitStatus::getIndex, PortfolioUtils.ExitStatus::getName));
+    static Map<Integer, String> exitTypes = EnumSet.allOf(PortfolioUtils.ExitTye.class).stream().
+            collect(Collectors.toMap(PortfolioUtils.ExitTye::getIndex, PortfolioUtils.ExitTye::getName));
+    static Map<Integer, String> moneyTypes = EnumSet.allOf(PortfolioUtils.MoneyType.class).stream().
+            collect(Collectors.toMap(PortfolioUtils.MoneyType::getIndex, PortfolioUtils.MoneyType::getName));
+
+    public PortfolioVo(Portfolio portfolio){
+        this.uid = portfolio.getUid();
+        this.name = portfolio.getName();
+        this.fundName = String.valueOf(portfolio.getFundId());
+        this.date = portfolio.getDate();
+        this.shareType = shareTypes.get(portfolio.getShareType());
+        this.investType = investTypes.get(portfolio.getInvestType());
+        this.boardNum = portfolio.getBoardNum();
+        this.round = portfolio.getRound();
+        this.partner = portfolio.getPartner();
+        this.moneyType = moneyTypes.get(portfolio.getMoneyType());
+        this.investNum = portfolio.getInvestNum();
+        this.investRatio = portfolio.getInvestRatio();
+        this.currentRatio = portfolio.getCurrentRatio();
+        this.source = portfolio.getSource();
+        this.director = portfolio.getDirector();
+        this.manager = portfolio.getManager();
+        this.boarder = portfolio.getBoarder();
+        this.industry = portfolio.getIndustry();
+        this.sector = portfolio.getSector();
+        this.location = portfolio.getLocation();
+        this.registerLocation = portfolio.getRegisterLocation();
+        this.intro = portfolio.getIntro();
+        this.exitStatus = exitStatuses.get(portfolio.getExitStatus());
+        this.exitType = exitTypes.get(portfolio.getExitType());
+        this.exitTime = portfolio.getExitTime();
+        this.valueAchieved = portfolio.getValueAchieved();
+        this.valueAchieving = portfolio.getValueAchieving();
+        this.totalValue = portfolio.getTotalValue();
+        this.returnMultiple = portfolio.getReturnMultiple();
+        this.irr = portfolio.getIrr();
+        this.valueEvidence = portfolio.getValueEvidence();
+    }
 
     public int getUid() {
         return uid;
@@ -59,12 +106,12 @@ public class Portfolio extends Entity{
         this.name = name;
     }
 
-    public int getFundId() {
-        return fundId;
+    public String getFundName() {
+        return fundName;
     }
 
-    public void setFundId(int fundId) {
-        this.fundId = fundId;
+    public void setFundName(String fundName) {
+        this.fundName = fundName;
     }
 
     public String getDate() {
@@ -75,19 +122,19 @@ public class Portfolio extends Entity{
         this.date = date;
     }
 
-    public int getShareType() {
+    public String getShareType() {
         return shareType;
     }
 
-    public void setShareType(int shareType) {
+    public void setShareType(String shareType) {
         this.shareType = shareType;
     }
 
-    public int getInvestType() {
+    public String getInvestType() {
         return investType;
     }
 
-    public void setInvestType(int investType) {
+    public void setInvestType(String investType) {
         this.investType = investType;
     }
 
@@ -115,11 +162,11 @@ public class Portfolio extends Entity{
         this.partner = partner;
     }
 
-    public int getMoneyType() {
+    public String getMoneyType() {
         return moneyType;
     }
 
-    public void setMoneyType(int moneyType) {
+    public void setMoneyType(String moneyType) {
         this.moneyType = moneyType;
     }
 
@@ -211,19 +258,19 @@ public class Portfolio extends Entity{
         this.registerLocation = registerLocation;
     }
 
-    public int getExitStatus() {
+    public String getExitStatus() {
         return exitStatus;
     }
 
-    public void setExitStatus(int exitStatus) {
+    public void setExitStatus(String exitStatus) {
         this.exitStatus = exitStatus;
     }
 
-    public int getExitType() {
+    public String getExitType() {
         return exitType;
     }
 
-    public void setExitType(int exitType) {
+    public void setExitType(String exitType) {
         this.exitType = exitType;
     }
 
@@ -289,13 +336,5 @@ public class Portfolio extends Entity{
 
     public void setIntro(String intro) {
         this.intro = intro;
-    }
-
-    public int getIpoStatus() {
-        return ipoStatus;
-    }
-
-    public void setIpoStatus(int ipoStatus) {
-        this.ipoStatus = ipoStatus;
     }
 }

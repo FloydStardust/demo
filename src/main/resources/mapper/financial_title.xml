@@ -1,0 +1,117 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.profit">
+    <resultMap id="profit" type="com.example.entity.Profit">
+        <result property="uid" column="uid" />
+        <result property="portfolioId" column="portfolio_id" />
+        <result property="type" column="type" />
+        <result property="date" column="date" />
+        <result property="fyDate" column="fy_date" />
+        <result property="revenue" column="revenue" />
+        <result property="cogs" column="cogs" />
+        <result property="grossProfit" column="gross_profit" />
+        <result property="operatingTax" column="operating_tax" />
+        <result property="sellingExpense" column="selling_expense" />
+        <result property="adminExpense" column="admin_expense" />
+        <result property="financialExpense" column="financial_expense" />
+        <result property="assetLoss" column="asset_loss" />
+        <result property="fairValueChange" column="fair_value_change" />
+        <result property="investmentIncome" column="investment_income" />
+        <result property="otherIncome" column="other_income" />
+        <result property="operatingIncome" column="operating_income" />
+        <result property="nonOperatingIncome" column="non_operating_income" />
+        <result property="nonOperatingExpense" column="non_operating_expense" />
+        <result property="incomeBeforeTax" column="income_before_tax" />
+        <result property="incomeTax" column="income_tax" />
+        <result property="netIncome" column="net_income" />
+        <result property="grossIncome" column="gross_income" />
+        <result property="sellingExpenseRatio" column="selling_expense_ratio" />
+        <result property="adminExpenseRatio" column="admin_expense_ratio" />
+        <result property="netIncomeRatio" column="net_income_ratio" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Profit">
+      insert into `vkc`.`profit`
+      (`portfolio_id`, `type`, `date`, `fy_date`, revenue, cogs, gross_profit, operating_tax, selling_expense, admin_expense,
+      financial_expense, asset_loss, fair_value_change, investment_income, other_income, operating_income, non_operating_income,
+      non_operating_expense, income_before_tax, income_tax, net_income, gross_income, selling_expense_ratio,
+      admin_expense_ratio, net_income_ratio)
+      values
+      (#{portfolioId}, #{type}, #{date}, #{fyDate}, #{revenue}, #{cogs}, #{grossProfit}, #{operatingTax}, #{sellingExpense},
+      #{adminExpense}, #{financialExpense}, #{assetLoss}, #{fairValueChange}, #{investmentIncome}, #{otherIncome},
+      #{operatingIncome}, #{nonOperatingIncome}, #{nonOperatingExpense}, #{incomeBeforeTax}, #{incomeTax}, #{netIncome},
+      #{grossIncome}, #{sellingExpenseRatio}, #{adminExpenseRatio}, #{netIncomeRatio})
+    </insert>
+
+    <update id="update" parameterType="com.example.entity.Profit">
+        update `vkc`.`profit`
+        set
+        <if test="portfolioId != null">
+            `portfolio_id` = #{portfolioId},
+        </if>
+        <if test="type != null">
+            `type` = #{type},
+        </if>
+        <if test="date != null">
+            `date` = #{date},
+        </if>
+        <if test="fyDate != null">
+            `fy_date` = #{fyDate},
+        </if>
+        revenue = #{revenue},
+        cogs = #{cogs},
+        gross_profit = #{grossProfit},
+        operating_tax = #{operatingTax},
+        selling_expense = #{sellingExpense},
+        admin_expense = #{adminExpense},
+        financial_expense = #{financialExpense},
+        asset_loss = #{assetLoss},
+        fair_value_change = #{fairValueChange},
+        investment_income = #{investmentIncome},
+        other_income = #{otherIncome},
+        operating_income = #{operatingIncome},
+        non_operating_income = #{nonOperatingIncome},
+        non_operating_expense = #{nonOperatingExpense},
+        income_before_tax = #{incomeBeforeTax},
+        income_tax = #{incomeTax},
+        net_income = #{netIncome},
+        gross_income = #{grossIncome},
+        selling_expense_ratio = #{sellingExpenseRatio},
+        admin_expense_ratio = #{adminExpenseRatio},
+        net_income_ratio = #{netIncomeRatio},
+        where uid = #{uid}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`profit` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+    <select id="select" resultMap="profit" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`profit`
+        where block_flag = 0
+        <if test="portfolioId != null">
+            and `portfolio_id` = #{portfolioId},
+        </if>
+        <if test="type != null">
+            and `type` = #{type},
+        </if>
+        <if test="date != null">
+            and `date` = #{date},
+        </if>
+        <if test="fyDate != null">
+            and `fy_date` = #{fyDate},
+        </if>
+        order by `date`
+    </select>
+
+    <select id="selectByUid" resultMap="profit">
+        select *
+        from
+        `vkc`.`profit`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>

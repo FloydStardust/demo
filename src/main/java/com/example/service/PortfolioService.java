@@ -21,4 +21,9 @@ public interface PortfolioService {
     ResultData fetchAllPortfolio();
 
     ResultData getAddPortfolioFields();
+
+    ResultData getProfit(int uid);
+
+    ResultData getBalance(int uid);
+
 }

@@ -104,8 +104,8 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index.html"> Dashboard</a></li>
-                    <li class="current"><a href="portfolio.html"> Portfolio</a></li>
+                    <li><a href="index"> Dashboard</a></li>
+                    <li class="current"><a href="portfolio"> Portfolio</a></li>
                     <li class="submenu open">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
@@ -113,12 +113,12 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a href="pipeline.html">Pipeline</a></li>
-                            <li><a href="leads.html">Leads</a></li>
-                            <li><a href="watchlist.html">Watchlist</a></li>
+                            <li><a href="pipeline">Pipeline</a></li>
+                            <li><a href="leads">Leads</a></li>
+                            <li><a href="watchlist">Watchlist</a></li>
                         </ul>
                     </li>
-                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="schedule">Schedule</a></li>
                 </ul>
             </div>
         </div>

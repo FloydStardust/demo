@@ -1,10 +1,22 @@
 package com.example.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Description: demo
  * Created by Floyd on 2019/2/10 16:51
  */
 public class PortfolioUtils {
+
+    public static Map<Integer, String> IPO_STATUS = new HashMap<Integer, String>(){
+        {
+            put(0, "未上市");
+            put(1, "HY");
+            put(2, "NYSE");
+        }
+    };
+
 
     public enum ShareType {
         COMMON("普通股", 1), PREFERRED("优先股", 2);

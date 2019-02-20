@@ -44,9 +44,10 @@ CREATE TABLE `portfolio` (
   `name` varchar(45) NOT NULL,
   `fund_id` int(11) NOT NULL,
   `date` varchar(45) NOT NULL,
-  `share_type` int(11) NOT NULL,
-  `invest_type` int(11) NOT NULL,
-  `board_num` int(11) NOT NULL,
+  `ipo_status` int(11),
+  `share_type` int(11),
+  `invest_type` int(11),
+  `board_num` int(11),
   `round` varchar(45),
   `partner` varchar(45),
   `money_type` int(11),
@@ -61,6 +62,7 @@ CREATE TABLE `portfolio` (
   `sector` VARCHAR (45) ,
   `location` VARCHAR (45) ,
   `register_location` VARCHAR (45) ,
+  `intro` varchar(65532),
   `exit_status` int(11) ,
   `exit_type` int(11),
   `exit_time` VARCHAR (45) ,
@@ -74,6 +76,133 @@ CREATE TABLE `portfolio` (
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+CREATE TABLE `financial_title` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `portfolio_id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `belong_to` int(2) NOT NULL,
+  `rank` int(11) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+CREATE TABLE `financial_data` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `title_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `fy_date` datetime NOT NULL,
+  `data_type` int(2) NOT NULL,
+  `money_type` int(2) DEFAULT 0,
+  `number` int(11) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+-- /**
+--   利润表
+--  */
+-- CREATE TABLE `profit` (
+--   `uid` int(11) NOT NULL AUTO_INCREMENT,
+--   `portfolio_id` int(11) NOT NULL,
+--   `type` int(11) NOT NULL,
+--   `date` datetime NOT NULL,
+--   `fy_date` datetime NOT NULL,
+--   `revenue` int(11),
+--   `cogs` int(11),
+--   `gross_profit` int(11),
+--   `operating_tax` int(11),
+--   `selling_expense` int(11),
+--   `admin_expense` int(11),
+--   `financial_expense` int(11),
+--   `asset_loss` int(11),
+--   `fair_value_change` int(11),
+--   `investment_income` int(11),
+--   `other_income` int(11),
+--   `operating_income` int(11),
+--   `non_operating_income` int(11),
+--   `non_operating_expense` int(11),
+--   `income_before_tax` int(11),
+--   `income_tax` int(11),
+--   `net_income` int(11),
+--   `gross_income` int(11),
+--   `selling_expense_ratio` double,
+--   `admin_expense_ratio` double,
+--   `net_income_ratio` double,
+--   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+--   PRIMARY KEY (`uid`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+--
+-- /**
+--   资产负债表
+--  */
+--  CREATE TABLE `balance` (
+--   `uid` int(11) NOT NULL AUTO_INCREMENT,
+--   `portfolio_id` int(11) NOT NULL,
+--   `type` int(11) NOT NULL,
+--   `date` datetime NOT NULL,
+--   `fy_date` datetime NOT NULL,
+--   `monetary` int(11),
+--   `financial_assets` int(11),
+--   `note_receivable` int(11),
+--   `account_receivable` int(11),
+--   `advanced_payment`int(11),
+--   `interest_receivable` int(11),
+--   `other_receivable` int(11),
+--   `inventory` int(11),
+--   `other_current_assets` int(11),
+--   `total_current_assets` int(11),
+--   `long_term_equity` int(11),
+--   `fixed_assets` int(11),
+--   `construction` int(11),
+--   `fixed_assets_disposal` int(11),
+--   `intangible_assets` int(11),
+--   `long_term_prepayment` int(11),
+--   `deferred_tax_assets` int(11),
+--   `other_non_current_assets` int(11),
+--   `total_non_current_assets` int(11),
+--   `total_assets` int(11),
+--   `short_term_loan` int(11),
+--   `financial_liabilities` int(11),
+--   `note_payable` int(11),
+--   `account_payable` int(11),
+--   `advanced_receivable` int(11),
+--   `accrued_payroll` int(11),
+--   `tax_payable` int(11),
+--   `interests_payable` int(11),
+--   `dividend_payable` int(11),
+--   `other_payable` int(11),
+--   `long_term_liabilities_within_year` int(11),
+--   `other_current_liabilities` int(11),
+--   `total_current_liabilities` int(11),
+--   `long_term_loan` int(11),
+--   `long_term_bonds` int(11),
+--   `long_term_payable` int(11),
+--   `special_payable` int(11),
+--   `accrued_liabilities` int(11),
+--   `deferred_receivable` int(11),
+--   `deferred_tax_liabilities` int(11),
+--   `other_non_current_liabilities` int(11),
+--   `total_non_current_liabilities` int(11),
+--   `total_liabilities` int(11),
+--   `paid_in_capital` int(11),
+--   `capital_reserve` int(11),
+--   `special_reserve` int(11),
+--   `surplus_reserve` int(11),
+--   `undistributed_profit` int(11),
+--   `minority_equity` int(11),
+--   `differences_in_conversion` int(11),
+--   `total_owner_equity` int(11),
+--   `total_liabilities_equity` int(11),
+--   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+--   PRIMARY KEY (`uid`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+--
+
 
 /**
   fund表

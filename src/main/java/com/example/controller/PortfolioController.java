@@ -6,13 +6,12 @@ import com.example.service.PortfolioService;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
 /**
- * Description: demo
+ * Description: REST controller for data fetch
  * Created by Floyd on 2019/2/10 16:53
  */
 @RestController
@@ -29,6 +28,11 @@ public class PortfolioController {
         return fundService.fetchAllFund();
     }
 
+    @GetMapping
+    public ResultData showAll(){
+        return portfolioService.fetchAllPortfolio();
+    }
+
     @PostMapping
     public ResultData create(@RequestBody Portfolio portfolio){
         ResultData result = new ResultData();
@@ -41,4 +45,16 @@ public class PortfolioController {
         }
         return result;
     }
+
+    @GetMapping("/profit/{id}")
+    public ResultData profit(@PathVariable int id){
+
+        return null;
+    }
+
+    @GetMapping("/balance/{id}")
+    public ResultData balance(@PathVariable int id){
+        return null;
+    }
+
 }

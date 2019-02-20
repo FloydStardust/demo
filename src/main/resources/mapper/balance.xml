@@ -1,0 +1,193 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.balance">
+    <resultMap id="balance" type="com.example.entity.BalanceSheet">
+        <result property="uid" column="uid" />
+        <result property="portfolioId" column="portfolio_id" />
+        <result property="type" column="type" />
+        <result property="date" column="date" />
+        <result property="fyDate" column="fy_date" />
+        <result property="monetary" column="monetary" />
+        <result property="financialAssets" column="financial_assets" />
+        <result property="noteReceivable" column="note_receivable" />
+        <result property="accountReceivable" column="account_receivable" />
+        <result property="advancedPayment" column="advanced_payment" />
+        <result property="interestReceivable" column="interest_receivable" />
+        <result property="otherReceivable" column="other_receivable" />
+        <result property="inventory" column="inventory" />
+        <result property="otherCurrentAssets" column="other_current_assets" />
+        <result property="totalCurrentAssets" column="total_current_assets" />
+        <result property="longTermEquity" column="long_term_equity" />
+        <result property="fixedAssets" column="fixed_assets" />
+        <result property="construction" column="construction" />
+        <result property="fixedAssetsDisposal" column="fixed_assets_disposal" />
+        <result property="intangibleAssets" column="intangible_assets" />
+        <result property="longTermPrepayment" column="long_term_prepayment" />
+        <result property="deferredTaxAssets" column="deferred_tax_assets" />
+        <result property="otherNonCurrentAssets" column="other_non_current_assets" />
+        <result property="totalNonCurrentAssets" column="total_non_current_assets" />
+        <result property="totalAssets" column="total_assets" />
+        <result property="shortTermLoan" column="short_term_loan" />
+        <result property="financialLiabilities" column="financial_liabilities" />
+        <result property="notePayable" column="note_payable" />
+        <result property="accountPayable" column="account_payable" />
+        <result property="advancedReceivable" column="advanced_receivable" />
+        <result property="accruedPayroll" column="accrued_payroll" />
+        <result property="taxPayable" column="tax_payable" />
+        <result property="interestsPayable" column="interests_payable" />
+        <result property="dividendPayable" column="dividend_payable" />
+        <result property="otherPayable" column="other_payable" />
+        <result property="longTermLiabilitiesWithinYear" column="long_term_liabilities_within_year" />
+        <result property="otherCurrentLiabilities" column="other_current_liabilities" />
+        <result property="totalCurrentLiabilities" column="total_current_liabilities" />
+        <result property="longTermLoan" column="long_term_loan" />
+        <result property="longTermBonds" column="longTermBonds" />
+        <result property="longTermPayable" column="long_term_payable" />
+        <result property="specialPayable" column="special_payable" />
+        <result property="accruedLiabilities" column="accrued_liabilities" />
+        <result property="deferredReceivable" column="deferred_receivable" />
+        <result property="deferredTaxLiabilities" column="deferred_tax_liabilities" />
+        <result property="otherNonCurrentLiabilities" column="other_non_current_liabilities" />
+        <result property="totalNonCurrentLiabilities" column="total_non_current_liabilities" />
+        <result property="totalLiabilities" column="total_liabilities" />
+        <result property="paidInCapital" column="paid_in_capital" />
+        <result property="capitalReserve" column="capital_reserve" />
+        <result property="specialReverse" column="special_reserve" />
+        <result property="surplusReserve" column="surplus_reserve" />
+        <result property="undistributedProfit" column="undistributed_profit" />
+        <result property="minorityEquity" column="minority_equity" />
+        <result property="differencesInConversion" column="differences_in_conversion" />
+        <result property="totalOwnerEquity" column="total_owner_equity" />
+        <result property="totalLiabilitiesAndEquity" column="total_liabilities_equity" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.BalanceSheet">
+      insert into `vkc`.`profit`
+      (`portfolio_id`, `type`, `date`, `fy_date`, monetary, financial_assets, note_receivable, account_receivable,
+      advanced_payment, interest_receivable, other_receivable, inventory, other_current_assets, total_current_assets,
+      long_term_equity, fixed_assets, construction, fixed_assets_disposal intangible_assets, long_term_prepaymentm,
+      deferred_tax_assets, other_non_current_assets, total_non_current_assets, total_assets,
+      short_term_loan, financial_liabilities, note_payable, account_payable, advanced_receivable, accrued_payroll,
+      tax_payable, interests_payable, dividend_payable, other_payable, long_term_liabilities_within_year, other_current_liabilities,
+      total_current_liabilities, long_term_loan, long_term_bonds, long_term_payable, special_payable, accrued_liabilities,
+      deferred_receivable, deferred_tax_liabilities, other_non_current_liabilities, total_non_current_liabilities,
+      total_liabilities,
+      paid_in_capital, capital_reserve, special_reserve, surplus_reserve, undistributed_profit, minority_equity,
+      differences_in_conversion, total_owner_equity, total_liabilities_equity)
+      values
+      (#{portfolioId}, #{type}, #{date}, #{fyDate}, #{monetary}, #{financialAssets}, #{noteReceivable}, #{accountReceivable},
+       #{advancedPayment}, #{interestReceivable}, #{otherReceivable}, #{inventory}, #{otherCurrentAssets}, #{totalCurrentAssets},
+       #{longTermEquity}, #{fixedAssets}, #{construction}, #{fixedAssetsDisposal}, #{intangibleAssets}, #{longTermPrepayment},
+       #{deferredTaxAssets}, #{otherNonCurrentAssets}, #{totalNonCurrentAssets}, #{totalAssets},
+       #{shortTermLoan}, #{financialLiabilities}, #{notePayable}, #{accountPayable}, #{advancedReceivable}, #{accruedPayroll},
+       #{taxPayable}, #{interestsPayable}, #{dividendPayable}, #{otherPayable}, #{longTermLiabilitiesWithinYear},
+       #{otherCurrentLiabilities}, #{totalCurrentLiabilities}, #{longTermLoan}, #{longTermBonds}, #{longTermPayable},
+       #{specialPayable}, #{accruedLiabilities}, #{deferredReceivable}, #{deferredTaxLiabilities}, #{otherNonCurrentLiabilities},
+       #{totalNonCurrentLiabilities}, #{totalLiabilities},
+       #{paidInCapital}, #{capitalReserve}, #{specialReverse}, #{surplusReserve}, #{undistributedProfit}, #{minorityEquity},
+       #{differencesInConversion}, #{totalOwnerEquity}, #{totalLiabilitiesAndEquity})
+    </insert>
+
+    <update id="update" parameterType="com.example.entity.BalanceSheet">
+        update `vkc`.`balance`
+        set
+        <if test="portfolioId != null">
+            `portfolio_id` = #{portfolioId},
+        </if>
+        <if test="type != null">
+            `type` = #{type},
+        </if>
+        <if test="date != null">
+            `date` = #{date},
+        </if>
+        <if test="fyDate != null">
+            `fy_date` = #{fyDate},
+        </if>
+        monetary = #{monetary},
+        financial_assets = #{financialAssets},
+        note_receivable = #{noteReceivable},
+        account_receivable = #{accountReceivable},
+        advanced_payment = #{advancedPayment},
+        interest_receivable = #{interestReceivable},
+        other_receivable = #{otherReceivable},
+        inventory = #{inventory},
+        other_current_assets = #{otherCurrentAssets},
+        total_current_assets = #{totalCurrentAssets},
+        long_term_equity = #{longTermEquity},
+        fixed_assets = #{fixedAssets},
+        construction = #{construction},
+        fixed_assets_disposal = #{fixedAssetsDisposal},
+        intangible_assets = #{intangibleAssets},
+        long_term_prepaymentm = #{longTermPrepayment},
+        deferred_tax_assets = #{deferredTaxAssets},
+        other_non_current_assets = #{otherNonCurrentAssets},
+        total_non_current_assets = #{totalNonCurrentAssets},
+        totalAssets = #{totalAssets},
+        short_term_loan = #{shortTermLoan},
+        financial_liabilities = #{financialLiabilities},
+        note_payable = #{notePayable},
+        account_payable = #{accountPayable},
+        advanced_receivable = #{advancedReceivable},
+        accrued_payroll = #{accruedPayroll},
+        tax_payable = #{taxPayable},
+        interests_payable = #{interestsPayable},
+        dividend_payable = #{dividendPayable},
+        other_payable = #{otherPayable},
+        long_term_liabilities_within_year = #{longTermLiabilitiesWithinYear},
+        other_current_liabilities = #{otherCurrentLiabilities},
+        total_current_liabilities = #{totalCurrentLiabilities},
+        long_term_loan = #{longTermLoan},
+        long_term_bonds = #{longTermBonds},
+        long_term_payable = #{longTermPayable},
+        special_payable = #{specialPayable},
+        accruedLiabilities = #{accruedLiabilities},
+        deferred_receivable = #{deferredReceivable},
+        deferred_tax_liabilities = #{deferredTaxLiabilities},
+        other_non_current_liabilities = #{otherNonCurrentLiabilities},
+        total_non_current_liabilities = #{totalNonCurrentLiabilities},
+        total_liabilities = #{totalLiabilities},
+        paid_in_capital = #{paidInCapital},
+        capital_reserve = #{capitalReserve},
+        special_reserve = #{specialReverse},
+        surplus_reserve = #{surplusReserve},
+        undistributed_profit = #{undistributedProfit},
+        minority_equity = #{minorityEquity},
+        differences_in_conversion = #{differencesInConversion},
+        total_owner_equity = #{totalOwnerEquity},
+        total_liabilities_equity = #{totalLiabilitiesAndEquity}
+        where uid = #{uid}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`balance` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+    <select id="select" resultMap="balance" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`balance`
+        where block_flag = 0
+        <if test="portfolioId != null">
+            and `portfolio_id` = #{portfolioId},
+        </if>
+        <if test="type != null">
+            and `type` = #{type},
+        </if>
+        <if test="date != null">
+            and `date` = #{date},
+        </if>
+        <if test="fyDate != null">
+            and `fy_date` = #{fyDate},
+        </if>
+        order by `date`
+    </select>
+
+    <select id="selectByUid" resultMap="balance">
+        select *
+        from
+        `vkc`.`balance`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>
