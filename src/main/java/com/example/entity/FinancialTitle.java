@@ -25,6 +25,11 @@ public class FinancialTitle extends Entity{
      */
     private int rank;
 
+    /**
+     * The importance of this row, to show if bold: 0 for normal, 1 for bold
+     */
+    private int importance;
+
 
     public int getUid() {
         return uid;
@@ -64,5 +69,13 @@ public class FinancialTitle extends Entity{
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public int getImportance() {
+        return importance;
+    }
+
+    public void setImportance(int importance) {
+        this.importance = importance;
     }
 }

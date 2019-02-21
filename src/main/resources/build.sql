@@ -83,6 +83,7 @@ CREATE TABLE `financial_title` (
   `name` varchar(45) NOT NULL,
   `belong_to` int(2) NOT NULL,
   `rank` int(11) NOT NULL,
+  `importance` int(11) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
@@ -91,11 +92,11 @@ CREATE TABLE `financial_title` (
 CREATE TABLE `financial_data` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `title_id` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  `fy_date` datetime NOT NULL,
+  `date` int(11) NOT NULL,
+  `fy_date` int(11) NOT NULL,
   `data_type` int(2) NOT NULL,
   `money_type` int(2) DEFAULT 0,
-  `number` int(11) NOT NULL,
+  `number` bigint(16) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
