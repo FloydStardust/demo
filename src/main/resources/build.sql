@@ -81,7 +81,7 @@ CREATE TABLE `financial_title` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `portfolio_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `belong_to` int(2) NOT NULL,
+  `belong_to` int(11) NOT NULL,
   `rank` int(11) NOT NULL,
   `importance` int(11) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -94,9 +94,35 @@ CREATE TABLE `financial_data` (
   `title_id` int(11) NOT NULL,
   `date` int(11) NOT NULL,
   `fy_date` int(11) NOT NULL,
-  `data_type` int(2) NOT NULL,
-  `money_type` int(2) DEFAULT 0,
-  `number` bigint(16) NOT NULL,
+  `track_id` int(11) NOT NULL,
+  `data_type` int(11) NOT NULL,
+  `money_type` int(11) DEFAULT 0,
+  `number` bigint NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+CREATE TABLE `financial_track` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `portfolio_id` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `is_raw` tinyint(1) NOT NULL,
+  `date` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+CREATE TABLE `financial_budget` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `title_id` int(11) NOT NULL,
+  `date` int(11) NOT NULL,
+  `data_type` int(11) NOT NULL,
+  `money_type` int(11) DEFAULT 0,
+  `number` bigint NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)

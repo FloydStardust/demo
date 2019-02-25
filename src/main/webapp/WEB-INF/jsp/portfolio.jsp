@@ -37,13 +37,17 @@
             font-family: "Microsoft YaHei";
         }
         th, td { white-space: nowrap; }
-        div.dataTables_wrapper {
-            margin: 0 auto;
-        }
 
-        div.container {
-            width: 80%;
-        }
+
+        /*table{*/
+            /*margin: 0 auto;*/
+            /*width: 100%;*/
+            /*clear: both;*/
+            /*border-collapse: collapse;*/
+            /*table-layout: fixed; // ***********add this*/
+            /*word-wrap:break-word; // ***********and this*/
+        /*}*/
+
     </style>
 </head>
 <body>
@@ -93,20 +97,20 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <li><a href="index"> Dashboard</a></li>
-                    <li class="current"><a href="portfolio"> Portfolio</a></li>
-                    <li class="submenu open">
+                    <li class="current"><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
+                    <li class="submenu">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
                             <span class="caret pull-right"></span>
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a href="pipeline">Pipeline</a></li>
-                            <li><a href="leads">Leads</a></li>
-                            <li><a href="watchlist">Watchlist</a></li>
+                            <li><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+                            <li><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
                         </ul>
                     </li>
-                    <li><a href="schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
                 </ul>
             </div>
         </div>
@@ -121,7 +125,8 @@
                 </div>
                 <div class="panel-body" id="container">
                     <!-- 已投项目表格 -->
-                    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered" id="portfolioTable" style="width: 100%;">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered nowrap"
+                           id="portfolioTable" style="width:100%">
                         <thead>
                         <tr>
                             <!-- <th>#</th> -->
@@ -459,9 +464,18 @@
     let token = getCookie("access_token");
     let fields = ${fields};
     let table;
-    console.log(fields);
 
     $(document).ready(function(){
+        $.ajax({
+            url: basepath + '/api/portfolio',
+            type: 'GET',
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            console.log(data)
+        });
         loadPortfolioTable();
         loadAddModalFields();
     });
@@ -481,9 +495,12 @@
                 }
             },
             columns: [
-                { data: null ,"render": function(data, type, row){
+                {   data: null ,
+                    render: function(data, type, row){
                         return '<a href="'+basepath+'/portfolio/' + row.uid + '">'+ row.name+ '</a>';
-                    }},
+                    },
+                    width: '80%'
+                },
                 { data: "fundName" }, { data: "date" }, { data: "shareType" }, { data: "investType" },
                 { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, { data: "investNum" },
                 { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "director" }, { data: "manager" },
@@ -491,18 +508,11 @@
                 { data: "exitStatus" }, { data: "exitType" }, { data: "exitTime" }, { data: "valueAchieved" }, { data: "valueAchieving" },
                 { data: "totalValue" }, { data: "returnMultiple" }, { data: "irr" }, { data: "valueEvidence" }
             ],
-            columnDefs: [
-                // {
-                //     orderable: false,
-                //     targets: [3,4,5,6,7,8,12,13,14,15,16,17,18,19,20,21,28]
-                // },
-                { width: '20%', targets: 0 } ],
-            fixedColumns: true, searching: true, // 可搜索
-            order: [[2, 'asc']], scrollX: true,	// 水平滚动条
-            scrollCollapse: true, autoWidth: true,
             fixedColumns: true,
+            searching: true, // 可搜索
+            order: [[2, 'asc']], scrollX: true,	// 水平滚动条
+            scrollCollapse: true, autoWidth: false,
         });
-
         // 在第一列添加序号
         // t.on( 'order.dt search.dt', function () {
         //     t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {

@@ -35,18 +35,30 @@
         body {
             font-family: "Microsoft YaHei";
         }
+
         .td-center {
             text-align: center;
         }
         .td-right {
             text-align: right;
         }
+        .td-left {
+            text-align: left;
+        }
         .td-font-bold {
             font-weight: bold;
+            font-family: "Microsoft YaHei";
         }
-
-        .table-pl > thead > tr > th {
+        .medium-font {
+            font-size: larger;
+        }
+        .font-bold {
+            font-weight: bold;
+        }
+        table.with-header thead tr {
             text-align: center;
+            color: #FFFFFF;
+            background: #a1c4fd ;
         }
 
         .table-op > tbody > tr > td {
@@ -55,6 +67,7 @@
         .table-op > thead > tr > th {
             text-align: center;
         }
+        th, td { white-space: nowrap;word-break:break-all; }
     </style>
 </head>
 <body>
@@ -104,8 +117,8 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index"> Dashboard</a></li>
-                    <li class="current"><a href="portfolio"> Portfolio</a></li>
+                    <li><a href="<%=request.getContextPath()%>/index"> Dashboard</a></li>
+                    <li class="current"><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li class="submenu open">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
@@ -113,12 +126,12 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a href="pipeline">Pipeline</a></li>
-                            <li><a href="leads">Leads</a></li>
-                            <li><a href="watchlist">Watchlist</a></li>
+                            <li><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+                            <li><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
                         </ul>
                     </li>
-                    <li><a href="schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
                 </ul>
             </div>
         </div>
@@ -129,17 +142,17 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs" id="detailTab" role="tablist">
-                        <li role="presentation">
+                        <li role="presentation" class="active">
                             <a id="intro-tab" data-toggle="tab" href="#intro" role="tab" aria-controls="intro">公司概览</a>
                         </li>
-                        <li role="presentation" class="active">
+                        <li role="presentation">
                             <a id="PL-tab" data-toggle="tab" href="#PL" role="tab" aria-controls="PL">利润表</a>
                         </li>
                         <li role="presentation">
-                            <a id="CS-tab" data-toggle="tab" href="#CS" role="tab" aria-controls="CS">现金流量表</a>
+                            <a id="BS-tab" data-toggle="tab" href="#BS" role="tab" aria-controls="BS">资产负债表</a>
                         </li>
                         <li role="presentation">
-                            <a id="BS-tab" data-toggle="tab" href="#BS" role="tab" aria-controls="BS">资产负债表</a>
+                            <a id="CS-tab" data-toggle="tab" href="#CS" role="tab" aria-controls="CS">现金流量表</a>
                         </li>
                         <li role="presentation">
                             <a id="OP-tab" data-toggle="tab" href="#OP" role="tab" aria-controls="OP">业务报表</a>
@@ -149,8 +162,31 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="detailTabContent">
-                        <div class="tab-pane fade" id="intro" role="tabpanel">
+                        <div class="tab-pane fade in active" id="intro" role="tabpanel">
                             <br/>
+                            <div class="row col-md-12">
+                                <div class="col-md-6 panel-primary">
+                                    <div class="content-box-header panel-heading">
+                                        <div class="panel-title">资产负债表摘要</div>
+                                    </div>
+                                    <div class="content-box-large box-with-header">
+                                        <table class="table table-bordered table-hover text-nowrap"
+                                               id="BSSummaryTable" cellspacing="0" width="100%">
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 panel-primary">
+                                    <div class="content-box-header panel-heading">
+                                        <div class="panel-title">利润表摘要</div>
+                                    </div>
+                                    <div class="content-box-large box-with-header">
+                                        <table class="table table-bordered table-hover text-nowrap"
+                                               id="PLSummaryTable" cellspacing="0" width="100%">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row col-md-12">
                                 <div class="col-md-6 panel-success">
                                     <div class="content-box-header panel-heading">
@@ -158,39 +194,19 @@
                                     </div>
                                     <div class="content-box-large box-with-header">
                                         <br/>
-                                        500.com是中国历史最长、用户规模最大、唯一具备合法资质的民营互联网体彩销售服务平台。500.com也是唯一一家获得财政部批准试点进行互联网体育彩票销售服务的民营企业
+                                        <div id="intro-info">
+                                            500.com是中国历史最长、用户规模最大、唯一具备合法资质的民营互联网体彩销售服务平台。500.com也是唯一一家获得财政部批准试点进行互联网体育彩票销售服务的民营企业
+                                        </div>
                                         <br />
                                     </div>
                                 </div>
                                 <div class="col-md-6 panel-success">
-                                    <div class="content-box-header panel-heading">
-                                        <div class="panel-title">利润表摘要</div>
-                                    </div>
-                                    <div class="content-box-large box-with-header">
-                                        <br/>
-                                        这里是利润表摘要
-                                        <br />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row col-md-12">
-                                <div class="col-md-6 panel-primary">
                                     <div class="content-box-header panel-heading">
                                         <div class="panel-title">现金流量表摘要</div>
                                     </div>
                                     <div class="content-box-large box-with-header">
                                         <br/>
                                         这里是现金流量表摘要
-                                        <br />
-                                    </div>
-                                </div>
-                                <div class="col-md-6 panel-primary">
-                                    <div class="content-box-header panel-heading">
-                                        <div class="panel-title">资产负债表摘要</div>
-                                    </div>
-                                    <div class="content-box-large box-with-header">
-                                        <br/>
-                                        这里是资产负债表摘要
                                         <br />
                                     </div>
                                 </div>
@@ -210,48 +226,67 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade in active" id="PL" role="tabpanel">
+                        <div class="tab-pane fade" id="PL" role="tabpanel">
                             <br/>
-                            <div class="row col-md-7">
-                                <div class="pull-left"> <h4>货币码：RMB 单位：千元</h4> </div>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-primary" id="loadHistory">加载历史数据</button>
-                                    <button type="button" class="btn btn-success">导出Excel</button>
+                            <div class="row col-md-12">
+                                <div class="col-md-7"> <h3>货币码：RMB 单位：千元</h3></div>
+                                <div class="col-md-5">
+                                    <div class="pull-left"><h3>历史数据</h3></div>
+                                    <div class="pull-right">
+                                        <%--<button type="button" class="btn btn-primary" id="loadHistory">加载历史数据</button>--%>
+                                        <button type="button" class="btn btn-success">导出Excel</button>
+                                    </div>
                                 </div>
                             </div>
                             <br/>
-                            <div class="col-md-7">
-                                <!-- 利润表 -->
-                                <table class="table table-bordered table-pl" style="width:100%" id="PLTable">
-                                    <thead>
-                                    <tr>
-                                        <th>科目</th>
-                                        <th id="PL-currentMonth">18 Nov</th>
-                                        <th id="PL-lastMonth">18 Oct</th>
-                                        <th>MoM</th>
-                                        <th>YoY</th>
-                                        <th id="PL-currentYTD">19 YTD</th>
-                                        <th id="PL-lastYTD">18 YTD</th>
-                                        <th>YoY</th>
-                                        <th id="PL-currentEstimate">FY19-E</th>
-                                        <th>完成%</th>
-                                    </tr>
-                                    </thead>
-                                </table>
+                            <div class="row col-md-12">
+                                <div class="col-md-7 medium-font">
+                                    <!-- 利润表 -->
+                                    <table class="table table-bordered table-hover text-nowrap with-header" id="PLTable" cellspacing="0" width="100%">
+                                    </table>
+                                </div>
+                                <div class="col-md-5 medium-font">
+                                    <!-- 利润表历史数据 -->
+                                    <table class="table table-bordered table-hover text-nowrap with-header" id="PLHistoryTable" cellspacing="0" width="100%">
+                                    </table>
+                                </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="BS" role="tabpanel">
+                            <br/>
+                            <div class="row col-md-12">
+                                <div class="col-md-6"> <h3>货币码：RMB 单位：千元</h3></div>
+                                <div class="col-md-6">
+                                    <div class="pull-left"><h3>历史数据</h3></div>
+                                    <div class="pull-right">
+                                        <%--<button type="button" class="btn btn-primary" id="loadHistory">加载历史数据</button>--%>
+                                        <button type="button" class="btn btn-success">导出Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row col-md-12">
+                                <div class="col-md-6 medium-font">
+                                    <!-- 资产负债表 -->
+                                    <table class="table table-bordered table-hover text-nowrap with-header" id="BSTable" cellspacing="0" width="100%">
+                                    </table>
+                                </div>
+                                <div class="col-md-6 medium-font">
+                                    <!-- 资产负债表历史数据 -->
+                                    <table class="table table-bordered table-hover text-nowrap with-header" id="BSHistoryTable" cellspacing="0" width="100%">
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
                         <div class="tab-pane fade" id="CS" role="tabpanel">
                             <br/>
                             <div class="row">
-                                <h4 class="col-md-6">报告期：2018.11.30 货币码：RMB 单位：元</h4>
-                                <div class="col-md-1">
-                                    <button type="button" class="btn btn-success">导出Excel</button>
-                                </div>
+                                <h2 class="col-md-12">该功能暂未开放，Floyd持续coding...QAQ</h2>
                             </div>
                             <br/>
                             <div class="col-md-7">
                                 <!-- 现金流量表 -->
-                                <table class="table table-bordered" style="width:100%" id="CFTable">
+                                <table class="table table-bordered with-header" style="width:100%" id="CFTable">
                                     <thead>
                                     <tr>
                                         <th>项目</th>
@@ -504,598 +539,6 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="BS" role="tabpanel">
-                            <br/>
-                            <div class="row">
-                                <h4 class="col-md-6">报告期：2018.11.30 货币码：RMB 单位：千元</h4>
-                                <div class="col-md-1">
-                                    <button type="button" class="btn btn-success">导出Excel</button>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="col-md-10">
-                                <!-- 资产负债表 -->
-                                <table class="table table-bordered table-pl" style="width:100%" id="BSTable">
-                                    <thead>
-                                    <tr>
-                                        <th>科目</th>
-                                        <th>18 Nov</th>
-                                        <th>17 Oct</th>
-                                        <th>MoM</th>
-                                        <th>FY18-E</th>
-                                        <th>FY17</th>
-                                        <th>YoY</th>
-                                        <th>18 Sep</th>
-                                        <th>18 Aug</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>货币资金</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>交易性金融资产</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应收票据</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应收账款	</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>预付账款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应收利息</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>其他应收款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>存货</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>其他流动资产</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>流动资产合计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>长期股权投资</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>固定资产</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>在建工程</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>固定资产清理	</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>无形资产</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>长期待摊费用</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>递延所得税资产</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>其他非流动资产</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>非流动资产合计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>资产总计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>短期借款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>交易性金融负债</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应付票据</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>预收账款	</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应付职工薪酬</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应交税费</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应付利息</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应付股利</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>其他应付款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>一年内到期的非流动负债</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>其他流动负债</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>流动负债合计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>长期借款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>应付债券</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>长期应付款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>专项应付款</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>预计负债</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>递延收益</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>递延所得税负债</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>其他非流动负债</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>非流动负债合计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>负债合计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>实收资本（或股本）</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>资本公积	</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>专项储备</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>盈余公积</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>未分配利润</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>少数股东权益</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>外币报表折算差异</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>所有者权益总计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>负债和权益总计</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -1395,85 +838,182 @@
 <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="<%=request.getContextPath()%>/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/js/cookieHelper.js"></script>
 
 <!-- datables-js引入-Floyd -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
 <script type="text/javascript">
-
+    let basepath = "<%=request.getContextPath()%>";
+    let token = getCookie("access_token");
+    let portfolioId = $(".page-content").attr("data-projectId");
     $(document).ready(function(){
-        var basepath = "<%=request.getContextPath()%>";
-        var projectId = $(".page-content").attr("data-projectId");
+        loadPlSummary();
+        loadBsSummary();
+        loadPlTable();
+        loadBsTable();
 
-        // load profit and loss table
-        $.ajax({
-            url: basepath + "/api/project_detail/" + projectId,
-            method: "GET"
-        }).done(function (data) {
-            var response;
-            try {
-                response = JSON.parse(data)
-            } catch (e) {
-                console.log(e.message);
-            }
-
-            var currentDate = response.data[0].currentDate;
-            var lastDate  = response.data[0].lastDate;
-            var currentYear = parseInt(currentDate.split('-')[0]);
-            var lastYear = currentYear - 1;
-
-            // set table header
-            $('#PL-currentMonth').html(currentDate);
-            $('#PL-lastMonth').html(lastDate);
-            $('#PL-currentYTD').html(currentYear+'YTD');
-            $('#PL-lastYTD').html(lastYear+'YTD');
-            $('#PL-currentEstimate').html('FY'+currentYear+'-E');
-
-            var plData = [];
-            $.each(response.data, function (index, value) {
-                let row = [];
-                row.push(value.rowName);
-                row.push(numberWithCommas(value.currentMonthValue));
-                row.push(numberWithCommas(value.lastMonthValue));
-                row.push(value.moM*100 + '%');
-                row.push(value.yoY*100 + '%');
-                row.push(numberWithCommas(value.currentYTD));
-                row.push(numberWithCommas(value.lastYTD));
-                row.push(value.yTD_YoY*100 + '%');
-                row.push(numberWithCommas(value.currentEstimate));
-                row.push(value.completeRatio*100 + '%');
-                plData.push(row);
-            });
-
-            $('#PLTable').DataTable({
-                "data": plData,
-                "ordering": false,
-                "paging": false,
-                "searching": false,
-                "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[0] == "毛利"  || aData[0] == "营业利润" || aData[0] == "利润总额" || aData[0] == "净利润")
-                    {
-                        $('td', nRow).css('background-color', '#D3D3D3');
-                        $('td', nRow).addClass('td-font-bold');
-                    }
-                }
-            });
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .fixedColumns().relayout();
         });
-
-        $(".page-content").on('click', '#loadHistory', function () {
-            $.ajax({
-                url: basepath + '/api/project_detail/history/' + projectId,
-                method: 'GET'
-            }).done(function (data) {
-
-            });
-        });
-
-        function numberWithCommas(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
     });
+
+    function loadBsSummary(){
+        $.ajax({
+            url: basepath + '/api/portfolio/balance_summary/' + portfolioId,
+            type: 'GET',
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            console.log(data)
+            if (data.responseCode == "RESPONSE_OK"){
+                let bsSummaryData = transpose( data.data.map(unshiftColumnName));
+                let header = genColumnConfig(bsSummaryData.shift());
+                let configure = {
+                    data: bsSummaryData ,
+                    columns: header,
+                    paging: false, ordering: false,
+                    searching: false, autoWidth: true, info: false
+                };
+                let table = $('#BSSummaryTable').DataTable(configure);
+            }
+        });
+    }
+
+    function loadPlSummary() {
+        $.ajax({
+            url: basepath + '/api/portfolio/profit_summary/' + portfolioId,
+            type: 'GET',
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            console.log(data)
+            if (data.responseCode == "RESPONSE_OK"){
+                let plSummaryData = transpose( data.data.map(unshiftColumnName));
+                let header = genColumnConfig(plSummaryData.shift());
+                let configure = {
+                    data: plSummaryData ,
+                    columns: header,
+                    paging: false, ordering: false,
+                    searching: false, autoWidth: true, info: false
+                };
+                let table = $('#PLSummaryTable').DataTable(configure);
+            }
+        });
+    }
+
+    function loadBsTable(){
+        $.ajax({
+            url: basepath + '/api/portfolio/balance/' + portfolioId,
+            type: 'GET',
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            if (data.responseCode == "RESPONSE_OK"){
+               // console.log(data);
+                let bsData = transpose( data.data.map(unshiftColumnName));
+                let firstN = parseInt(data.description);
+                let header = genColumnConfig(bsData.shift(), firstN);
+                let configure1 = {
+                    data: bsData.map(item => item.slice(0, firstN)) ,
+                    columns: header.slice(0,firstN),
+                    paging: false, ordering: false,
+                    searching: false, autoWidth: true, info: false
+                };
+                let configure2 = {
+                    data: bsData.map(item => item.slice(firstN,)) ,
+                    columns: header.slice(firstN,),
+                    paging: false, ordering: false, // false to disable sorting (or any other option)
+                    scrollX: true,	scrollCollapse : true, // 水平滚动条
+                    searching: false, autoWidth: true, info: false,
+                }
+                let table1 = $('#BSTable').DataTable(configure1);
+                let table2 = $('#BSHistoryTable').DataTable(configure2);
+            }
+        });
+    }
+
+    function loadPlTable() {
+        $.ajax({
+            url: basepath + '/api/portfolio/profit/' + portfolioId,
+            type: 'GET',
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            if (data.responseCode == "RESPONSE_OK"){
+                // console.log(data);
+                let plData = transpose( data.data.map(unshiftColumnName));
+                let firstN = parseInt(data.description);
+                let header = genColumnConfig(plData.shift(), firstN);
+                let configure1 = {
+                    data: plData.map(item => item.slice(0, firstN)) ,
+                    columns: header.slice(0,firstN),
+                    paging: false, ordering: false,
+                    searching: false, autoWidth: true, info: false
+                };
+                let configure2 = {
+                    data: plData.map(item => item.slice(firstN,)) ,
+                    columns: header.slice(firstN,),
+                    paging: false, ordering: false, // false to disable sorting (or any other option)
+                    scrollX: true,	scrollCollapse : true, // 水平滚动条
+                    searching: false, autoWidth: true, info: false,
+                }
+                let table1 = $('#PLTable').DataTable(configure1);
+                let table2 = $('#PLHistoryTable').DataTable(configure2);
+            }
+        });
+    }
+
+    function genColumnConfig(obj, firstN) {
+        let headers = []
+        for(let i=0; i<obj.length; i++){
+            let configure = {
+                    title: obj[i],
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return numberWithCommas(data);},
+                };
+            if(i==0){
+                configure['width'] = '30%';
+                configure['className'] = 'font-bold';
+            }else{
+                configure['className'] = 'td-right';
+                if(i>=firstN){
+                    configure['width'] = '15%';
+                }
+            }
+            headers.push(configure);
+        }
+        return headers;
+    }
+
+    function unshiftColumnName(object) {
+        object.numbers.unshift(object.columnsName);
+        return object.numbers;
+    }
+    function transpose(array) {
+        return array[0].map((col, i) => array.map(row => row[i]));
+    }
+    function numberWithCommas(x) {
+        if(typeof x == 'number'){
+            x = (x/1000).toFixed(1);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }else {
+            return  '<a style="text-decoration:none;">'+ x +'</a>';
+            // return x;
+        }
+    }
 </script>
 </body>
 </html>

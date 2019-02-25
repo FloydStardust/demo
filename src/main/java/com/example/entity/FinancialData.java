@@ -3,7 +3,7 @@ package com.example.entity;
 import java.util.Date;
 
 /**
- * Description: Financial Statement datas
+ * Description: Financial Statement data
  * Created by Floyd on 2019/2/20 14:12
  */
 public class FinancialData extends Entity {
@@ -12,17 +12,22 @@ public class FinancialData extends Entity {
 
     private int titleId;
 
-    private Date date;
+    private int date;
 
-    private Date fyDate;
+    private int fyDate;
 
     /**
-     * the financial data type: 0 for month, 1 for quarter, 2 for half-year, 3 for year
+     * the track count, begin from 0, which represents the first month/quarter/n months we track...
+     */
+    private int trackId;
+
+    /**
+     * the financial data type: 0 for month, 1 for quarter, 2 for half-year, 3 for 3-quarter, 4 for year, 5 for irregular
      */
     private int dataType;
 
     /**
-     * the money type of financial datas: 0 for RMB, 1 for dollar
+     * the money type of financial data: 0 for RMB, 1 for dollar
      */
     private int moneyType;
 
@@ -47,19 +52,19 @@ public class FinancialData extends Entity {
         this.titleId = titleId;
     }
 
-    public Date getDate() {
+    public int getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(int date) {
         this.date = date;
     }
 
-    public Date getFyDate() {
+    public int getFyDate() {
         return fyDate;
     }
 
-    public void setFyDate(Date fyDate) {
+    public void setFyDate(int fyDate) {
         this.fyDate = fyDate;
     }
 
@@ -85,6 +90,14 @@ public class FinancialData extends Entity {
 
     public void setNumber(long number) {
         this.number = number;
+    }
+
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 }
 

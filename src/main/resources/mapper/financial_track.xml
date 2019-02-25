@@ -1,0 +1,119 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.financial_track">
+    <resultMap id="financial_track" type="com.example.entity.FinancialTrack">
+        <result property="uid" column="uid" />
+        <result property="portfolioId" column="portfolio_id" />
+        <result property="count" column="count" />
+        <result property="type" column="type" />
+        <result property="date" column="date" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.FinancialTrack">
+      insert into `vkc`.`financial_data`
+      (`title_id`, `portfolio_id`, `count`, `type`, `date`, `name`)
+      values
+      (#{titleId}, #{portfolioId}, #{count}, #{type}, #{date}, #{name})
+    </insert>
+
+    <update id="update" parameterType="com.example.entity.FinancialTrack">
+        update `vkc`.`financial_track`
+        set
+        <if test="portfolioId != null">
+            `portfolio_id` = #{portfolioId},
+        </if>
+        <if test="count != null">
+            `count` = #{count},
+        </if>
+        <if test="type != null">
+            `type` = #{type},
+        </if>
+        <if test="date != null">
+            `date` = #{date}
+        </if>
+        <if test="name != null">
+            `name` = #{name}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`financial_track` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+    <select id="selectManualTrack" resultMap="financial_track" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`financial_track`
+        where block_flag = 0 and `count` = 0
+        <if test="portfolioId != null">
+            and `portfolio_id` = #{portfolioId}
+        </if>
+        <if test="count != null">
+            and `count` = #{count}
+        </if>
+        <if test="type != null">
+            and `type` = #{type}
+        </if>
+        <if test="date != null">
+            and `date` = #{date}
+        </if>
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+        <if test="startDate != null">
+            <![CDATA[
+              and `date` >= #{startDate}
+            ]]>
+        </if>
+        <if test="endDate != null">
+            <![CDATA[
+              and `date` =< #{endDate}
+            ]]>
+        </if>
+        ORDER BY `date` DESC
+    </select>
+
+    <select id="selectRawTrack" resultMap="financial_track" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`financial_track`
+        where block_flag = 0 and `count` != 0
+        <if test="portfolioId != null">
+            and `portfolio_id` = #{portfolioId}
+        </if>
+        <if test="count != null">
+            and `count` = #{count}
+        </if>
+        <if test="type != null">
+            and `type` = #{type}
+        </if>
+        <if test="date != null">
+            and `date` = #{date}
+        </if>
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+        <if test="startDate != null">
+            <![CDATA[
+              and `date` > #{startDate}
+            ]]>
+        </if>
+        <if test="endDate != null">
+            <![CDATA[
+              and `date` < #{endDate}
+            ]]>
+        </if>
+        ORDER BY `count` DESC
+    </select>
+
+    <select id="selectByUid" resultMap="financial_track">
+        select *
+        from
+        `vkc`.`financial_track`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>

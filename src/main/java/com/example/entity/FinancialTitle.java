@@ -26,7 +26,7 @@ public class FinancialTitle extends Entity{
     private int rank;
 
     /**
-     * The importance of this row, to show if bold: 0 for normal, 1 for bold
+     * The importance of this row, to show if bold: 0 for normal, 1 for bold, 2 for summary
      */
     private int importance;
 

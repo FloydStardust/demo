@@ -48,13 +48,26 @@ public class PortfolioController {
 
     @GetMapping("/profit/{id}")
     public ResultData profit(@PathVariable int id){
-
-        return null;
+        ResultData result = portfolioService.getProfit(id);
+        return result;
     }
 
     @GetMapping("/balance/{id}")
     public ResultData balance(@PathVariable int id){
-        return null;
+        ResultData result = portfolioService.getBalance(id);
+        return result;
+    }
+
+    @GetMapping("/profit_summary/{id}")
+    public ResultData profitSummary(@PathVariable int id){
+        ResultData result = portfolioService.getProfitSummary(id);
+        return result;
+    }
+
+    @GetMapping("/balance_summary/{id}")
+    public ResultData balanceSummary(@PathVariable int id){
+        ResultData result = portfolioService.getBalanceSummary(id);
+        return result;
     }
 
 }

@@ -8,5 +8,8 @@
         <mapper resource="mapper/schedule.xml" />
         <mapper resource="mapper/portfolio.xml"/>
         <mapper resource="mapper/fund.xml"/>
+        <mapper resource="mapper/financial_title.xml"/>
+        <mapper resource="mapper/financial_data.xml"/>
+        <mapper resource="mapper/financial_track.xml"/>
     </mappers>
 </configuration>

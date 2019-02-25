@@ -40,6 +40,7 @@ public class DemoTest {
 		System.out.println(IPO_STATUS);
 		EnumSet<InvestType> types = EnumSet.allOf(InvestType.class);
 		System.out.println( types.stream().collect(Collectors.toMap(InvestType::getIndex, InvestType::getName)) );
+
 		for(InvestType item: types){
 			System.out.println(item);
 		}

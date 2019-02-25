@@ -31,7 +31,7 @@
             `end` = #{end},
         </if>
         <if test="content != null">
-            `content` = #{content}
+            `content` = #{content},
         </if>
         <if test="venue != null">
             `venue` = #{venue}

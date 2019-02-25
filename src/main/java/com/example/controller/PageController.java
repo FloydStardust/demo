@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by IntelliJ IDEA.
- * User: xxh
+ * User: Floyd
  * Date: 2019/1/29
  * Time: 6:43 PM
  */
@@ -64,6 +64,11 @@ public class PageController {
 	public String projectDetail(@PathVariable String id, Model model) {
 		model.addAttribute("projectId", id);
 		return "portfolio_detail";
+	}
+
+	@GetMapping("pipeline")
+	public String pipeline(Model model){
+		return "pipeline";
 	}
 
 }

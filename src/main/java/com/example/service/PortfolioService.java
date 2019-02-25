@@ -16,7 +16,7 @@ public interface PortfolioService {
 
     ResultData updatePortfolio(Portfolio portfolio);
 
-    ResultData fetchPortfolio(int uid);
+    ResultData getPortfolio(int uid);
 
     ResultData fetchAllPortfolio();
 
@@ -26,4 +26,7 @@ public interface PortfolioService {
 
     ResultData getBalance(int uid);
 
+    ResultData getProfitSummary(int uid);
+
+    ResultData getBalanceSummary(int uid);
 }
