@@ -3,15 +3,17 @@ package com.example.dao.impl;
 import com.example.dao.BaseDao;
 import com.example.dao.LeadsDao;
 import com.example.entity.Leads;
+import com.example.util.LeadsUtils;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Description: demo
+ * Description: Leads DAO
  * Created by Floyd on 2019/2/1 15:18
  */
 @Repository
@@ -31,6 +33,29 @@ public class LeadsDaoImpl extends BaseDao implements LeadsDao {
             result.setDescription(e.getMessage());
         }
         return result;
+    }
+
+    @Override
+    public ResultData selectAllLeads() {
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("statusLessAndEqual", LeadsUtils.LeadsStatus.MEETING.getIndex());
+        condition.put("statusBiggerThan", LeadsUtils.LeadsStatus.PASS.getIndex());
+        return select(condition);
+    }
+
+    @Override
+    public ResultData selectAllPipelines() {
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("statusLessAndEqual", LeadsUtils.PipelineStatus.INVESTED.getIndex());
+        condition.put("statusBiggerThan", LeadsUtils.LeadsStatus.MEETING);
+        return select(condition);
+    }
+
+    @Override
+    public ResultData selectAllWatchlist() {
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("status", LeadsUtils.PipelineStatus.PASS.getIndex());
+        return select(condition);
     }
 
     @Override

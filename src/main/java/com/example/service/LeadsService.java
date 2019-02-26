@@ -23,4 +23,6 @@ public interface LeadsService {
 
     ResultData deleteByUid(int uid);
 
+    ResultData fetchStatusField();
+
 }

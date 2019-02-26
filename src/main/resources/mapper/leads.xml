@@ -4,26 +4,29 @@
         <result property="uid" column="uid" />
         <result property="name" column="name" />
         <result property="source" column="source" />
-        <result property="director" column="director" />
+        <result property="partner" column="partner" />
         <result property="manager" column="manager" />
-        <result property="companyName" column="company_name" />
+        <result property="company" column="company" />
         <result property="industry" column="industry" />
         <result property="location" column="location" />
         <result property="summary" column="summary" />
         <result property="description" column="description" />
         <result property="status" column="status" />
         <result property="lastChange" column="last_change" />
-        <result property="nextStep" column="next_step" />
-        <result property="reason" column="reason" />
+        <result property="next" column="next" />
+        <result property="sourceReason" column="source_reason" />
+        <result property="passReason" column="pass_reason" />
+        <result property="meetingRecord" column="meeting_record" />
+        <result property="bpRecord" column="bp_record" />
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.Leads">
       insert into `vkc`.`leads`
-      (`name`, source, director, manager, company_name, industry, `location`, summary, description, `status`, last_change,
-      next_step, `reason`)
+      (`name`, source, partner, manager, company, industry, `location`, summary, description, `status`, last_change,
+      `next`, `source_reason`, `pass_reason`, `meeting_record`, `bp_record`)
       values
-      (#{name}, #{source}, #{director}, #{manager}, #{companyName}, #{industry}, #{location}, #{summary}, #{description},
-      #{status}, #{lastChange}, #{nextStep}, #{reason})
+      (#{name}, #{source}, #{partner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{description},
+      #{status}, #{lastChange}, #{next}, #{sourceReason}, #{passReason}, #{meetingRecord}, #{bpRecord})
     </insert>
 
     <update id="update" parameterType="com.example.entity.Leads">
@@ -33,10 +36,10 @@
             `name` = #{name},
         </if>
         source = #{source},
-        director = #{director},
+        partner = #{partner},
         manager = #{manager},
-        <if test="companyName != null">
-            company_name = #{companyName},
+        <if test="company != null">
+            company = #{company},
         </if>
         industry = #{industry},
         `location` = #{location},
@@ -44,8 +47,9 @@
         description = #{description},
         `status` = #{status},
         last_change = #{lastChange},
-        next_step = #{nextStep},
-        `reason` = #{reason}
+        `next` = #{next},
+        `source_reason` = #{sourceReason},
+        `pass_reason` = #{passReason},
         where uid = #{uid}
     </update>
 
@@ -55,43 +59,44 @@
         `vkc`.`leads`
         where block_flag = 0
         <if test="name != null">
-            and name = #{name}
+            and `name` = #{name}
         </if>
         <if test="source != null">
             and `source` = #{source}
         </if>
-        <if test="director != null">
-            and `director` = #{director}
+        <if test="partner != null">
+            and `partner` = #{partner}
         </if>
         <if test="manager != null">
             and `manager` = #{manager}
         </if>
-        <if test="companyName != null">
-            and `company_name` >= #{companyName}
+        <if test="company != null">
+            and `company` = #{company}
         </if>
         <if test="industry != null">
-            and `industry` >= #{industry}
+            and `industry` = #{industry}
         </if>
         <if test="location != null">
-            and `location` >= #{location}
-        </if>
-        <if test="summary != null">
-            and `summary` >= #{summary}
-        </if>
-        <if test="description != null">
-            and `description` >= #{description}
+            and `location` = #{location}
         </if>
         <if test="status != null">
-            and `status` >= #{status}
+            and `status` = #{status}
         </if>
         <if test="lastChange != null">
-            and `last_change` >= #{lastChange}
+            and `last_change` = #{lastChange}
         </if>
-        <if test="nextStep != null">
-            and `next_step` >= #{nextStep}
+        <if test="next != null">
+            and `next` = #{next}
         </if>
-        <if test="reason != null">
-            and `reason` >= #{reason}
+        <if test="statusLessAndEqual != null">
+            <![CDATA[
+              and `status` <= #{statusLessThan}
+            ]]>
+        </if>
+        <if test="statusBiggerThan != null">
+            <![CDATA[
+              and `status` > #{statusBiggerThan}
+            ]]>
         </if>
         order by last_change
     </select>

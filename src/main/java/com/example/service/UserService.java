@@ -13,4 +13,6 @@ public interface UserService {
     ResultData findByEmail(String email);
 
     ResultData create(User user);
+
+    ResultData findAll();
 }

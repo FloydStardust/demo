@@ -12,6 +12,12 @@ import java.util.Map;
 public interface LeadsDao {
     ResultData select(Map<String, Object> condition);
 
+    ResultData selectAllLeads();
+
+    ResultData selectAllPipelines();
+
+    ResultData selectAllWatchlist();
+
     ResultData selectByUid(int uid);
 
     ResultData insert(Leads leads);

@@ -1,7 +1,10 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.service.LeadsService;
 import com.example.service.PortfolioService;
+import com.example.service.UserService;
+import com.example.util.LeadsUtils;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,10 @@ public class PageController {
 
 	@Autowired
 	private PortfolioService portfolioService;
+	@Autowired
+	private LeadsService leadsService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "register")
 	public String register(ModelMap model) {
@@ -68,7 +75,14 @@ public class PageController {
 
 	@GetMapping("pipeline")
 	public String pipeline(Model model){
-		return "pipeline";
+		model.addAttribute("type", LeadsUtils.LeadsType.PIPELINE);
+		return "leads";
+	}
+
+	@GetMapping("leads")
+	public String leads(Model model){
+		model.addAttribute("type", LeadsUtils.LeadsType.LEADS);
+		return "leads";
 	}
 
 }

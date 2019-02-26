@@ -40,4 +40,9 @@ public class SessionController {
         }
         return result;
     }
+
+
+    public ResultData getAll(){
+        return userService.findAll();
+    }
 }

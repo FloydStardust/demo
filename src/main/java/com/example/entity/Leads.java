@@ -9,64 +9,21 @@ import java.util.Date;
 public class Leads extends Entity {
     private int uid;
     private String name;
-    private String source;
-    private String director;
-    private String manager;
-    private String companyName;
+    private int source;
+    private int partner;
+    private int manager;
+    private String company;
     private String industry;
     private String location;
     private String summary;
     private String description;
     private int status;
     private Date lastChange;
-    private int nextStep;
-    private String reason;
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
-    }
-
-    public enum Status{
-        OBSERVING("继续观察", 0), PASS("PASS", -1),
-        SENIOR("见过高管",1), FOUNDER("见过创始人", 2), MEETING("上过周会", 3),
-        TS("TS", 4), DD("DD", 5), IC("IC", 6), INVESTED("已投", 7);
-
-        private String name;
-        private int index;
-
-        private Status(String name, int index){
-            this.name = name;
-            this.index  =index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
+    private int next;
+    private String sourceReason;
+    private String passReason;
+    private String meetingRecord;
+    private String bpRecord;
 
     public int getUid() {
         return uid;
@@ -84,20 +41,36 @@ public class Leads extends Entity {
         this.name = name;
     }
 
-    public String getSource() {
+    public int getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(int source) {
         this.source = source;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public int getPartner() {
+        return partner;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setPartner(int partner) {
+        this.partner = partner;
+    }
+
+    public int getManager() {
+        return manager;
+    }
+
+    public void setManager(int manager) {
+        this.manager = manager;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getIndustry() {
@@ -148,23 +121,43 @@ public class Leads extends Entity {
         this.lastChange = lastChange;
     }
 
-    public int getNextStep() {
-        return nextStep;
+    public int getNext() {
+        return next;
     }
 
-    public void setNextStep(int nextStep) {
-        this.nextStep = nextStep;
+    public void setNext(int next) {
+        this.next = next;
     }
 
-    public String getReason() {
-        return reason;
+    public String getSourceReason() {
+        return sourceReason;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setSourceReason(String sourceReason) {
+        this.sourceReason = sourceReason;
     }
 
-//    public Enum Status{
-//
-//    }
+    public String getPassReason() {
+        return passReason;
+    }
+
+    public void setPassReason(String passReason) {
+        this.passReason = passReason;
+    }
+
+    public String getMeetingRecord() {
+        return meetingRecord;
+    }
+
+    public void setMeetingRecord(String meetingRecord) {
+        this.meetingRecord = meetingRecord;
+    }
+
+    public String getBpRecord() {
+        return bpRecord;
+    }
+
+    public void setBpRecord(String bpRecord) {
+        this.bpRecord = bpRecord;
+    }
 }

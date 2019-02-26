@@ -105,9 +105,9 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
-                            <li><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
-                            <li><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+                            <li><a id="pipeline_link" href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li><a id="watch_link" href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
@@ -466,20 +466,9 @@
     let table;
 
     $(document).ready(function(){
-        $.ajax({
-            url: basepath + '/api/portfolio',
-            type: 'GET',
-            contentType : 'application/json;charset=utf-8',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("authorization", "Bearer " + token);
-            }
-        }).done(function (data) {
-            console.log(data)
-        });
         loadPortfolioTable();
         loadAddModalFields();
     });
-
 
     /**
      *  加载portfolio大表格
@@ -503,7 +492,7 @@
                 },
                 { data: "fundName" }, { data: "date" }, { data: "shareType" }, { data: "investType" },
                 { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, { data: "investNum" },
-                { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "director" }, { data: "manager" },
+                { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "partner" }, { data: "manager" },
                 { data: "boarder" }, { data: "industry" }, { data: "sector" }, { data: "location" }, { data: "registerLocation" },
                 { data: "exitStatus" }, { data: "exitType" }, { data: "exitTime" }, { data: "valueAchieved" }, { data: "valueAchieving" },
                 { data: "totalValue" }, { data: "returnMultiple" }, { data: "irr" }, { data: "valueEvidence" }
@@ -525,8 +514,6 @@
             $('#addModalBtn').click();
             // alert( 'You clicked on '+data[0]+'\'s row' );
         });
-
-
     }
 
     /**
@@ -548,7 +535,7 @@
             "investRatio": $("#addModalInvestShareRatio").val(),
             "currentRatio": $("#addModalCurrentShareRatio").val(),
             "source": $("#addModalSource").val(),
-            "director": $("#addModalDirector").val(),
+            "partner": $("#addModalDirector").val(),
             "manager": $("#addModalManager").val(),
             "boarder": $("#addModalBoarder").val(),
             "industry": $("#addModalIndustry").val(),

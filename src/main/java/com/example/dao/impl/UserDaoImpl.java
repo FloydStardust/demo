@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * User: xxh
+ * User: Floyd
  * Date: 2019/1/27
  * Time: 10:32 AM
  * 用户查找类
@@ -55,6 +55,22 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		ResultData result = new ResultData();
 		try {
 			List<User> list = sqlSession.selectList("vkc.user.queryByUids", ids);
+			if (list.isEmpty()) {
+				result.setResponseCode(ResponseCode.RESPONSE_NULL);
+			}
+			result.setData(list);
+		} catch (Exception e) {
+			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+			result.setDescription(e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public ResultData selectAll() {
+		ResultData result = new ResultData();
+		try {
+			List<User> list = sqlSession.selectList("vkc.user.selectAll");
 			if (list.isEmpty()) {
 				result.setResponseCode(ResponseCode.RESPONSE_NULL);
 			}

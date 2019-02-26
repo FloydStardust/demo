@@ -117,18 +117,18 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="<%=request.getContextPath()%>/index"> Dashboard</a></li>
+                    <li><a href="index"> Dashboard</a></li>
                     <li class="current"><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
-                    <li class="submenu open">
+                    <li class="submenu">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
                             <span class="caret pull-right"></span>
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
-                            <li><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
-                            <li><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+                            <li><a id="pipeline_link" href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li><a id="watch_link" href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>

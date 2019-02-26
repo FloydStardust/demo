@@ -3,6 +3,7 @@ package com.example.service.impl;
 import com.example.dao.UserDao;
 import com.example.entity.User;
 import com.example.service.UserService;
+import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResultData create(User user) {
 		return userDao.insertUser(user);
+	}
+
+	@Override
+	public ResultData findAll() {
+		ResultData allUserResult = userDao.selectAll();
+		Map<String, String> users = new HashMap<>();
+		if(allUserResult.getResponseCode() == ResponseCode.RESPONSE_OK){
+			List<User> userList = (List<User>) allUserResult.getData();
+			for(User user : userList){
+				users.put(String.valueOf(user.getId()), user.getUserName());
+			}
+			ResultData result = new ResultData();
+			result.setResponseCode(ResponseCode.RESPONSE_OK);
+			result.setData(userList);
+			return result;
+		}
+		return null;
 	}
 }
