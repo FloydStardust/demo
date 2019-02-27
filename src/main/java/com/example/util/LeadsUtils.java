@@ -6,6 +6,10 @@ package com.example.util;
  */
 public class LeadsUtils {
 
+    public static String UPLOAD_RECORD_PATH = "D:\\crm_files\\record\\";
+    public static String UPLOAD_BP_PATH = "D:\\crm_files\\bp\\";
+
+
     public static class LeadsType {
         public static int LEADS = 0;
         public static int PIPELINE = 1;
@@ -19,45 +23,13 @@ public class LeadsUtils {
      */
     public enum LeadsStatus{
         PASS("PASS", -1), OBSERVING("继续观察", 0),
-        SENIOR("见过高管",1), FOUNDER("见过创始人", 2), MEETING("上过周会", 3);
-
-        private String name;
-        private int index;
-
-        private LeadsStatus(String name, int index){
-            this.name = name;
-            this.index  =index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
-
-    /**
-     * The pipelines' status:
-     * 4 for passing this pipeline
-     */
-    public enum PipelineStatus{
-        PASS("PASS", -1),
+        SENIOR("见过高管",1), FOUNDER("见过创始人", 2), MEETING("上过周会", 3),
         TS("TS", 4), DD("DD", 5), IC("IC", 6), INVESTED("已投", 7);
 
         private String name;
         private int index;
 
-        private PipelineStatus(String name, int index){
+        private LeadsStatus(String name, int index){
             this.name = name;
             this.index  =index;
         }

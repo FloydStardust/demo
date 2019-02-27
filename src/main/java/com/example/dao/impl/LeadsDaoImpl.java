@@ -46,15 +46,15 @@ public class LeadsDaoImpl extends BaseDao implements LeadsDao {
     @Override
     public ResultData selectAllPipelines() {
         Map<String, Object> condition = new HashMap<>();
-        condition.put("statusLessAndEqual", LeadsUtils.PipelineStatus.INVESTED.getIndex());
-        condition.put("statusBiggerThan", LeadsUtils.LeadsStatus.MEETING);
+        condition.put("statusLessAndEqual", LeadsUtils.LeadsStatus.INVESTED.getIndex());
+        condition.put("statusBiggerThan", LeadsUtils.LeadsStatus.MEETING.getIndex());
         return select(condition);
     }
 
     @Override
     public ResultData selectAllWatchlist() {
         Map<String, Object> condition = new HashMap<>();
-        condition.put("status", LeadsUtils.PipelineStatus.PASS.getIndex());
+        condition.put("status", LeadsUtils.LeadsStatus.PASS.getIndex());
         return select(condition);
     }
 

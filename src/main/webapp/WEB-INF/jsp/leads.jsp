@@ -24,7 +24,7 @@
 
     <!-- datatable-css引入-Floyd -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/fileinput.min.css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -40,6 +40,9 @@
 
         div.container {
             width: 80%;
+        }
+        .font-bold {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -99,9 +102,9 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a id="pipeline_link" href="<%=request.getContextPath()%>/leads">Leads</a></li>
-                            <li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
-                            <li><a id="watch_link" href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li id="leads_link"><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li id="pipeline_link"><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+                            <li id="watch_link"><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
@@ -113,7 +116,7 @@
                 <div class="panel-heading clearfix">
                     <div class="panel-title pull-left"><h3>Pipeline List</h3></div>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-primary" id="addModalBtn" data-toggle="modal" data-target="#addModal">添加 Pipeline</button>
+                        <button type="button" class="btn btn-primary hidden" id="addModalBtn" data-toggle="modal" data-target="#addModal">添加 Leads</button>
                         <button type="button" class="btn btn-success">批量导入</button>
                     </div>
                 </div>
@@ -122,7 +125,6 @@
                     <table cellpadding="0" cellspacing="0" class="table table-hover table-striped table-bordered" id="dataTable" style="width: 100%;">
                         <thead>
                         <tr>
-                            <!-- <th>#</th> -->
                             <th>项目名称</th>
                             <th>项目来源</th>
                             <th>负责合伙人</th>
@@ -139,31 +141,7 @@
                             <th>BP文件</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <!-- <td></td> -->
-                            <td><a href="#">500万彩票</a></td>
-                            <td>Rachel</td>
-                            <td>朱海龙</td>
-                            <td>朱海龙</td>
-                            <td>500.com</td>
-                            <td>博彩</td>
-                            <td>上海</td>
-                            <td>中国用户规模最大、唯一具备合法资质的民营互联网体彩销售服务平台。</td>
-                            <td>见过高管</td>
-                            <td>2018/12/23</td>
-                            <td>约见合伙人</td>
-                            <td>春节期间博彩行业迎来业务增长高峰</td>
-                            <td>
-                                <button class="btn btn-danger">上传</button>
-                                <button class="btn btn-primary">下载</button>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger">上传</button>
-                                <button class="btn btn-primary">下载</button>
-                            </td>
-                        </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -190,21 +168,24 @@
                     <div class="form-group row">
                         <label for="addModalSource" class="col-sm-2 col-form-label">项目来源</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addModalSource" placeholder="">
+                            <select class="form-control" id="addModalSource">
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="addModalPartner" class="col-sm-2 col-form-label">负责合伙人</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addModalPartner" placeholder="">
+                            <select class="form-control" id="addModalPartner">
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="addModalManager" class="col-sm-2 col-form-label">投资经理</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addModalManager" placeholder="">
+                            <select class="form-control" id="addModalManager">
+                            </select>
                         </div>
                     </div>
 
@@ -271,11 +252,50 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
-                <button type="button" class="btn btn-primary" onclick="addLeads()">保存</button>
+                <button id="addLeads" type="button" class="btn btn-primary" onclick="addLeads()">保存</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Upload records Modal -->
+<div class="modal fade" id="uploadModal1" tabindex="-1" role="dialog" aria-labelledby="uploadModal1Title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="uploadModal1Title">上传文件</h3>
+            </div>
+            <div class="modal-body">
+                <div class="file-loading">
+                    <input id="input-repl-1" name="file" type="file">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload records Modal -->
+<div class="modal fade" id="uploadModal2" tabindex="-1" role="dialog" aria-labelledby="uploadModal2Title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="uploadModal2Title">上传文件</h3>
+            </div>
+            <div class="modal-body">
+                <div class="file-loading">
+                    <input id="input-repl-2" name="file" type="file">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <footer>
     <div class="container">
@@ -293,17 +313,16 @@
 <!-- jQuery UI -->
 <!-- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-
-<!-- <script src="vendors/datatables/js/jquery.dataTables.min.js"></script> -->
-<!-- <script src="vendors/datatables/dataTables.bootstrap.js"></script> -->
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- datables-js引入-Floyd -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
 
-<script src="js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/js/fileinput.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/locales/zh.js"></script>
+<script src="<%=request.getContextPath()%>/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/js/cookieHelper.js"></script>
 <script type="text/javascript">
 
     let basepath = "<%=request.getContextPath()%>";
@@ -312,78 +331,57 @@
     let table;
 
     $(document).ready(function(){
-        let url;
         if(type == 0){
             $("#leads_link").addClass("current");
-            url = basepath + '/api/leads';
-
-            $.ajax({
-                url: basepath + '/auth',
-                type: "GET",
-                contentType : 'application/json;charset=utf-8',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("authorization", "Bearer " + token);
-                }
-            }).done(function (data) {
-                console.log(data);
-            });
-            $.ajax({
-                url: basepath + '/auth',
-                type: "GET",
-                contentType : 'application/json;charset=utf-8',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("authorization", "Bearer " + token);
-                }
-            }).done(function (data) {
-                console.log(data);
-            });
-            console.log(users);
-            console.log(fields);
         }else if(type == 1){
             $("#pipeline_link").addClass("current");
-            url = basepath + '/api/leads/pipeline'
         }else if(type == 2){
             $("#watch_link").addClass("current");
-            url = basepath + '/api/leads/watchlist'
         }
+
+        let users={}, status = {};
         $.ajax({
-            url: url,
+            url: basepath + '/api/leads/status',
             type: "GET",
             contentType : 'application/json;charset=utf-8',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("authorization", "Bearer " + token);
             }
         }).done(function (data) {
-            console.log(data);
-        })
-        // loadTable();
-        loadAddModalFields();
-
-
-        // t.on( 'order.dt search.dt', function () {
-        //     t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-        //         cell.innerHTML = i+1;
-        //     } );
-        // } ).draw();
-
-        $('#dataTable tbody').on('dblclick', 'tr', function () {
-            var data = table.row( this ).data();
-            $('#addModalBtn').click();
-            // alert( 'You clicked on '+data[0]+'\'s row' );
+            if(data.responseCode == "RESPONSE_OK"){
+                status = data.data;
+                $.ajax({
+                    url: basepath + '/auth',
+                    type: "GET",
+                    contentType : 'application/json;charset=utf-8',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("authorization", "Bearer " + token);
+                    }
+                }).done(function (data) {
+                    if(data.responseCode == "RESPONSE_OK"){
+                        $.each(data.data, function (index, value) {
+                           users[value.id] = value.userName;
+                        });
+                        loadAddModalFields(users, status);
+                        loadTable(users, status);
+                    }
+                });
+            }
         });
     });
 
     /**
      *  加载leads大表格
      */
-    function loadTable() {
+    function loadTable(users, status) {
         let url;
         if(type == 0){
             url = basepath + '/api/leads';
+            $("#addModalBtn").removeClass("hidden");
         }else if(type == 1){
-            url = basepath + '/api/leads/pipeline'
+            url = basepath + '/api/leads/pipeline';
         }else if(type == 2){
-            url = basepath + '/api/leads/watchlist'
+            url = basepath + '/api/leads/watchlist';
         }
         table = $('#dataTable').DataTable({
             ajax:  {
@@ -395,37 +393,109 @@
                 }
             },
             columns: [
-                {   data: null ,
-                    render: function(data, type, row){
-                        return '<a href="'+basepath+'/portfolio/' + row.uid + '">'+ row.name+ '</a>';
-                    },
-                    width: '80%'
-                },
-                { data: "fundName" }, { data: "date" }, { data: "shareType" }, { data: "investType" },
-                { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, { data: "investNum" },
-                { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "partner" }, { data: "manager" },
-                { data: "boarder" }, { data: "industry" }, { data: "sector" }, { data: "location" }, { data: "registerLocation" },
-                { data: "exitStatus" }, { data: "exitType" }, { data: "exitTime" }, { data: "valueAchieved" }, { data: "valueAchieving" },
-                { data: "totalValue" }, { data: "returnMultiple" }, { data: "irr" }, { data: "valueEvidence" }
+                {   data: null, render: function(data, type, row){
+                        return '<a href="#" data-id="' +  row.uid + '">'+ row.name+ '</a>';
+                    }, className: 'font-bold' },
+                { data: null, render: function (data, type, row) {
+                        return users[row.source]
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return users[row.partner]
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return users[row.manager]
+                    } },
+                { data: "company" },
+                { data: "industry" }, { data: "location" }, { data: "summary" },
+                { data: null, render: function (data, type, row) {
+                        return status[row.status]
+                    } },
+                { data: null, render: function (data, type, row) {
+                    let date = new Date(row.lastChange);
+                        return date.toLocaleDateString();
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return status[row.next]
+                    } },
+                { data: null, render: function (data, type, row) {
+                        if(row.status == -1)    return row.passReason;
+                        else    return row.sourceReason;
+                    }, orderable: false },
+                { data: null, render: function (data, type, row) {
+                        return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm record-upload">上传</button>&nbsp;&nbsp;' +
+                            '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download record-download">下载</button>';
+                    }, orderable: false },
+                { data: null, render: function (data, type, row) {
+                        return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm bp-upload">上传</button>&nbsp;&nbsp;' +
+                            '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download bp-download">下载</button>';
+                    }, orderable: false }
             ],
-            fixedColumns: true,
             searching: true, // 可搜索
-            order: [[2, 'asc']], scrollX: true,	// 水平滚动条
-            scrollCollapse: true, autoWidth: false,
+            order: [[9, 'desc']], autoWidth: false,
         });
-        // 在第一列添加序号
-        // t.on( 'order.dt search.dt', function () {
-        //     t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-        //         cell.innerHTML = i+1;
-        //     } );
-        // } ).draw();
 
-        $('#portfolioTable tbody').on('dblclick', 'tr', function () {
+        $('#dataTable tbody').on('dblclick', 'tr', function () {
             var data = table.row( this ).data();
             $('#addModalBtn').click();
-            // alert( 'You clicked on '+data[0]+'\'s row' );
+            console.log(data);
+            $("#addModal").attr("data-id", data.uid);
+            $("#addModalName").val(data.name);
+            $("#addModalSource").val(data.source);
+            $("#addModalPartner").val(data.partner);
+            $("#addModalManager").val(data.manager);
+            $("#addModalCompany").val(data.company);
+            $("#addModalIndustry").val(data.industry);
+            $("#addModalLocation").val(data.location);
+            $("#addModalSummary").val(data.summary);
+            $("#addModalDescription").val(data.description);
+            $("#addModalStatus").val(data.status);
+            $("#addModalNext").val(data.next);
+            $("#addModalReason").val(data.sourceReason);
+            $("#addLeads").addClass("update");
+        });
+
+        $('#dataTable tbody').on('click', '.download', function () {
+            let id = $(this).attr("data-id");
+            console.log(id);
+            //将名称传入后台
+            if($(this).hasClass("record-download")){
+                window.location.href = basepath + "/file/download/record/"+id;
+            }else if($(this).hasClass("bp-download")){
+                window.location.href = basepath + "/file/download/bp/"+id;
+            }
+        });
+
+        $('#dataTable tbody').on('click', '.record-upload', function () {
+            $("#uploadModal1").modal('show');
+            let url = '/record/' + $(this).attr("data-id");
+            iniFileInput1(url);
+        });
+
+        $('#dataTable tbody').on('click', '.bp-upload', function () {
+            $("#uploadModal2").modal('show');
+            let url = '/bp/' + $(this).attr("data-id");
+            iniFileInput2(url);
         });
     }
+
+    function iniFileInput1(subpath) {
+        let panel = $("#input-repl-1").fileinput({
+            uploadUrl: basepath + '/file' + subpath,
+            autoReplace: true,
+            maxFileCount: 1,
+            allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "jpg", "jpeg", "png"]
+        });
+    }
+
+    function iniFileInput2(subpath) {
+        let panel = $("#input-repl-2").fileinput({
+            uploadUrl: basepath + '/file' + subpath,
+            autoReplace: true,
+            maxFileCount: 1,
+            allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "jpg", "jpeg", "png"]
+        });
+    }
+
 
     /**
      *  添加一条leads记录
@@ -450,6 +520,10 @@
         } else {
             form["sourceReason"] = $("#addModalReason").val();
         }
+        if($("#addLeads").hasClass("update")){
+            form["uid"] = $("#addModal").attr("data-id")
+        }
+
         let formData = JSON.stringify(form);
 
         $.ajax({
@@ -474,8 +548,22 @@
     /**
      * 加载add leads modal 中的各个<select>字段
      */
-    function loadAddModalFields() {
+    function loadAddModalFields(users, status) {
+        console.log(users)
+        console.log(status)
         let options = []
+        $.each(users, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalSource").html(options.join(''));
+        $("#addModalPartner").html(options.join(''));
+        $("#addModalManager").html(options.join(''));
+        options = []
+        $.each(status, function (k, v) {
+            options.push("<option value='" + k + "'>" + v + "</option>");
+        });
+        $("#addModalStatus").html(options.join(''));
+        $("#addModalNext").html(options.join(''));
     }
 
 </script>

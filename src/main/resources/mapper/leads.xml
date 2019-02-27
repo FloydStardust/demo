@@ -47,9 +47,13 @@
         description = #{description},
         `status` = #{status},
         last_change = #{lastChange},
-        `next` = #{next},
-        `source_reason` = #{sourceReason},
-        `pass_reason` = #{passReason},
+        `next` = #{next}
+        <if test="sourceReason != null">
+          , `source_reason` = #{sourceReason}
+        </if>
+        <if test="passReason != null">
+            , `pass_reason` = #{passReason}
+        </if>
         where uid = #{uid}
     </update>
 
@@ -90,7 +94,7 @@
         </if>
         <if test="statusLessAndEqual != null">
             <![CDATA[
-              and `status` <= #{statusLessThan}
+              and `status` <= #{statusLessAndEqual}
             ]]>
         </if>
         <if test="statusBiggerThan != null">
@@ -108,10 +112,10 @@
         where block_flag = 0 and uid = #{uid}
     </select>
 
-    <update id="delete" parameterType="java.lang.Integer">
+    <delete id="delete" parameterType="java.lang.Integer">
         update `vkc`.`leads` set
         block_flag = 1
         where uid = #{uid}
-    </update>
+    </delete>
 
 </mapper>

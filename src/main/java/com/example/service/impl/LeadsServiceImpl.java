@@ -65,12 +65,10 @@ public class LeadsServiceImpl implements LeadsService {
         Map<Integer, String> status = new HashMap<>();
         status.putAll(EnumSet.allOf(LeadsUtils.LeadsStatus.class).stream().
                     collect(Collectors.toMap(LeadsUtils.LeadsStatus::getIndex, LeadsUtils.LeadsStatus::getName)));
-        status.putAll(EnumSet.allOf(LeadsUtils.PipelineStatus.class).stream().
-                    collect(Collectors.toMap(LeadsUtils.PipelineStatus::getIndex, LeadsUtils.PipelineStatus::getName)));
-
         ResultData resultData = new ResultData();
         resultData.setResponseCode(ResponseCode.RESPONSE_OK);
         resultData.setData(status);
         return resultData;
     }
+
 }

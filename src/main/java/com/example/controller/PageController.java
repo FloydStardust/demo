@@ -85,4 +85,10 @@ public class PageController {
 		return "leads";
 	}
 
+	@GetMapping("watchlist")
+	public String watchlist(Model model){
+		model.addAttribute("type", LeadsUtils.LeadsType.WATCHLIST);
+		return "leads";
+	}
+
 }

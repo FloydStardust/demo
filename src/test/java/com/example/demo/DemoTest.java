@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -29,10 +30,12 @@ public class DemoTest {
 
 	@Test
 	public void test1() {
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String week = LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CHINA);
-
-		System.out.println(LocalDate.now().format(dateFormat) + " " +  week);
+		File file = new File("D:\\crm_files\\record\\1");
+		for (File file1 : file.listFiles()){
+			System.out.println(file1.getName());
+			System.out.println(file1.getPath());
+			System.out.println(file1.getAbsolutePath());
+		}
 	}
 
 	@Test

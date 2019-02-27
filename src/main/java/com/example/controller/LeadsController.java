@@ -8,6 +8,8 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * Description: demo
  * Created by Floyd on 2019/2/25 15:30
@@ -39,7 +41,13 @@ public class LeadsController {
 
     @PostMapping
     public ResultData create(@RequestBody Leads leads){
-        return leadsService.addLeads(leads);
+        if(leads.getUid()==0){
+            return leadsService.addLeads(leads);
+        } else {
+            leads.setLastChange(new Date());
+            return leadsService.updateLeads(leads);
+        }
+
     }
 
     @PutMapping

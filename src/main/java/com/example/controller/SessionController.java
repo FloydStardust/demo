@@ -9,6 +9,7 @@ import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class SessionController {
         return result;
     }
 
-
+    @GetMapping
     public ResultData getAll(){
         return userService.findAll();
     }

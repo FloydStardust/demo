@@ -11,5 +11,6 @@
         <mapper resource="mapper/financial_title.xml"/>
         <mapper resource="mapper/financial_data.xml"/>
         <mapper resource="mapper/financial_track.xml"/>
+        <mapper resource="mapper/leads.xml"/>
     </mappers>
 </configuration>
