@@ -6,8 +6,10 @@ package com.example.util;
  */
 public class LeadsUtils {
 
-    public static String UPLOAD_RECORD_PATH = "D:\\crm_files\\record\\";
-    public static String UPLOAD_BP_PATH = "D:\\crm_files\\bp\\";
+//    public static String UPLOAD_RECORD_PATH = "D:\\crm_files\\record\\";
+    public static String UPLOAD_RECORD_PATH = "/home/ec2-user/crm/upload/record/";
+//    public static String UPLOAD_BP_PATH = "D:\\crm_files\\bp\\";
+    public static String UPLOAD_BP_PATH = "/home/ec2-user/crm/upload/bp/";
 
 
     public static class LeadsType {

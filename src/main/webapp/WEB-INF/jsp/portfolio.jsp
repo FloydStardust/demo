@@ -96,7 +96,7 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index"> Dashboard</a></li>
+                    <%--<li><a href="index"> Dashboard</a></li>--%>
                     <li class="current"><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li class="submenu">
                         <a href="#">
@@ -117,7 +117,7 @@
         <div class="col-md-10">
             <div class="content-box-large">
                 <div class="panel-heading clearfix">
-                    <div class="panel-title pull-left"><h3>已投项目列表</h3></div>
+                    <div class="panel-title pull-left"><h3>已投项目列表(RMB K)</h3></div>
                     <div class="pull-right">
                         <button type="button" class="btn btn-primary" id="addModalBtn" data-toggle="modal" data-target="#addModal">添加项目</button>
                         <button type="button" class="btn btn-success">批量导入</button>
@@ -198,31 +198,29 @@
                     <div class="form-group row">
                         <label for="addModalInitialTime" class="col-sm-2 col-form-label">初投时间</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addModalInitialTime" placeholder="YYYY/MM">
+                            <input type="text" class="form-control" id="addModalInitialTime" placeholder="yyyy/MM/dd">
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="addModalShareType" class="col-sm-2 col-form-label">目前状态</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" id="addModalIPOStatus">
-                            </select>
-                        </div>
-                    </div>
+                    <%--<div class="form-group row">--%>
+                        <%--<label for="addModalShareType" class="col-sm-2 col-form-label">目前状态</label>--%>
+                        <%--<div class="col-sm-10">--%>
+                            <%--<select class="form-control" id="addModalIPOStatus">--%>
+                            <%--</select>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
                     <div class="form-group row">
                         <label for="addModalShareType" class="col-sm-2 col-form-label">股权性质</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalShareType">
-                            </select>
+                            <input type="text" class="form-control" id="addModalShareType" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="addModalInvestType" class="col-sm-2 col-form-label">领头/跟投</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalInvestType">
-                            </select>
+                            <input type="text" class="form-control" id="addModalInvestType" placeholder="">
                         </div>
                     </div>
 
@@ -360,16 +358,14 @@
                     <div class="form-group row">
                         <label for="addModalExitStatus" class="col-sm-2 col-form-label">退出状态</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalExitStatus">
-                            </select>
+                            <input type="text" class="form-control" id="addModalExitStatus" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="addModalExitType" class="col-sm-2 col-form-label">退出方式</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalExitType">
-                            </select>
+                            <input type="text" class="form-control" id="addModalExitType" placeholder="">
                         </div>
                     </div>
 
@@ -491,15 +487,32 @@
                     width: '80%'
                 },
                 { data: "fundName" }, { data: "date" }, { data: "shareType" }, { data: "investType" },
-                { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, { data: "investNum" },
-                { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "partner" }, { data: "manager" },
+                { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, 
+                { data: null, render: function (data, type, row) {
+                        return numberWithCommas(row.investNum);
+                    } },
+                { data: "investRatio" }, { data: "currentRatio" }, { data: "source" }, { data: "director" }, { data: "manager" },
                 { data: "boarder" }, { data: "industry" }, { data: "sector" }, { data: "location" }, { data: "registerLocation" },
-                { data: "exitStatus" }, { data: "exitType" }, { data: "exitTime" }, { data: "valueAchieved" }, { data: "valueAchieving" },
-                { data: "totalValue" }, { data: "returnMultiple" }, { data: "irr" }, { data: "valueEvidence" }
+                { data: "exitStatus" }, { data: "exitType" }, { data: "exitTime" }, 
+                { data: null, render: function (data, type, row) {
+                        return numberWithCommas(row.valueAchieved);
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return numberWithCommas(row.valueAchieving);
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return numberWithCommas(row.totalValue);
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return row.returnMultiple.toFixed(1)+ 'x';
+                    } },
+                { data: null, render: function (data, type, row) {
+                        return (row.irr*100).toFixed(2) + '%';
+                    } }, { data: "valueEvidence" }
             ],
             fixedColumns: true,
             searching: true, // 可搜索
-            order: [[2, 'asc']], scrollX: true,	// 水平滚动条
+            order: [[2, 'desc']], scrollX: true,	// 水平滚动条
             scrollCollapse: true, autoWidth: false,
         });
         // 在第一列添加序号
@@ -508,12 +521,6 @@
         //         cell.innerHTML = i+1;
         //     } );
         // } ).draw();
-
-        $('#portfolioTable tbody').on('dblclick', 'tr', function () {
-            var data = table.row( this ).data();
-            $('#addModalBtn').click();
-            // alert( 'You clicked on '+data[0]+'\'s row' );
-        });
     }
 
     /**
@@ -529,13 +536,13 @@
             "investType": $("#addModalInvestType").val(),
             "boardNum": $("#addModalBoardNum").val(),
             "round": $("#addModalInvestRound").val(),
-            "partner": $("#addModalInvestPartner").val(),
+            "investPartner": $("#addModalInvestPartner").val(),
             "moneyType": $("#addModalMoneyType").val(),
             "investNum": $("#addModalInvestAccount").val(),
             "investRatio": $("#addModalInvestShareRatio").val(),
             "currentRatio": $("#addModalCurrentShareRatio").val(),
             "source": $("#addModalSource").val(),
-            "partner": $("#addModalDirector").val(),
+            "investPartner": $("#addModalDirector").val(),
             "manager": $("#addModalManager").val(),
             "boarder": $("#addModalBoarder").val(),
             "industry": $("#addModalIndustry").val(),
@@ -618,6 +625,16 @@
             options.push("<option value='" + k + "'>" + v + "</option>");
         });
         $("#addModalExitType").html(options.join(''));
+    }
+
+    function numberWithCommas(x) {
+        if(typeof x == 'number'){
+            x = (x/1000).toFixed(1);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }else {
+            return  '<a style="text-decoration:none;">'+ x +'</a>';
+            // return x;
+        }
     }
 </script>
 </body>

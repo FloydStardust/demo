@@ -72,7 +72,7 @@
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
 	                          <li><a href="profile.html">Profile</a></li>
-	                          <li><a href="login.html">Logout</a></li>
+	                          <li><a href="logout">Logout</a></li>
 	                        </ul>
 	                      </li>
 	                    </ul>
@@ -88,19 +88,21 @@
 		  	<div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index.html"> Dashboard</a></li>
-                    <li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
-                    <li>
-                         <a href="#" id="PLW"> PLW
-                            <span class="glyphicon glyphicon-triangle-bottom pull-right"></span>
-                         </a>
-                     </li>
-                     <!-- Sub menu -->
-                    <li><a href="pipeline.html">&emsp;&emsp;Pipeline</a></li>
-                    <li><a href="leads.html">&emsp;&emsp;Leads</a></li>
-                    <li><a href="watchlist.html">&emsp;&emsp;Watchlist</a></li>
-
-                    <li class="current"><a href="schedule.html">Schedule</a></li>
+                    <%--<li><a href="index"> Dashboard</a></li>--%>
+					<li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
+					<li class="submenu">
+						<a href="#">
+							<i class="glyphicon glyphicon-list"></i> PLW
+							<span class="caret pull-right"></span>
+						</a>
+						<!-- Sub menu -->
+						<ul>
+							<li><a id="pipeline_link" href="<%=request.getContextPath()%>/leads">Leads</a></li>
+							<li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+							<li><a id="watch_link" href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+						</ul>
+					</li>
+					<li class="current"><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
                 </ul>
              </div>
 		  </div>
@@ -109,12 +111,12 @@
   				<div class="panel-heading clearfix">
 					<div class="panel-title pull-left"><h3 id="scheduleDate">VKC日程安排</h3></div>
 					<div class="pull-right">
-						<button type="button" class="btn btn-primary" id="addModalBtn" data-toggle="modal" data-target="#addModal">录入下周日程</button>
+						<button type="button" class="btn btn-primary" id="addModalBtn" data-toggle="modal" data-target="#addModal">录入日程</button>
 					</div>
 				</div>
   				<div class="panel-body" id="container">
   					<!-- 已投项目表格 -->
-  					<table class="table table-striped table-bordered" id="scheduleTable" style="width: 100%;">
+  					<table class="table table-hover table-striped table-bordered" id="scheduleTable" style="width: 100%;">
 						<thead>
 							<tr>
 								<th>姓名</th>
@@ -130,6 +132,62 @@
 		  </div>
 		</div>
     </div>
+
+	<!-- Add Schedule Modal -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" id="addModalTitle">添加日程信息</h3>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group row">
+							<label for="addModalDate" class="col-sm-2 col-form-label">日期</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="addModalDate" placeholder="yyyy-MM-dd(如：2019/1/1，无需添加0)">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="addModalStart" class="col-sm-2 col-form-label">开始时间</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="addModalStart">
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="addModalEnd" class="col-sm-2 col-form-label">结束时间</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="addModalEnd">
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="addModalVenue" class="col-sm-2 col-form-label">地点</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="addModalVenue" placeholder="">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="addModalContent" class="col-sm-2 col-form-label">事件</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="addModalContent" rows="3"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="float-right"><h3>提交前请再次检查</h3></div>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">退出</button>
+					<button id="addSchedule" type="button" class="btn btn-primary" onclick="addSchedule()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <footer>
          <div class="container">
@@ -155,56 +213,65 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-	<%--一定要按顺序引入！！！--%>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dataTables.editor.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/editor.bootstrap.min.js"></script>
 
 
     <script src="<%=request.getContextPath()%>/js/custom.js"></script>
 	<script src="<%=request.getContextPath()%>/js/cookieHelper.js"></script>
     <script type="text/javascript">
-		var editor;
 		var basepath = "<%=request.getContextPath()%>";
 		var token = getCookie("access_token");
+		var currentUser = null;
+		var time_split = null;
 
 		$(document).ready( function () {
-
-			editor = new $.fn.dataTable.Editor( {
-				ajax: {
-					url: basepath + '/api/schedule/week',
-					type: "GET",
-					contentType : 'application/json;charset=utf-8',
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader("authorization", "Bearer " + token);
-					}
-				},
-				table: "#scheduleTable",
-				idSrc: 'id',
-				fields: [ {
-					label: "姓名:",
-					name: "username"
-				}, {
-					label: "日期:",
-					name: "date"
-				}, {
-					label: "开始时间:",
-					name: "start"
-				}, {
-					label: "结束时间:",
-					name: "end"
-				}, {
-					label: "地点:",
-					name: "venue"
-				}, {
-					label: "事件:",
-					name: "event"
+			$.ajax({
+				url: basepath + 'api/user/current',
+				type: "GET",
+				contentType : 'application/json;charset=utf-8',
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("authorization", "Bearer " + token);
 				}
-				]
-			} );
+			}).done(function (data) {
+				if(data.responseCode == "RESPONSE_OK"){
+					currentUser = data.data;
+					console.log("currentUser:", currentUser)
+					$.ajax({
+						url: basepath + 'api/schedule/time_split',
+						type: "GET",
+						contentType : 'application/json;charset=utf-8',
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader("authorization", "Bearer " + token);
+						}
+					}).done(function (data) {
+						if(data.responseCode == "RESPONSE_OK"){
+							let options = [];
+							time_split = data.data;
+							$.each(time_split, function (k, v) {
+								options.push("<option value='" + k + "'>" + v + "</option>");
+							});
+							$("#addModalStart").html(options.join(''));
+							$("#addModalEnd").html(options.join(''));
+							loadWeekSchedule();
+						}
+					});
+				}
+			});
 
-			var table = $('#scheduleTable').DataTable( {
-				lengthChange: false,
-				ajax: {
+			$('#addModal').on('hidden.bs.modal', function () {
+				$(this).find("input,textarea,select")
+						.val('')
+						.end();
+				$("#addModal").removeAttr("data-id");
+				$("#addSchedule").removeClass("update");
+			});
+		});
+
+		/**
+		 * 加载日程表
+		 */
+		function loadWeekSchedule() {
+			table = $('#scheduleTable').DataTable({
+				ajax:  {
 					url: basepath + '/api/schedule/week',
 					type: "GET",
 					contentType : 'application/json;charset=utf-8',
@@ -213,28 +280,72 @@
 					}
 				},
 				columns: [
-					{ data: "username"},
+					{ data: "username" },
 					{ data: "date" },
-					{ data:  null, render: function ( data, type, row ) {
-							return data.start+' - '+data.end;
-						} } ,
+					{ data: null, render: function (data, type, row) {
+							return time_split[row.start] + " - " + time_split[row.end];
+						} },
 					{ data: "venue" },
-					{ data: "event" },
-					// { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
+					{ data: "event" }
 				],
-				select: true
-			} );
+				searching: true, // 可搜索
+				order: [[0, 'asc']],
+				autoWidth: false,
+			});
+			$('#scheduleTable tbody').on('dblclick', 'tr', function () {
+				console.log(currentUser);
+				var data = table.row( this ).data();
+				if(currentUser.userName == data.username) {
+					$('#addModalBtn').click();
+					$("#addModal").attr("data-id", data.id);
+					$("#addModalDate").val(data.date.split(' ')[0]);
+					$("#addModalStart").val(data.start);
+					$("#addModalEnd").val(data.end);
+					$("#addModalVenue").val(data.venue);
+					$("#addModalContent").val(data.event);
+					$("#addSchedule").addClass("update");
+				} else {
+					window.alert("只能修改自己的日程！");
+				}
+			});
+		}
 
-			// Display the buttons
-			new $.fn.dataTable.Buttons( table, [
-				{ extend: "create", editor: editor },
-				{ extend: "edit",   editor: editor },
-				{ extend: "remove", editor: editor }
-			] );
+		/**
+		 *  添加一条日程
+		 */
+		function addSchedule() {
+			let form = {
+				"date": new Date($("#addModalDate").val()).getTime(),
+				"start": $("#addModalStart").val(),
+				"end": $("#addModalEnd").val(),
+				"creatorId": currentUser.id,
+				"content": $("#addModalContent").val(),
+				"venue": $("#addModalVenue").val(),
+			};
+			if($("#addSchedule").hasClass("update")){
+				form["uid"] = $("#addModal").attr("data-id")
+			}
 
-			table.buttons().container()
-					.appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
-		})
+			let formData = JSON.stringify(form);
+
+			$.ajax({
+				url: basepath + '/api/schedule',
+				type: 'POST',
+				data: formData,
+				dataType: 'json',
+				contentType:"application/json",
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("authorization", "Bearer " + token);
+				}
+			}).done(function (data) {
+				if (data.responseCode == "RESPONSE_OK"){
+					alert("添加成功！");
+					window.location.reload();
+				} else {
+					alert(data.description);
+				}
+			});
+		}
 
     </script>
   </body>

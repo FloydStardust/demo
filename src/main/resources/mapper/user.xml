@@ -2,8 +2,6 @@
 <mapper namespace="vkc.user">
     <resultMap id="user" type="com.example.entity.User">
         <result property="id" column="id"></result>
-        <result property="email" column="email"></result>
-        <result property="phone" column="phone"></result>
         <result property="userName" column="user_name"></result>
         <result property="password" column="password"></result>
         <result property="blockFlag" column="block_flag"></result>
@@ -11,30 +9,24 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.User" useGeneratedKeys="false">
-        INSERT INTO `vkc`.`user` (email, phone, user_name, password, block_flag, create_time)
-        VALUES (#{email}, #{phone}, #{userName}, #{password}, #{blockFlag}, #{createAt})
+        INSERT INTO `vkc`.`user` (user_name, password, block_flag, create_time)
+        VALUES ( #{userName}, #{password}, #{blockFlag}, #{createAt})
     </insert>
 
     <select id="query" parameterType="java.util.Map" resultMap="user">
-        SELECT id, email, phone, user_name, password, block_flag, create_time
+        SELECT id, user_name, password, block_flag, create_time
         FROM `vkc`.`user`
         WHERE 1 = 1 and block_flag = 0
         <if test="id != null">
             AND id = #{id}
         </if>
-        <if test="email != null">
-            AND email = #{email}
-        </if>
         <if test="userName != null">
             AND user_name = #{userName}
-        </if>
-        <if test="phone != null">
-            AND phone = #{phone}
         </if>
     </select>
 
     <select id="queryByUids" parameterType="java.util.List" resultMap="user">
-        SELECT id, email, phone, user_name, password, block_flag, create_time
+        SELECT id, user_name, password, block_flag, create_time
         FROM `vkc`.`user`
         WHERE 1 = 1 and block_flag = 0
         and id in
@@ -44,7 +36,7 @@
     </select>
 
     <select id="selectAll" resultMap="user">
-        SELECT id, email, phone, user_name, password, block_flag, create_time
+        SELECT id, user_name, password, block_flag, create_time
         FROM `vkc`.`user`
         WHERE block_flag = 0
         ORDER BY `user_name` ASC

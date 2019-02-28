@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.service.LeadsService;
 import com.example.service.PortfolioService;
 import com.example.service.UserService;
-import com.example.util.LeadsUtils;
-import com.example.util.ResponseCode;
-import com.example.util.ResultData;
+import com.example.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +26,6 @@ public class PageController {
 
 	@Autowired
 	private PortfolioService portfolioService;
-	@Autowired
-	private LeadsService leadsService;
-	@Autowired
-	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "register")
 	public String register(ModelMap model) {
@@ -46,13 +40,6 @@ public class PageController {
 	@GetMapping("home")
 	public String home(){
 		return "forward:/schedule";
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "schedule")
-	public String schedule(ModelMap model) {
-//		ResultData result = scheduleService.fetchScheduleWeekly();
-//		model.put("schedules", result.getData());
-		return "schedule";
 	}
 
 	@GetMapping("portfolio")
@@ -89,6 +76,11 @@ public class PageController {
 	public String watchlist(Model model){
 		model.addAttribute("type", LeadsUtils.LeadsType.WATCHLIST);
 		return "leads";
+	}
+
+	@GetMapping("schedule")
+	public String schedule(){
+		return "schedule";
 	}
 
 }

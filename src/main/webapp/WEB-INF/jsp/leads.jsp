@@ -76,7 +76,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
                                 <ul class="dropdown-menu animated fadeInUp">
                                     <li><a href="profile.html">Profile</a></li>
-                                    <li><a href="login.html">Logout</a></li>
+                                    <li><a href="logout">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -93,7 +93,7 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index"> Dashboard</a></li>
+                    <%--<li><a href="index"> Dashboard</a></li>--%>
                     <li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li class="submenu open">
                         <a href="#">
@@ -114,7 +114,7 @@
         <div class="col-md-10">
             <div class="content-box-large">
                 <div class="panel-heading clearfix">
-                    <div class="panel-title pull-left"><h3>Pipeline List</h3></div>
+                    <div class="panel-title pull-left"><h3 id="page_name">Pipeline List</h3></div>
                     <div class="pull-right">
                         <button type="button" class="btn btn-primary hidden" id="addModalBtn" data-toggle="modal" data-target="#addModal">添加 Leads</button>
                         <button type="button" class="btn btn-success">批量导入</button>
@@ -154,7 +154,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="addModalTitle">添加Pipeline信息</h3>
+                <h3 class="modal-title" id="addModalTitle">添加Leads信息</h3>
             </div>
             <div class="modal-body">
                 <form>
@@ -333,10 +333,13 @@
     $(document).ready(function(){
         if(type == 0){
             $("#leads_link").addClass("current");
+            $("#page_name").html("Leads列表");
         }else if(type == 1){
             $("#pipeline_link").addClass("current");
+            $("#page_name").html("Pipeline列表");
         }else if(type == 2){
             $("#watch_link").addClass("current");
+            $("#page_name").html("Watchlist列表");
         }
 
         let users={}, status = {};
@@ -351,7 +354,7 @@
             if(data.responseCode == "RESPONSE_OK"){
                 status = data.data;
                 $.ajax({
-                    url: basepath + '/auth',
+                    url: basepath + '/api/user',
                     type: "GET",
                     contentType : 'application/json;charset=utf-8',
                     beforeSend: function (xhr) {
@@ -367,6 +370,14 @@
                     }
                 });
             }
+        });
+
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find("input,textarea,select")
+                .val('')
+                .end();
+            $(this).removeAttr("data-id");
+            $("#addLeads").removeClass("update");
         });
     });
 
@@ -441,7 +452,7 @@
             $("#addModal").attr("data-id", data.uid);
             $("#addModalName").val(data.name);
             $("#addModalSource").val(data.source);
-            $("#addModalPartner").val(data.partner);
+            $("#addModalPartner").val(data.investPartner);
             $("#addModalManager").val(data.manager);
             $("#addModalCompany").val(data.company);
             $("#addModalIndustry").val(data.industry);
@@ -504,7 +515,7 @@
         let form = {
             "name": $("#addModalName").val(),
             "source": $("#addModalSource").val(),
-            "partner": $("#addModalPartner").val(),
+            "investPartner": $("#addModalPartner").val(),
             "manager": $("#addModalManager").val(),
             "company": $("#addModalCompany").val(),
             "industry": $("#addModalIndustry").val(),
@@ -549,8 +560,6 @@
      * 加载add leads modal 中的各个<select>字段
      */
     function loadAddModalFields(users, status) {
-        console.log(users)
-        console.log(status)
         let options = []
         $.each(users, function (k, v) {
             options.push("<option value='" + k + "'>" + v + "</option>");

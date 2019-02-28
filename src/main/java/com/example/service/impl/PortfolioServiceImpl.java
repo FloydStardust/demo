@@ -87,17 +87,17 @@ public class PortfolioServiceImpl implements PortfolioService {
             Map<Integer, String> briefInfo = list.stream().collect(Collectors.toMap(Fund::getUid, Fund::getName));
 
             addPortfolioFieldsVo.setFunds(briefInfo);
-            addPortfolioFieldsVo.setIPOStatus(PortfolioUtils.IPO_STATUS.toMap());
-            addPortfolioFieldsVo.setInvestType( EnumSet.allOf(PortfolioUtils.InvestType.class).stream().
-                    collect(Collectors.toMap(PortfolioUtils.InvestType::getIndex, PortfolioUtils.InvestType::getName)));
-            addPortfolioFieldsVo.setShareType( EnumSet.allOf(PortfolioUtils.ShareType.class).stream().
-                    collect(Collectors.toMap(PortfolioUtils.ShareType::getIndex, PortfolioUtils.ShareType::getName)));
-            addPortfolioFieldsVo.setExitStatus( EnumSet.allOf(PortfolioUtils.ExitStatus.class).stream().
-                    collect(Collectors.toMap(PortfolioUtils.ExitStatus::getIndex, PortfolioUtils.ExitStatus::getName)));
-            addPortfolioFieldsVo.setMoneyType( EnumSet.allOf(PortfolioUtils.MoneyType.class).stream().
-                    collect(Collectors.toMap(PortfolioUtils.MoneyType::getIndex, PortfolioUtils.MoneyType::getName)));
-            addPortfolioFieldsVo.setExitType( EnumSet.allOf(PortfolioUtils.ExitTye.class).stream().
-                    collect(Collectors.toMap(PortfolioUtils.ExitTye::getIndex, PortfolioUtils.ExitTye::getName)));
+//            addPortfolioFieldsVo.setIPOStatus(PortfolioUtils.IPO_STATUS.toMap());
+//            addPortfolioFieldsVo.setInvestType( EnumSet.allOf(PortfolioUtils.InvestType.class).stream().
+//                    collect(Collectors.toMap(PortfolioUtils.InvestType::getIndex, PortfolioUtils.InvestType::getName)));
+//            addPortfolioFieldsVo.setShareType( EnumSet.allOf(PortfolioUtils.ShareType.class).stream().
+//                    collect(Collectors.toMap(PortfolioUtils.ShareType::getIndex, PortfolioUtils.ShareType::getName)));
+//            addPortfolioFieldsVo.setExitStatus( EnumSet.allOf(PortfolioUtils.ExitStatus.class).stream().
+//                    collect(Collectors.toMap(PortfolioUtils.ExitStatus::getIndex, PortfolioUtils.ExitStatus::getName)));
+//            addPortfolioFieldsVo.setMoneyType( EnumSet.allOf(PortfolioUtils.MoneyType.class).stream().
+//                    collect(Collectors.toMap(PortfolioUtils.MoneyType::getIndex, PortfolioUtils.MoneyType::getName)));
+//            addPortfolioFieldsVo.setExitType( EnumSet.allOf(PortfolioUtils.ExitTye.class).stream().
+//                    collect(Collectors.toMap(PortfolioUtils.ExitTye::getIndex, PortfolioUtils.ExitTye::getName)));
 
             result.setData(addPortfolioFieldsVo);
             result.setResponseCode(ResponseCode.RESPONSE_OK);

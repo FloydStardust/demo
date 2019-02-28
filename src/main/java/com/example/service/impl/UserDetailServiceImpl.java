@@ -23,7 +23,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 	    List<SimpleGrantedAuthority> authorities = new LinkedList<>();
-	    ResultData result = userService.findByEmail(userName);
+	    ResultData result = userService.findByName(userName);
 	    if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
 		    com.example.entity.User user = ((List<com.example.entity.User>) result.getData()).get(0);
 		    return new User(user.getUserName(), user.getPassword(), authorities);

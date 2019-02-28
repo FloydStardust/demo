@@ -9,7 +9,7 @@
         <result property="investType" column="invest_type" />
         <result property="boardNum" column="board_num" />
         <result property="round" column="round" />
-        <result property="partner" column="partner" />
+        <result property="investPartner" column="invest_partner" />
         <result property="moneyType" column="money_type" />
         <result property="investNum" column="invest_num" />
         <result property="investRatio" column="invest_ratio" />
@@ -36,11 +36,11 @@
 
     <insert id="insert" parameterType="com.example.entity.Portfolio">
       insert into `vkc`.`portfolio`
-      (`name`, fund_id, `date`, share_type, invest_type, board_num, round, partner, money_type, invest_num, invest_ratio,
+      (`name`, fund_id, `date`, share_type, invest_type, board_num, round, invest_partner, money_type, invest_num, invest_ratio,
       current_ratio, `source`, partner, manager, boarder, industry, sector, location, register_location, `intro`, exit_status,
       exit_type, exit_time, value_achieved, value_achieving, total_value, return_multiple, irr, value_evidence)
       values
-      (#{name}, #{fundId}, #{date}, #{shareType}, #{investType}, #{boardNum}, #{round}, #{partner}, #{moneyType},
+      (#{name}, #{fundId}, #{date}, #{shareType}, #{investType}, #{boardNum}, #{round}, #{investPartner}, #{moneyType},
       #{investNum}, #{investRatio}, #{currentRatio}, #{source}, #{partner}, #{manager}, #{boarder}, #{industry}, #{sector},
       #{location}, #{registerLocation}, #{intro}, #{exitStatus}, #{exitType}, #{exitTime}, #{valueAchieved}, #{valueAchieving},
       #{totalValue}, #{returnMultiple}, #{irr}, #{valueEvidence})
@@ -58,33 +58,33 @@
         <if test="date != null">
             `date` = #{date},
         </if>
-            share_type = #{shareType},
-            invest_type = #{investType},
-            board_num = #{boardNum},
-            round = #{round},
-            partner = #{partner},
-            money_type = #{moneyType},
-            invest_num = #{investNum},
-            invest_ratio = #{investRatio},
-            current_ratio = #{currentRatio},
-            `source` = #{source},
-            partner = #{partner},
-            manager = #{manager},
-            boarder = #{boarder},
-            industry = #{industry},
-            sector = #{sector},
-            location = #{location},
-            register_location = #{registerLocation},
-            `intro` = #{intro},
-            exit_status = #{exitStatus},
-            exit_type = #{exitType},
-            exit_time = #{exitTime},
-            value_achieved = #{valueAchieved},
-            value_achieving = #{valueAchieving},
-            total_value = #{totalValue},
-            return_multiple = #{returnMultiple},
-            irr = #{irr},
-            value_evidence = #{valueEvidence}
+        share_type = #{shareType},
+        invest_type = #{investType},
+        board_num = #{boardNum},
+        round = #{round},
+        invest_partner = #{investPartner},
+        money_type = #{moneyType},
+        invest_num = #{investNum},
+        invest_ratio = #{investRatio},
+        current_ratio = #{currentRatio},
+        `source` = #{source},
+        partner = #{partner},
+        manager = #{manager},
+        boarder = #{boarder},
+        industry = #{industry},
+        sector = #{sector},
+        location = #{location},
+        register_location = #{registerLocation},
+        `intro` = #{intro},
+        exit_status = #{exitStatus},
+        exit_type = #{exitType},
+        exit_time = #{exitTime},
+        value_achieved = #{valueAchieved},
+        value_achieving = #{valueAchieving},
+        total_value = #{totalValue},
+        return_multiple = #{returnMultiple},
+        irr = #{irr},
+        value_evidence = #{valueEvidence}
         where uid = #{uid}
     </update>
 
@@ -107,9 +107,6 @@
         </if>
         <if test="manager != null">
             and `manager` = #{manager}
-        </if>
-        <if test="partner != null">
-            and partner = #{partner}
         </if>
         order by `date`
     </select>

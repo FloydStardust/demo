@@ -100,7 +100,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
                                 <ul class="dropdown-menu animated fadeInUp">
                                     <li><a href="profile.html">Profile</a></li>
-                                    <li><a href="login.html">Logout</a></li>
+                                    <li><a href="logout">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -117,7 +117,7 @@
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li><a href="index"> Dashboard</a></li>
+                    <%--<li><a href="index"> Dashboard</a></li>--%>
                     <li class="current"><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li class="submenu">
                         <a href="#">
@@ -126,8 +126,8 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
                             <li><a id="pipeline_link" href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
                             <li><a id="watch_link" href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
                         </ul>
                     </li>
@@ -138,7 +138,7 @@
         <div class="col-md-10">
             <div class="content-box-large">
                 <div class="panel-heading">
-                    <div class="panel-title"><h3 id="big-title">500万彩票</h3></div>
+                    <div class="panel-title"><h3 id="big-title"></h3></div>
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs" id="detailTab" role="tablist">
@@ -194,8 +194,7 @@
                                     </div>
                                     <div class="content-box-large box-with-header">
                                         <br/>
-                                        <div id="intro-info">
-                                            500.com是中国历史最长、用户规模最大、唯一具备合法资质的民营互联网体彩销售服务平台。500.com也是唯一一家获得财政部批准试点进行互联网体育彩票销售服务的民营企业
+                                        <div id="company_description">
                                         </div>
                                         <br />
                                     </div>
@@ -206,7 +205,9 @@
                                     </div>
                                     <div class="content-box-large box-with-header">
                                         <br/>
-                                        这里是现金流量表摘要
+                                        <div id="cash_flow_summary">
+                                            现金流量表功能暂未开放  (๑•́ ₃ •̀๑)
+                                        </div>
                                         <br />
                                     </div>
                                 </div>
@@ -214,19 +215,43 @@
                             <div class="row col-md-12">
                                 <div class="col-md-12 panel-warning">
                                     <div class="content-box-header panel-heading">
-                                        <div class="panel-title ">当期业务情况简评</div>
+                                        <div class="panel-title ">当期业务完成情况</div>
                                     </div>
                                     <div class="content-box-large box-with-header">
                                         <br/>
-                                        报告期：2018.11.01-2018.11.30
-                                        <br/>
-                                        这里是当期业务情况简评
+                                        该公司未提交2019年财务目标数据  (つд⊂)
                                         <br />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="PL" role="tabpanel">
+                            <br/>
+                            <div class="row col-md-12">
+                                <div class="col-md-9"> <h3>货币码：RMB 单位：千元</h3></div>
+                                <div class="col-md-3">
+                                    <div class="pull-left"><h3>历史数据</h3></div>
+                                    <div class="pull-right">
+                                        <%--<button type="button" class="btn btn-primary" id="loadHistory">加载历史数据</button>--%>
+                                        <button type="button" class="btn btn-success">导出Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row col-md-12">
+                                <div class="col-md-9 medium-font">
+                                    <!-- 利润表 -->
+                                    <table class="table table-bordered table-hover text-nowrap with-header" id="PLTable" cellspacing="0" width="100%">
+                                    </table>
+                                </div>
+                                <div class="col-md-3 medium-font">
+                                    <!-- 利润表历史数据 -->
+                                    <table class="table table-bordered table-hover text-nowrap with-header" id="PLHistoryTable" cellspacing="0" width="100%">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="BS" role="tabpanel">
                             <br/>
                             <div class="row col-md-12">
                                 <div class="col-md-7"> <h3>货币码：RMB 单位：千元</h3></div>
@@ -241,37 +266,11 @@
                             <br/>
                             <div class="row col-md-12">
                                 <div class="col-md-7 medium-font">
-                                    <!-- 利润表 -->
-                                    <table class="table table-bordered table-hover text-nowrap with-header" id="PLTable" cellspacing="0" width="100%">
-                                    </table>
-                                </div>
-                                <div class="col-md-5 medium-font">
-                                    <!-- 利润表历史数据 -->
-                                    <table class="table table-bordered table-hover text-nowrap with-header" id="PLHistoryTable" cellspacing="0" width="100%">
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="BS" role="tabpanel">
-                            <br/>
-                            <div class="row col-md-12">
-                                <div class="col-md-6"> <h3>货币码：RMB 单位：千元</h3></div>
-                                <div class="col-md-6">
-                                    <div class="pull-left"><h3>历史数据</h3></div>
-                                    <div class="pull-right">
-                                        <%--<button type="button" class="btn btn-primary" id="loadHistory">加载历史数据</button>--%>
-                                        <button type="button" class="btn btn-success">导出Excel</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row col-md-12">
-                                <div class="col-md-6 medium-font">
                                     <!-- 资产负债表 -->
                                     <table class="table table-bordered table-hover text-nowrap with-header" id="BSTable" cellspacing="0" width="100%">
                                     </table>
                                 </div>
-                                <div class="col-md-6 medium-font">
+                                <div class="col-md-5 medium-font">
                                     <!-- 资产负债表历史数据 -->
                                     <table class="table table-bordered table-hover text-nowrap with-header" id="BSHistoryTable" cellspacing="0" width="100%">
                                     </table>
@@ -281,7 +280,7 @@
                         <div class="tab-pane fade" id="CS" role="tabpanel">
                             <br/>
                             <div class="row">
-                                <h2 class="col-md-12">该功能暂未开放，Floyd持续coding...QAQ</h2>
+                                <h2 class="col-md-12">该功能暂未开放，Floyd持续coding...(〃∀〃)</h2>
                             </div>
                             <br/>
                             <div class="col-md-7">
@@ -546,7 +545,7 @@
                         <div class="tab-pane fade" id="OP" role="tabpanel">
                             <br/>
                             <div class="row">
-                                <h4 class="col-md-6">报告期：2018.11.30 货币码：RMB 单位：见左侧表头</h4>
+                                <h2 class="col-md-11">该功能暂未开放，Floyd持续coding...(〃∀〃)</h2>
                                 <div class="col-md-1">
                                     <button type="button" class="btn btn-success">导出Excel</button>
                                 </div>
@@ -809,7 +808,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="modify" role="tabpanel">
-                            <h4 class="offset-md-2"> Floyd持续Coding中...QAQ </h4>
+                            <h2 class="col-md-12">该功能暂未开放，Floyd持续coding...(〃∀〃)</h2>
                         </div>
                     </div>
                 </div>
@@ -823,7 +822,7 @@
     <div class="container">
 
         <div class="copy text-center">
-            Copyright 2014 <a href='#'>Website</a>
+            Copyright <a href='#'> Floyd, 2019 </a>
         </div>
 
     </div>
@@ -851,6 +850,7 @@
     $(document).ready(function(){
         loadPlSummary();
         loadBsSummary();
+        loadCompanyDescription();
         loadPlTable();
         loadBsTable();
 
@@ -870,7 +870,6 @@
                 xhr.setRequestHeader("authorization", "Bearer " + token);
             }
         }).done(function (data) {
-            console.log(data)
             if (data.responseCode == "RESPONSE_OK"){
                 let bsSummaryData = transpose( data.data.map(unshiftColumnName));
                 let header = genColumnConfig(bsSummaryData.shift());
@@ -894,7 +893,6 @@
                 xhr.setRequestHeader("authorization", "Bearer " + token);
             }
         }).done(function (data) {
-            console.log(data)
             if (data.responseCode == "RESPONSE_OK"){
                 let plSummaryData = transpose( data.data.map(unshiftColumnName));
                 let header = genColumnConfig(plSummaryData.shift());
@@ -905,6 +903,25 @@
                     searching: false, autoWidth: true, info: false
                 };
                 let table = $('#PLSummaryTable').DataTable(configure);
+            }
+        });
+    }
+
+    function loadCompanyDescription() {
+        $.ajax({
+            url: basepath + '/api/portfolio/' + portfolioId,
+            type: 'GET',
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            console.log(data.data)
+            if (data.responseCode != "RESPONSE_OK" ||  data.data.intro==null ){
+                $("#company_description").html("暂无公司介绍 ( ˘･з･)");
+            }else {
+                $("#big-title").html(data.data.name);
+                $("#company_description").html(data.data.intro);
             }
         });
     }

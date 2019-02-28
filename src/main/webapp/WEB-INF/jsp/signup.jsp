@@ -40,7 +40,6 @@
 			            <div class="content-wrap">
 			                <h6>Sign Up</h6>
                             <input id="username" class="form-control" type="text" placeholder="username" required="required">
-			                <input id="email" class="form-control" type="text" placeholder="E-mail address" required="required">
 			                <input id="password" class="form-control" type="password" placeholder="Password" required="required">
 			                <input id="passwordRepeat" class="form-control" type="password" placeholder="Confirm Password" required="required">
 			                <div class="action">

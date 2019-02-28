@@ -1,6 +1,5 @@
 function register() {
     var username = document.getElementById("username").value;
-    var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var passwordRepeat = document.getElementById("passwordRepeat").value;
     
@@ -11,7 +10,6 @@ function register() {
 
     var data = new FormData();
     data.append("userName", username);
-    data.append("email", email);
     data.append("password", password);
 
     var xhr = new XMLHttpRequest();
@@ -21,6 +19,7 @@ function register() {
         if (this.readyState === 4) {
             var response = JSON.parse(this.responseText);
             if (response.responseCode === 'RESPONSE_OK') {
+                window.alert("注册成功");
                 window.location.href = '/login';
             }
         }

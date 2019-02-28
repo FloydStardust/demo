@@ -11,21 +11,18 @@ public class Portfolio extends Entity{
     private String name;
     private int fundId;
     private String date;
-    /**
-     * The portfolio's type: 0 for normal, 1 for HK_IPO, 2 for NYSE_IPO
-     */
-    private int ipoStatus;
-    private int shareType;
-    private int investType;
-    private int boardNum;
+
+    private String shareType;
+    private String investType;
+    private String boardNum;
     private String round;
-    private String partner;
-    private int moneyType;
+    private String investPartner;
+    private String moneyType;
     private int investNum;
-    private double investRatio;
-    private double currentRatio;
+    private String investRatio;
+    private String currentRatio;
     private String source;
-    private String director;
+    private String partner;
     private String manager;
     private String boarder;
     private String industry;
@@ -33,8 +30,8 @@ public class Portfolio extends Entity{
     private String location;
     private String registerLocation;
     private String intro;
-    private int exitStatus;
-    private int exitType;
+    private String exitStatus;
+    private String exitType;
     private String exitTime;
     private int valueAchieved;
     private int valueAchieving;
@@ -75,29 +72,6 @@ public class Portfolio extends Entity{
         this.date = date;
     }
 
-    public int getShareType() {
-        return shareType;
-    }
-
-    public void setShareType(int shareType) {
-        this.shareType = shareType;
-    }
-
-    public int getInvestType() {
-        return investType;
-    }
-
-    public void setInvestType(int investType) {
-        this.investType = investType;
-    }
-
-    public int getBoardNum() {
-        return boardNum;
-    }
-
-    public void setBoardNum(int boardNum) {
-        this.boardNum = boardNum;
-    }
 
     public String getRound() {
         return round;
@@ -107,20 +81,12 @@ public class Portfolio extends Entity{
         this.round = round;
     }
 
-    public String getPartner() {
-        return partner;
+    public String getInvestPartner() {
+        return investPartner;
     }
 
-    public void setPartner(String partner) {
-        this.partner = partner;
-    }
-
-    public int getMoneyType() {
-        return moneyType;
-    }
-
-    public void setMoneyType(int moneyType) {
-        this.moneyType = moneyType;
+    public void setInvestPartner(String investPartner) {
+        this.investPartner = investPartner;
     }
 
     public int getInvestNum() {
@@ -131,22 +97,6 @@ public class Portfolio extends Entity{
         this.investNum = investNum;
     }
 
-    public double getInvestRatio() {
-        return investRatio;
-    }
-
-    public void setInvestRatio(double investRatio) {
-        this.investRatio = investRatio;
-    }
-
-    public double getCurrentRatio() {
-        return currentRatio;
-    }
-
-    public void setCurrentRatio(double currentRatio) {
-        this.currentRatio = currentRatio;
-    }
-
     public String getSource() {
         return source;
     }
@@ -155,12 +105,12 @@ public class Portfolio extends Entity{
         this.source = source;
     }
 
-    public String getDirector() {
-        return director;
+    public String getPartner() {
+        return partner;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    public void setPartner(String partner) {
+        this.partner = partner;
     }
 
     public String getManager() {
@@ -209,22 +159,6 @@ public class Portfolio extends Entity{
 
     public void setRegisterLocation(String registerLocation) {
         this.registerLocation = registerLocation;
-    }
-
-    public int getExitStatus() {
-        return exitStatus;
-    }
-
-    public void setExitStatus(int exitStatus) {
-        this.exitStatus = exitStatus;
-    }
-
-    public int getExitType() {
-        return exitType;
-    }
-
-    public void setExitType(int exitType) {
-        this.exitType = exitType;
     }
 
     public String getExitTime() {
@@ -291,11 +225,67 @@ public class Portfolio extends Entity{
         this.intro = intro;
     }
 
-    public int getIpoStatus() {
-        return ipoStatus;
+    public String getShareType() {
+        return shareType;
     }
 
-    public void setIpoStatus(int ipoStatus) {
-        this.ipoStatus = ipoStatus;
+    public void setShareType(String shareType) {
+        this.shareType = shareType;
+    }
+
+    public String getInvestType() {
+        return investType;
+    }
+
+    public void setInvestType(String investType) {
+        this.investType = investType;
+    }
+
+    public String getBoardNum() {
+        return boardNum;
+    }
+
+    public void setBoardNum(String boardNum) {
+        this.boardNum = boardNum;
+    }
+
+    public String getMoneyType() {
+        return moneyType;
+    }
+
+    public void setMoneyType(String moneyType) {
+        this.moneyType = moneyType;
+    }
+
+    public String getInvestRatio() {
+        return investRatio;
+    }
+
+    public void setInvestRatio(String investRatio) {
+        this.investRatio = investRatio;
+    }
+
+    public String getCurrentRatio() {
+        return currentRatio;
+    }
+
+    public void setCurrentRatio(String currentRatio) {
+        this.currentRatio = currentRatio;
+    }
+
+    public String getExitStatus() {
+        return exitStatus;
+    }
+
+    public void setExitStatus(String exitStatus) {
+        this.exitStatus = exitStatus;
+    }
+
+    public String getExitType() {
+        return exitType;
+    }
+
+    public void setExitType(String exitType) {
+        this.exitType = exitType;
     }
 }

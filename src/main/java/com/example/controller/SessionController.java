@@ -25,8 +25,8 @@ public class SessionController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResultData create(RegisterForm form) {
         ResultData result = new ResultData();
-        if (!StringUtils.isEmpty(form.getUserName()) && !StringUtils.isEmpty(form.getPassword()) && !StringUtils.isEmpty(form.getEmail())) {
-            User user = new User(form.getUserName(), form.getPhone(), form.getEmail(), Encryption.md5(form.getPassword()));
+        if (!StringUtils.isEmpty(form.getUserName()) && !StringUtils.isEmpty(form.getPassword()) ) {
+            User user = new User(form.getUserName(), Encryption.md5(form.getPassword()));
             ResultData response = userService.create(user);
             if (response.getResponseCode() == ResponseCode.RESPONSE_OK) {
                 result.setResponseCode(ResponseCode.RESPONSE_OK);
@@ -40,10 +40,5 @@ public class SessionController {
             result.setDescription("参数错误");
         }
         return result;
-    }
-
-    @GetMapping
-    public ResultData getAll(){
-        return userService.findAll();
     }
 }

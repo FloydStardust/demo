@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
- * User: xxh
+ * User: Floyd
  * Date: 2019/1/29
  * Time: 10:58 AM
  */
@@ -64,29 +64,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
 			result.setDescription("无权限操作");
 			return result;
+		} else {
+			return scheduleDao.update(schedule);
 		}
-		// 查询相同时期内是否有对应的日程安排，如果有，替换 并且删除当前记录
-		ResultData result = scheduleDao.selectByUid(schedule.getUid());
-		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
-			Schedule origin = (Schedule) result.getData();
-			Map<String, Object> condition = new HashMap<>();
-			condition.put("creatorId", currentUserHelper.currentUser().getId());
-			condition.put("date", schedule.getDate() == null ? origin.getDate() : schedule.getDate());
-			condition.put("start", schedule.getStart() == null ? origin.getStart() : schedule.getStart());
-			condition.put("end", schedule.getEnd() == null ? origin.getEnd() : schedule.getEnd());
-
-			result = scheduleDao.select(condition);
-			if (result.getResponseCode() == ResponseCode.RESPONSE_NULL) {
-				return scheduleDao.update(schedule);
-			} else {
-				Schedule updateSchedule = ((List<Schedule>) result.getData()).get(0);
-				scheduleDao.delete(schedule.getUid());
-				schedule.setUid(updateSchedule.getUid());
-				return scheduleDao.update(schedule);
-			}
-		}
-
-		return scheduleDao.update(schedule);
 	}
 
 	@Override
@@ -101,9 +81,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 		LocalDate today = LocalDate.now();
 		LocalDate monday = today.with(DayOfWeek.MONDAY);
-		LocalDate friday = today.with(DayOfWeek.FRIDAY);
+		LocalDate sunday = today.with(DayOfWeek.SUNDAY);
 		condition.put("startDate", monday);
-		condition.put("endDate", friday);
+		condition.put("endDate", sunday);
 		ResultData result = scheduleDao.select(condition);
 
 		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {

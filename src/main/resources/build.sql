@@ -3,33 +3,24 @@
 -- -----------------------------------------------------
 CREATE TABLE `vkc`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `phone` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
   `user_name` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `block_flag` TINYINT(1) NOT NULL DEFAULT 0,
   `create_time` DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `phone_UNIQUE` (`phone` ASC),
-  UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC)
+  UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC)
   ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
-
-/**
-  增加真实姓名列
- */
-ALTER TABLE `vkc`.`user`
-ADD COLUMN `realname` VARCHAR(45) NULL AFTER `user_name`;
 
 /**
   日程表
  */
 CREATE TABLE `schedule` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `creator_id` varchar(45) NOT NULL,
   `date` datetime NOT NULL,
   `start` int(11) NOT NULL,
   `end` int(11) NOT NULL,
-  `creatorId` varchar(45) NOT NULL,
+  `venue` varchar(45) NOT NULL,
   `content` longtext NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
@@ -44,16 +35,15 @@ CREATE TABLE `portfolio` (
   `name` varchar(45) NOT NULL,
   `fund_id` int(11) NOT NULL,
   `date` varchar(45) NOT NULL,
-  `ipo_status` int(11),
-  `share_type` int(11),
-  `invest_type` int(11),
-  `board_num` int(11),
+  `share_type` varchar(45),
+  `invest_type` varchar(45),
+  `board_num` varchar(45),
   `round` varchar(45),
-  `partner` varchar(45),
-  `money_type` int(11),
+  `invest_partner` varchar(45),
+  `money_type` varchar(45),
   `invest_num` int(11) UNSIGNED,
-  `invest_ratio` double,
-  `current_ratio` double ,
+  `invest_ratio` varchar(45),
+  `current_ratio` varchar(45) ,
   `source` VARCHAR (45) ,
   `partner` VARCHAR (45) ,
   `manager` VARCHAR (45) ,
@@ -63,15 +53,15 @@ CREATE TABLE `portfolio` (
   `location` VARCHAR (45) ,
   `register_location` VARCHAR (45) ,
   `intro` varchar(65532),
-  `exit_status` int(11) ,
-  `exit_type` int(11),
+  `exit_status` varchar(45) ,
+  `exit_type` varchar(45),
   `exit_time` VARCHAR (45) ,
   `value_achieved` int UNSIGNED,
   `value_achieving` int UNSIGNED,
   `total_value` int UNSIGNED,
   `return_multiple` double ,
   `irr` double ,
-  `value_evidence` longtext,
+  `value_evidence` varchar(45),
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
@@ -134,7 +124,7 @@ CREATE TABLE `financial_budget` (
 CREATE TABLE `fund` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `account` integer NOT NULL,
+  `account` integer ,
   `start_date` varchar(45),
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
@@ -148,7 +138,7 @@ CREATE TABLE `leads` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `name`  VARCHAR (45) NOT NULL,
   `source` int(11) NOT NULL,
-  `partner` int(11) NOT NULL,
+  `investPartner` int(11) NOT NULL,
   `manager` int(11),
   `company` VARCHAR (45) NOT NULL,
   `industry` VARCHAR (45) ,

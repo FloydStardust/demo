@@ -33,6 +33,10 @@ public class PortfolioController {
         return portfolioService.fetchAllPortfolio();
     }
 
+    @GetMapping("/{uid}")
+    public ResultData getOne(@PathVariable int uid){
+        return portfolioService.getPortfolio(uid);
+    }
     @PostMapping
     public ResultData create(@RequestBody Portfolio portfolio){
         ResultData result = new ResultData();

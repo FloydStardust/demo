@@ -1,11 +1,6 @@
 package com.example.vo;
 
 import com.example.entity.Portfolio;
-import com.example.util.PortfolioUtils;
-
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Description: portfolio view object, see fields:
@@ -19,13 +14,13 @@ public class PortfolioVo {
     private String date;
     private String shareType;
     private String investType;
-    private int boardNum;
+    private String boardNum;
     private String round;
     private String partner;
     private String moneyType;
     private int investNum;
-    private double investRatio;
-    private double currentRatio;
+    private String investRatio;
+    private String currentRatio;
     private String source;
     private String director;
     private String manager;
@@ -45,33 +40,22 @@ public class PortfolioVo {
     private double irr;
     private String valueEvidence;
 
-    static Map<Integer, String> shareTypes = EnumSet.allOf(PortfolioUtils.ShareType.class).stream().
-            collect(Collectors.toMap(PortfolioUtils.ShareType::getIndex, PortfolioUtils.ShareType::getName));
-    static Map<Integer, String> investTypes = EnumSet.allOf(PortfolioUtils.InvestType.class).stream().
-            collect(Collectors.toMap(PortfolioUtils.InvestType::getIndex, PortfolioUtils.InvestType::getName));
-    static Map<Integer, String> exitStatuses =  EnumSet.allOf(PortfolioUtils.ExitStatus.class).stream().
-            collect(Collectors.toMap(PortfolioUtils.ExitStatus::getIndex, PortfolioUtils.ExitStatus::getName));
-    static Map<Integer, String> exitTypes = EnumSet.allOf(PortfolioUtils.ExitTye.class).stream().
-            collect(Collectors.toMap(PortfolioUtils.ExitTye::getIndex, PortfolioUtils.ExitTye::getName));
-    static Map<Integer, String> moneyTypes = EnumSet.allOf(PortfolioUtils.MoneyType.class).stream().
-            collect(Collectors.toMap(PortfolioUtils.MoneyType::getIndex, PortfolioUtils.MoneyType::getName));
-
     public PortfolioVo(Portfolio portfolio){
         this.uid = portfolio.getUid();
         this.name = portfolio.getName();
         this.fundName = String.valueOf(portfolio.getFundId());
         this.date = portfolio.getDate();
-        this.shareType = shareTypes.get(portfolio.getShareType());
-        this.investType = investTypes.get(portfolio.getInvestType());
+        this.shareType = portfolio.getShareType();
+        this.investType = portfolio.getInvestType();
         this.boardNum = portfolio.getBoardNum();
         this.round = portfolio.getRound();
-        this.partner = portfolio.getPartner();
-        this.moneyType = moneyTypes.get(portfolio.getMoneyType());
+        this.partner = portfolio.getInvestPartner();
+        this.moneyType = portfolio.getMoneyType();
         this.investNum = portfolio.getInvestNum();
         this.investRatio = portfolio.getInvestRatio();
         this.currentRatio = portfolio.getCurrentRatio();
         this.source = portfolio.getSource();
-        this.director = portfolio.getDirector();
+        this.director = portfolio.getPartner();
         this.manager = portfolio.getManager();
         this.boarder = portfolio.getBoarder();
         this.industry = portfolio.getIndustry();
@@ -79,8 +63,8 @@ public class PortfolioVo {
         this.location = portfolio.getLocation();
         this.registerLocation = portfolio.getRegisterLocation();
         this.intro = portfolio.getIntro();
-        this.exitStatus = exitStatuses.get(portfolio.getExitStatus());
-        this.exitType = exitTypes.get(portfolio.getExitType());
+        this.exitStatus = portfolio.getExitStatus();
+        this.exitType = portfolio.getExitType();
         this.exitTime = portfolio.getExitTime();
         this.valueAchieved = portfolio.getValueAchieved();
         this.valueAchieving = portfolio.getValueAchieving();
@@ -138,13 +122,6 @@ public class PortfolioVo {
         this.investType = investType;
     }
 
-    public int getBoardNum() {
-        return boardNum;
-    }
-
-    public void setBoardNum(int boardNum) {
-        this.boardNum = boardNum;
-    }
 
     public String getRound() {
         return round;
@@ -178,21 +155,6 @@ public class PortfolioVo {
         this.investNum = investNum;
     }
 
-    public double getInvestRatio() {
-        return investRatio;
-    }
-
-    public void setInvestRatio(double investRatio) {
-        this.investRatio = investRatio;
-    }
-
-    public double getCurrentRatio() {
-        return currentRatio;
-    }
-
-    public void setCurrentRatio(double currentRatio) {
-        this.currentRatio = currentRatio;
-    }
 
     public String getSource() {
         return source;
@@ -336,5 +298,29 @@ public class PortfolioVo {
 
     public void setIntro(String intro) {
         this.intro = intro;
+    }
+
+    public String getBoardNum() {
+        return boardNum;
+    }
+
+    public void setBoardNum(String boardNum) {
+        this.boardNum = boardNum;
+    }
+
+    public String getInvestRatio() {
+        return investRatio;
+    }
+
+    public void setInvestRatio(String investRatio) {
+        this.investRatio = investRatio;
+    }
+
+    public String getCurrentRatio() {
+        return currentRatio;
+    }
+
+    public void setCurrentRatio(String currentRatio) {
+        this.currentRatio = currentRatio;
     }
 }

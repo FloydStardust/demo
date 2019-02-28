@@ -1,15 +1,17 @@
 package com.example.vo;
 
 import com.example.entity.Schedule;
+import com.example.util.ScheduleUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * User: xxh
+ * User: Floyd
  * Date: 2019/2/1
  * Time: 8:32 PM
  */
@@ -17,8 +19,8 @@ public class ScheduleVO {
 	private int id;
 	private String username;
 	private String date;
-	private int start;
-	private int end;
+	private double start;
+	private double end;
 	private String venue;
 	private String event;
 
@@ -44,22 +46,6 @@ public class ScheduleVO {
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	public int getStart() {
-		return start;
-	}
-
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	public int getEnd() {
-		return end;
-	}
-
-	public void setEnd(int end) {
-		this.end = end;
 	}
 
 	public String getVenue() {
@@ -95,5 +81,21 @@ public class ScheduleVO {
 		String day = date.format(dateFormat);
 		String week = date.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.CHINA);
 		return day + " " + week;
+	}
+
+	public double getStart() {
+		return start;
+	}
+
+	public void setStart(double start) {
+		this.start = start;
+	}
+
+	public double getEnd() {
+		return end;
+	}
+
+	public void setEnd(double end) {
+		this.end = end;
 	}
 }

@@ -5,15 +5,14 @@
         <result property="date" column="date" />
         <result property="start" column="start" />
         <result property="end" column="end" />
-        <result property="creatorId" column="creatorId" />
+        <result property="creatorId" column="creator_id" />
         <result property="content" column="content" />
         <result property="venue" column="venue" />
-        <result property="createAt" column="create_time" />
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.Schedule">
       insert into `vkc`.`schedule`
-      (`date`, start, `end`, creatorId, content, venue)
+      (`date`, `start`, `end`, creator_id, `content`, `venue`)
       values
       (#{date}, #{start}, #{end}, #{creatorId}, #{content}, #{venue})
     </insert>
@@ -40,12 +39,12 @@
     </update>
 
     <select id="select" resultMap="schedule" parameterType="java.util.Map">
-        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `venue`, `create_time`
+        select `uid`, `date`, `start`, `end`, `creator_id`, `content`, `venue`
         from
         `vkc`.`schedule`
         where block_flag = 0
         <if test="creatorId != null">
-            and creatorId = #{creatorId}
+            and creator_id = #{creatorId}
         </if>
         <if test="date != null">
             and `date` = #{date}
@@ -67,14 +66,14 @@
         order by `date`, start
     </select>
 
-    <update id="delete" parameterType="java.lang.Integer">
+    <delete id="delete" parameterType="java.lang.Integer">
         update `vkc`.`schedule` set
         block_flag = 1
         where uid = #{uid}
-    </update>
+    </delete>
 
     <select id="selectByUid" resultMap="schedule">
-        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `venue`, `create_time`
+        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `venue`
         from
         `vkc`.`schedule`
         where block_flag = 0 and uid = #{uid}

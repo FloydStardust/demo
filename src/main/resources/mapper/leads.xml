@@ -4,7 +4,7 @@
         <result property="uid" column="uid" />
         <result property="name" column="name" />
         <result property="source" column="source" />
-        <result property="partner" column="partner" />
+        <result property="investPartner" column="investPartner" />
         <result property="manager" column="manager" />
         <result property="company" column="company" />
         <result property="industry" column="industry" />
@@ -22,10 +22,10 @@
 
     <insert id="insert" parameterType="com.example.entity.Leads">
       insert into `vkc`.`leads`
-      (`name`, source, partner, manager, company, industry, `location`, summary, description, `status`, last_change,
+      (`name`, source, investPartner, manager, company, industry, `location`, summary, description, `status`, last_change,
       `next`, `source_reason`, `pass_reason`, `meeting_record`, `bp_record`)
       values
-      (#{name}, #{source}, #{partner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{description},
+      (#{name}, #{source}, #{investPartner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{description},
       #{status}, #{lastChange}, #{next}, #{sourceReason}, #{passReason}, #{meetingRecord}, #{bpRecord})
     </insert>
 
@@ -36,7 +36,7 @@
             `name` = #{name},
         </if>
         source = #{source},
-        partner = #{partner},
+        investPartner = #{investPartner},
         manager = #{manager},
         <if test="company != null">
             company = #{company},
@@ -68,8 +68,8 @@
         <if test="source != null">
             and `source` = #{source}
         </if>
-        <if test="partner != null">
-            and `partner` = #{partner}
+        <if test="investPartner != null">
+            and `investPartner` = #{investPartner}
         </if>
         <if test="manager != null">
             and `manager` = #{manager}

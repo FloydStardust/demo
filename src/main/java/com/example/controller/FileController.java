@@ -30,7 +30,8 @@ public class FileController {
     public ResultData singleBPUpload(@RequestParam(value = "file") MultipartFile file, @PathVariable int id){
         String basePath = LeadsUtils.UPLOAD_BP_PATH + id;
         findDir(basePath);
-        Path path = Paths.get(basePath + "\\" + file.getOriginalFilename());
+//        Path path = Paths.get(basePath + "\\" + file.getOriginalFilename());
+        Path path = Paths.get(basePath + "/" + file.getOriginalFilename());
         return saveFile(file, path);
     }
     @PostMapping("/record/{id}")
@@ -38,7 +39,8 @@ public class FileController {
         String basePath = LeadsUtils.UPLOAD_RECORD_PATH + id;
         System.out.println(file);
         findDir(basePath);
-        Path path = Paths.get(basePath + "\\" + file.getOriginalFilename());
+//        Path path = Paths.get(basePath + "\\" + file.getOriginalFilename());
+        Path path = Paths.get(basePath + "/" + file.getOriginalFilename());
         return saveFile(file, path);
     }
 
@@ -170,7 +172,7 @@ public class FileController {
             byte[] bytes = file.getBytes();
             Files.write(path, bytes);
             resultData.setResponseCode(ResponseCode.RESPONSE_OK);
-            resultData.setDescription("Upload BP files successfully ~ (ゝ∀･)b");
+            resultData.setDescription("Upload files successfully ~ (ゝ∀･)b");
         } catch (IOException e) {
             resultData.setResponseCode(ResponseCode.RESPONSE_ERROR);
             resultData.setDescription("Background saving error occurs...(╥﹏╥)");

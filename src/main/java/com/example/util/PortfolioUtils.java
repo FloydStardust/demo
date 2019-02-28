@@ -48,153 +48,154 @@ public class PortfolioUtils {
         public static int SUMMARY = 2;
     }
 
-    /**
-     * The portfolio status: 0 for normal(not listed), 1 HK, 2 for NYSE
-     */
-    public static class IPO_STATUS {
-        public static int NOT_LIST = 0;
-        public static int HK = 1;
-        public static int NYSE = 2;
-        public static Map<Integer, String> toMap(){
-            Map<Integer, String> ipoStatus = new HashMap<>();
-            ipoStatus.put(0, "未上市");
-            ipoStatus.put(1, "HK");
-            ipoStatus.put(2, "NYSE");
-            return ipoStatus;
-        }
-    }
-
-    public enum ShareType {
-        COMMON("普通股", 1), PREFERRED("优先股", 2);
-        private String name;
-        private int index;
-
-        private ShareType(String name, int index){
-            this.name = name;
-            this.index = index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
-
-    public enum InvestType {
-        LEAD("领投",1), FOLLOW("跟投",2);
-        private String name;
-        private int index;
-        private InvestType(String name, int index) {
-            this.name = name;
-            this.index = index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
-
-    public enum MoneyType {
-        DOLLAR("美元", 1), RMB("人民币",2);
-        private String name;
-        private int index;
-        private MoneyType(String name, int index){
-            this.name = name;
-            this.index = index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
-
-    public enum ExitStatus {
-        EXIT("已退出",1), PART_EXIT("部分退出",2), NOT_EXIT("未退出",0);
-
-        private String name;
-        private int index;
-        private ExitStatus(String name, int index){
-            this.name = name;
-            this.index = index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
-
-    public enum ExitTye {
-        IPO("IPO", 1), MERGE("并购",2), NOT_EXIT("未退出",0);
-        private String name;
-        private int index;
-        private ExitTye(String name, int index){
-            this.name = name;
-            this.index = index;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
+//    /**
+//     * The portfolio status: 0 for normal(not listed), 1 HK, 2 for NYSE
+//     */
+//    public static class IPO_STATUS {
+//        public static int NOT_LIST = 0;
+//        public static int HK = 1;
+//        public static int NYSE = 2;
+//        public static Map<Integer, String> toMap(){
+//            Map<Integer, String> ipoStatus = new HashMap<>();
+//            ipoStatus.put(0, "未上市");
+//            ipoStatus.put(1, "HK");
+//            ipoStatus.put(2, "NYSE");
+//            return ipoStatus;
+//        }
+//    }
+//
+//    public enum ShareType {
+//        COMMON("普通股", 1), PREFERRED("优先股", 2),
+//        CHANGE("可转债", 3);
+//        private String name;
+//        private int index;
+//
+//        private ShareType(String name, int index){
+//            this.name = name;
+//            this.index = index;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public int getIndex() {
+//            return index;
+//        }
+//
+//        public void setIndex(int index) {
+//            this.index = index;
+//        }
+//    }
+//
+//    public enum InvestType {
+//        LEAD("领投",1), FOLLOW("跟投",2);
+//        private String name;
+//        private int index;
+//        private InvestType(String name, int index) {
+//            this.name = name;
+//            this.index = index;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public int getIndex() {
+//            return index;
+//        }
+//
+//        public void setIndex(int index) {
+//            this.index = index;
+//        }
+//    }
+//
+//    public enum MoneyType {
+//        DOLLAR("美元", 1), RMB("人民币",2);
+//        private String name;
+//        private int index;
+//        private MoneyType(String name, int index){
+//            this.name = name;
+//            this.index = index;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public int getIndex() {
+//            return index;
+//        }
+//
+//        public void setIndex(int index) {
+//            this.index = index;
+//        }
+//    }
+//
+//    public enum ExitStatus {
+//        EXIT("已退出",1), PART_EXIT("部分退出",2), NOT_EXIT("未退出",0);
+//
+//        private String name;
+//        private int index;
+//        private ExitStatus(String name, int index){
+//            this.name = name;
+//            this.index = index;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public int getIndex() {
+//            return index;
+//        }
+//
+//        public void setIndex(int index) {
+//            this.index = index;
+//        }
+//    }
+//
+//    public enum ExitTye {
+//        IPO("IPO", 1), MERGE("并购",2), NOT_EXIT("未退出",0);
+//        private String name;
+//        private int index;
+//        private ExitTye(String name, int index){
+//            this.name = name;
+//            this.index = index;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public int getIndex() {
+//            return index;
+//        }
+//
+//        public void setIndex(int index) {
+//            this.index = index;
+//        }
+//    }
 
 }
 
