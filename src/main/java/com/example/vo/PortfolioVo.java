@@ -39,6 +39,7 @@ public class PortfolioVo {
     private double returnMultiple;
     private double irr;
     private String valueEvidence;
+    private boolean financeData;
 
     public PortfolioVo(Portfolio portfolio){
         this.uid = portfolio.getUid();
@@ -72,6 +73,7 @@ public class PortfolioVo {
         this.returnMultiple = portfolio.getReturnMultiple();
         this.irr = portfolio.getIrr();
         this.valueEvidence = portfolio.getValueEvidence();
+        this.financeData = portfolio.getFinanceData();
     }
 
     public int getUid() {
@@ -322,5 +324,13 @@ public class PortfolioVo {
 
     public void setCurrentRatio(String currentRatio) {
         this.currentRatio = currentRatio;
+    }
+
+    public boolean isFinanceData() {
+        return financeData;
+    }
+
+    public void setFinanceData(boolean financeData) {
+        this.financeData = financeData;
     }
 }

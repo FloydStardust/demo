@@ -18,6 +18,8 @@ public interface LeadsDao {
 
     ResultData selectAllWatchlist();
 
+    ResultData selectAllPass();
+
     ResultData selectByUid(int uid);
 
     ResultData insert(Leads leads);

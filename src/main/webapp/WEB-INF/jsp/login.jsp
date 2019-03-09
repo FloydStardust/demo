@@ -39,7 +39,7 @@
 			        <div class="box">
 			            <div class="content-wrap">
 			                <h6>Sign In</h6>
-			                <input id="email" class="form-control" type="text" placeholder="E-mail address">
+			                <input id="email" class="form-control" type="text" placeholder="Username">
 			                <input id="password" class="form-control" type="password" placeholder="Password">
 			                <div class="action">
 			                    <button class="btn btn-primary signup" onclick="login()">Login</button>

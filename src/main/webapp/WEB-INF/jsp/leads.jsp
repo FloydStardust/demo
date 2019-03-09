@@ -24,6 +24,7 @@
 
     <!-- datatable-css引入-Floyd -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/fileinput.min.css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -105,6 +106,7 @@
                             <li id="leads_link"><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
                             <li id="pipeline_link"><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
                             <li id="watch_link"><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li id="pass_link"><a href="<%=request.getContextPath()%>/pass">Pass</a></li>
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
@@ -122,26 +124,8 @@
                 </div>
                 <div class="panel-body" id="container">
                     <!-- 已投项目表格 -->
-                    <table cellpadding="0" cellspacing="0" class="table table-hover table-striped table-bordered" id="dataTable" style="width: 100%;">
-                        <thead>
-                        <tr>
-                            <th>项目名称</th>
-                            <th>项目来源</th>
-                            <th>负责合伙人</th>
-                            <th>投资经理</th>
-                            <th>公司名称</th>
-                            <th>所属行业</th>
-                            <th>公司地点</th>
-                            <th>公司简介</th>
-                            <th>目前进展</th>
-                            <th>最新更新时间</th>
-                            <th>下一步行动</th>
-                            <th>推荐原因</th>
-                            <th>会议纪要</th>
-                            <th>BP文件</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered nowrap"
+                           id="dataTable" style="width: 100%;">
                     </table>
                 </div>
             </div>
@@ -168,13 +152,12 @@
                     <div class="form-group row">
                         <label for="addModalSource" class="col-sm-2 col-form-label">项目来源</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalSource">
-                            </select>
+                            <input type="text" class="form-control" id="addModalSource" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalPartner" class="col-sm-2 col-form-label">负责合伙人</label>
+                        <label for="addModalPartner" class="col-sm-2 col-form-label">项目Leader</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalPartner">
                             </select>
@@ -182,10 +165,24 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalManager" class="col-sm-2 col-form-label">投资经理</label>
+                        <label for="addModalManager" class="col-sm-2 col-form-label">项目执行人</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalManager">
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="addModalRevenueGroup">
+                        <label for="addModalRevenue" class="col-sm-2 col-form-label">收入规模</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addModalRevenue" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="addModalNetIncomeGroup">
+                        <label for="addModalNetIncome" class="col-sm-2 col-form-label">净利规模</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addModalNetIncome" placeholder="">
                         </div>
                     </div>
 
@@ -213,7 +210,7 @@
                     <div class="form-group row">
                         <label for="addModalSummary" class="col-sm-2 col-form-label">公司简介</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" id="addModalSummary" rows="1"></textarea>
+                            <input type="text" class="form-control" id="addModalSummary" placeholder="">
                         </div>
                     </div>
 
@@ -235,16 +232,15 @@
                     <div class="form-group row">
                         <label for="addModalNext" class="col-sm-2 col-form-label">下一步计划</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="addModalNext">
-                            </select>
+                            <input type="text" class="form-control" id="addModalNext" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalReason" class="col-sm-2 col-form-label">推荐/pass原因</label>
+                        <label for="addModalReason" class="col-sm-2 col-form-label">推荐原因/特别关注/park原因/pass原因</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" id="addModalReason" rows="3"
-                                      placeholder="如果要将此项目转入watchlist，此项请填写pass原因..."></textarea>
+                                      placeholder="如果要将此项目转入pipeline，此项请填写特别关注..."></textarea>
                         </div>
                     </div>
                 </form>
@@ -340,11 +336,14 @@
         }else if(type == 2){
             $("#watch_link").addClass("current");
             $("#page_name").html("Watchlist列表");
+        }else if(type == 3){
+            $("#pass_link").addClass("current");
+            $("#page_name").html("Pass项目列表");
         }
 
         let users={}, status = {};
         $.ajax({
-            url: basepath + '/api/leads/status',
+            url: basepath + '/api/leads/status/' + type,
             type: "GET",
             contentType : 'application/json;charset=utf-8',
             beforeSend: function (xhr) {
@@ -381,6 +380,54 @@
         });
     });
 
+    function reloadModal(rowdata) {
+        $.ajax({
+            url: basepath + '/api/leads/status/' + rowdata.status,
+            type: "GET",
+            contentType : 'application/json;charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            let thisStatus = data.data;
+            let options = []
+            $.each(thisStatus, function (k, v) {
+                options.push("<option value='" + k + "'>" + v + "</option>");
+            });
+            $("#addModalStatus").html(options.join(''));
+            $("#addModal").attr("data-id", rowdata.uid);
+            $("#addModalName").val(rowdata.name);
+            $("#addModalSource").val(rowdata.source);
+            $("#addModalPartner").val(rowdata.partner);
+            $("#addModalManager").val(rowdata.manager);
+            if(type == 0 || type==2){
+                $("#addModalRevenue").val(rowdata.revenue);
+                $("#addModalNetIncome").val(rowdata.netIncome);
+            }else{
+                $("#addModalRevenueGroup").addClass("hidden");
+                $("#addModalNetIncomeGroup").addClass("hidden");
+            }
+            $("#addModalCompany").val(rowdata.company);
+            $("#addModalIndustry").val(rowdata.industry);
+            $("#addModalLocation").val(rowdata.location);
+            $("#addModalSummary").val(rowdata.summary);
+            $("#addModalDescription").val(rowdata.description);
+            $("#addModalStatus").val(rowdata.status);
+            $("#addModalNext").val(rowdata.next);
+            if(type==0){
+                $("#addModalReason").val(rowdata.sourceReason);
+            }else if(type==1){
+                $("#addModalReason").val(rowdata.specialConcern);
+            }else if(type==2){
+                $("#addModalReason").val(rowdata.parkReason);
+            }else if(type==3){
+                $("#addModalReason").val(rowdata.passReason);
+            }
+
+            $("#addLeads").addClass("update");
+        });
+    }
+
     /**
      *  加载leads大表格
      */
@@ -389,80 +436,224 @@
         if(type == 0){
             url = basepath + '/api/leads';
             $("#addModalBtn").removeClass("hidden");
+            table = $('#dataTable').DataTable({
+                ajax:  {
+                    url: url,
+                    type: "GET",
+                    contentType : 'application/json;charset=utf-8',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("authorization", "Bearer " + token);
+                    }
+                },
+                columns: [
+                    {   data: null, render: function(data, type, row){
+                            return '<a href="#" data-id="' +  row.uid + '">'+ row.name+ '</a>';
+                        }, className: 'font-bold', title: "项目名称", width: '80%' },
+                    { data: null, render: function (data, type, row) {
+                            return row.source
+                        }, title: "项目来源" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.partner]
+                        }, title: "项目Leader" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.manager]
+                        }, title: "项目执行人" },
+                    { data: "revenue", title: "收入规模" },
+                    { data: "netIncome", title: "净利规模" },
+                    { data: "company", title: "公司名称" },
+                    { data: "industry", title: "所属行业" },
+                    { data: "location", title: "公司地点" },
+                    { data: "summary", title: "公司简介" },
+                    { data: null, render: function (data, type, row) {
+                            return status[row.status]
+                        }, title: "目前进展" },
+                    { data: null, render: function (data, type, row) {
+                            let date = new Date(row.lastChange);
+                            return date.toLocaleDateString();
+                        }, title: "最新更新时间" },
+                    { data: null, render: function (data, type, row) {
+                            return row.next
+                        }, title: "下一步行动" },
+                    { data: null, render: function (data, type, row) {
+                            return row.sourceReason;
+                        }, orderable: false, title: "推荐原因" },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm record-upload">上传</button>&nbsp;&nbsp;' +
+                                '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download record-download">下载</button>';
+                        }, orderable: false, title: "会议纪要"  },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm bp-upload">上传</button>&nbsp;&nbsp;' +
+                                '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download bp-download">下载</button>';
+                        }, orderable: false, title: "BP"   }
+                ],
+                fixedColumns: true, searching: true, // 可搜索
+                order: [[11, 'desc']], autoWidth: false,
+                scrollX: true,	scrollCollapse: true
+            });
         }else if(type == 1){
             url = basepath + '/api/leads/pipeline';
+            table = $('#dataTable').DataTable({
+                ajax:  {
+                    url: url,
+                    type: "GET",
+                    contentType : 'application/json;charset=utf-8',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("authorization", "Bearer " + token);
+                    }
+                },
+                columns: [
+                    {   data: null, render: function(data, type, row){
+                            return '<a href="#" data-id="' +  row.uid + '">'+ row.name+ '</a>';
+                        }, className: 'font-bold', title: "项目名称" },
+                    { data: null, render: function (data, type, row) {
+                            return row.source
+                        }, title: "项目来源" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.partner]
+                        }, title: "项目Leader" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.manager]
+                        }, title: "项目执行人" },
+                    { data: "company", title: "公司名称" },
+                    { data: "industry", title: "所属行业" },
+                    { data: "location", title: "公司地点" },
+                    { data: "summary", title: "公司简介" },
+                    { data: null, render: function (data, type, row) {
+                            return status[row.status]
+                        }, title: "目前进展" },
+                    { data: null, render: function (data, type, row) {
+                            let date = new Date(row.lastChange);
+                            return date.toLocaleDateString();
+                        }, title: "最新更新时间" },
+                    { data: null, render: function (data, type, row) {
+                            return row.next
+                        }, title: "下一步行动" },
+                    { data: null, render: function (data, type, row) {
+                            return row.specialConcern;
+                        }, orderable: false, title: "特别关注" },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm record-upload">上传</button>&nbsp;&nbsp;' +
+                                '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download record-download">下载</button>';
+                        }, orderable: false, title: "会议纪要" },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm bp-upload">上传</button>&nbsp;&nbsp;' +
+                                '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download bp-download">下载</button>';
+                        }, orderable: false, title: "BP" }
+                ],
+                fixedColumns: true, searching: true, // 可搜索
+                order: [[9, 'desc']], autoWidth: false,
+                scrollX: true,	scrollCollapse: true
+            });
         }else if(type == 2){
             url = basepath + '/api/leads/watchlist';
+            table = $('#dataTable').DataTable({
+                ajax:  {
+                    url: url,
+                    type: "GET",
+                    contentType : 'application/json;charset=utf-8',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("authorization", "Bearer " + token);
+                    }
+                },
+                columns: [
+                    {   data: null, render: function(data, type, row){
+                            return '<a href="#" data-id="' +  row.uid + '">'+ row.name+ '</a>';
+                        }, className: 'font-bold', title: "项目名称" },
+                    { data: null, render: function (data, type, row) {
+                            return row.source
+                        }, title: "项目来源" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.partner]
+                        }, title: "项目Leader" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.manager]
+                        }, title: "项目执行人" },
+                    { data: "revenue", title: "收入规模" },
+                    { data: "netIncome", title: "净利规模" },
+                    { data: "company", title: "公司名称" },
+                    { data: "industry", title: "所属行业" },
+                    { data: "location", title: "公司地点" },
+                    { data: "summary", title: "公司简介" },
+                    { data: null, render: function (data, type, row) {
+                            return status[row.status]
+                        }, title: "目前进展" },
+                    { data: null, render: function (data, type, row) {
+                            let date = new Date(row.lastChange);
+                            return date.toLocaleDateString();
+                        }, title: "最新更新时间" },
+                    { data: null, render: function (data, type, row) {
+                            return row.next
+                        }, title: "下一步行动" },
+                    { data: null, render: function (data, type, row) {
+                            return row.parkReason;
+                        }, orderable: false, title: "PARK原因" },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm record-upload">上传</button>&nbsp;&nbsp;' +
+                                '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download record-download">下载</button>';
+                        }, orderable: false, title: "会议纪要"},
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm bp-upload">上传</button>&nbsp;&nbsp;' +
+                                '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download bp-download">下载</button>';
+                        }, orderable: false, title: "BP" }
+                ],
+                fixedColumns: true, searching: true, // 可搜索
+                order: [[11, 'desc']], autoWidth: false,
+                scrollX: true,	scrollCollapse: true
+            });
+        }else if(type == 3){
+            url = basepath + '/api/leads/pass';
+            table = $('#dataTable').DataTable({
+                ajax:  {
+                    url: url,
+                    type: "GET",
+                    contentType : 'application/json;charset=utf-8',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("authorization", "Bearer " + token);
+                    }
+                },
+                columns: [
+                    {   data: null, render: function(data, type, row){
+                            return '<a href="#" data-id="' +  row.uid + '">'+ row.name+ '</a>';
+                        }, className: 'font-bold', title: "项目名称" },
+                    { data: null, render: function (data, type, row) {
+                            return row.source
+                        }, title: "项目来源" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.partner]
+                        }, title: "项目Leader" },
+                    { data: null, render: function (data, type, row) {
+                            return users[row.manager]
+                        }, title: "项目执行人" },
+                    { data: "revenue", title: "收入规模" },
+                    { data: "netIncome", title: "净利规模" },
+                    { data: "company", title: "公司名称" },
+                    { data: "industry", title: "所属行业" },
+                    { data: "location", title: "公司地点" },
+                    { data: "summary", title: "公司简介" },
+                    { data: null, render: function (data, type, row) {
+                            let date = new Date(row.lastChange);
+                            return date.toLocaleDateString();
+                        }, title: "最新更新时间" },
+                    { data: null, render: function (data, type, row) {
+                            return row.passReason;
+                        }, orderable: false, title: "PASS原因" },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download record-download">下载</button>';
+                        }, orderable: false, title: "会议纪要" },
+                    { data: null, render: function (data, type, row) {
+                            return '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download bp-download">下载</button>';
+                        }, orderable: false, title: "BP" }
+                ],
+                fixedColumns: true, searching: true, // 可搜索
+                order: [[10, 'desc']], autoWidth: false,
+                scrollX: true,	scrollCollapse: true
+            });
         }
-        table = $('#dataTable').DataTable({
-            ajax:  {
-                url: url,
-                type: "GET",
-                contentType : 'application/json;charset=utf-8',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("authorization", "Bearer " + token);
-                }
-            },
-            columns: [
-                {   data: null, render: function(data, type, row){
-                        return '<a href="#" data-id="' +  row.uid + '">'+ row.name+ '</a>';
-                    }, className: 'font-bold' },
-                { data: null, render: function (data, type, row) {
-                        return users[row.source]
-                    } },
-                { data: null, render: function (data, type, row) {
-                        return users[row.partner]
-                    } },
-                { data: null, render: function (data, type, row) {
-                        return users[row.manager]
-                    } },
-                { data: "company" },
-                { data: "industry" }, { data: "location" }, { data: "summary" },
-                { data: null, render: function (data, type, row) {
-                        return status[row.status]
-                    } },
-                { data: null, render: function (data, type, row) {
-                    let date = new Date(row.lastChange);
-                        return date.toLocaleDateString();
-                    } },
-                { data: null, render: function (data, type, row) {
-                        return status[row.next]
-                    } },
-                { data: null, render: function (data, type, row) {
-                        if(row.status == -1)    return row.passReason;
-                        else    return row.sourceReason;
-                    }, orderable: false },
-                { data: null, render: function (data, type, row) {
-                        return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm record-upload">上传</button>&nbsp;&nbsp;' +
-                            '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download record-download">下载</button>';
-                    }, orderable: false },
-                { data: null, render: function (data, type, row) {
-                        return '<button data-id="'+ row.uid + '" type="button" class="btn btn-danger btn-sm bp-upload">上传</button>&nbsp;&nbsp;' +
-                            '<button data-id="'+ row.uid + '" type="button" class="btn btn-primary btn-sm download bp-download">下载</button>';
-                    }, orderable: false }
-            ],
-            searching: true, // 可搜索
-            order: [[9, 'desc']], autoWidth: false,
-        });
 
         $('#dataTable tbody').on('dblclick', 'tr', function () {
             var data = table.row( this ).data();
             $('#addModalBtn').click();
-            console.log(data);
-            $("#addModal").attr("data-id", data.uid);
-            $("#addModalName").val(data.name);
-            $("#addModalSource").val(data.source);
-            $("#addModalPartner").val(data.investPartner);
-            $("#addModalManager").val(data.manager);
-            $("#addModalCompany").val(data.company);
-            $("#addModalIndustry").val(data.industry);
-            $("#addModalLocation").val(data.location);
-            $("#addModalSummary").val(data.summary);
-            $("#addModalDescription").val(data.description);
-            $("#addModalStatus").val(data.status);
-            $("#addModalNext").val(data.next);
-            $("#addModalReason").val(data.sourceReason);
-            $("#addLeads").addClass("update");
+            reloadModal(data);
         });
 
         $('#dataTable tbody').on('click', '.download', function () {
@@ -494,7 +685,7 @@
             uploadUrl: basepath + '/file' + subpath,
             autoReplace: true,
             maxFileCount: 1,
-            allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "jpg", "jpeg", "png"]
+            allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "jpg", "jpeg", "png", "pdf"]
         });
     }
 
@@ -503,7 +694,7 @@
             uploadUrl: basepath + '/file' + subpath,
             autoReplace: true,
             maxFileCount: 1,
-            allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "jpg", "jpeg", "png"]
+            allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "jpg", "jpeg", "png", "pdf"]
         });
     }
 
@@ -515,7 +706,7 @@
         let form = {
             "name": $("#addModalName").val(),
             "source": $("#addModalSource").val(),
-            "investPartner": $("#addModalPartner").val(),
+            "partner": $("#addModalPartner").val(),
             "manager": $("#addModalManager").val(),
             "company": $("#addModalCompany").val(),
             "industry": $("#addModalIndustry").val(),
@@ -526,10 +717,20 @@
             "lastChange": new Date().getTime(),
             "next": $("#addModalNext").val(),
         };
-        if($("#addModalStatus").val() == -1){
-            form["passReason"] = $("#addModalReason").val();
-        } else {
+        if(type == 0 || type == 2){
+            form["revenue"] = $("#addModalRevenue").val();
+            form["netIncome"] = $("#addModalNetIncome").val();
+        }
+
+        let nextStatus = $("#addModalStatus").val();
+        if( nextStatus < 10){
             form["sourceReason"] = $("#addModalReason").val();
+        } else if( nextStatus >= 10 && nextStatus < 14){
+            form["specialConcern"] = $("#addModalReason").val();
+        } else if(nextStatus >= 14 && nextStatus <18) {
+            form["parkReason"] = $("#addModalReason").val();
+        } else if(nextStatus == 18) {
+            form["passReason"] = $("#addModalReason").val();
         }
         if($("#addLeads").hasClass("update")){
             form["uid"] = $("#addModal").attr("data-id")
@@ -572,7 +773,6 @@
             options.push("<option value='" + k + "'>" + v + "</option>");
         });
         $("#addModalStatus").html(options.join(''));
-        $("#addModalNext").html(options.join(''));
     }
 
 </script>

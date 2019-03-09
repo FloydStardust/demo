@@ -61,7 +61,7 @@ public class FileController {
         }
         //设置最终输出zip文件的目录+文件名
         SimpleDateFormat formatter  = new SimpleDateFormat("yyyy-MM-dd");
-        String zipFileName = formatter.format(new Date())+".zip";
+        String zipFileName = formatter.format(new Date())+"-"+type+".zip";
         String strZipPath = dirc+"\\"+zipFileName;
 
         ZipOutputStream zipStream = null;

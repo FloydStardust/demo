@@ -17,12 +17,14 @@ public interface LeadsService {
 
     ResultData selectAllWatchlist();
 
+    ResultData selectAllPass();
+
     ResultData selectByUid(int uid);
 
     ResultData updateLeads(Leads leads);
 
     ResultData deleteByUid(int uid);
 
-    ResultData fetchStatusField();
+    ResultData fetchStatusField(int currentStatus);
 
 }

@@ -108,6 +108,7 @@
                             <li id="leads_link"><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
                             <li id="pipeline_link"><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
                             <li id="watch_link"><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li id="pass_link"><a href="<%=request.getContextPath()%>/pass">Pass</a></li>
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
@@ -482,7 +483,11 @@
             columns: [
                 {   data: null ,
                     render: function(data, type, row){
-                        return '<a href="'+basepath+'/portfolio/' + row.uid + '">'+ row.name+ '</a>';
+                        if(row.financeData){
+                            return '<a href="'+basepath+'/portfolio/' + row.uid + '">'+ row.name+ '</a>';
+                        }else{
+                            return '<a href="#">'+ row.name+ '</a>';
+                        }
                     },
                     width: '80%'
                 },
@@ -542,7 +547,7 @@
             "investRatio": $("#addModalInvestShareRatio").val(),
             "currentRatio": $("#addModalCurrentShareRatio").val(),
             "source": $("#addModalSource").val(),
-            "investPartner": $("#addModalDirector").val(),
+            "partner": $("#addModalPartner").val(),
             "manager": $("#addModalManager").val(),
             "boarder": $("#addModalBoarder").val(),
             "industry": $("#addModalIndustry").val(),

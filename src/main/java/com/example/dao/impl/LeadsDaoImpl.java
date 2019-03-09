@@ -38,23 +38,31 @@ public class LeadsDaoImpl extends BaseDao implements LeadsDao {
     @Override
     public ResultData selectAllLeads() {
         Map<String, Object> condition = new HashMap<>();
-        condition.put("statusLessAndEqual", LeadsUtils.LeadsStatus.MEETING.getIndex());
-        condition.put("statusBiggerThan", LeadsUtils.LeadsStatus.PASS.getIndex());
+        condition.put("statusLessAndEqual", LeadsUtils.LeadsStatus.TS.getIndex());
+        condition.put("statusBiggerAndEqual", LeadsUtils.LeadsStatus.BP.getIndex());
         return select(condition);
     }
 
     @Override
     public ResultData selectAllPipelines() {
         Map<String, Object> condition = new HashMap<>();
-        condition.put("statusLessAndEqual", LeadsUtils.LeadsStatus.INVESTED.getIndex());
-        condition.put("statusBiggerThan", LeadsUtils.LeadsStatus.MEETING.getIndex());
+        condition.put("statusLessAndEqual", LeadsUtils.PipelineStatus.PAYING.getIndex());
+        condition.put("statusBiggerAndEqual", LeadsUtils.PipelineStatus.DD.getIndex());
         return select(condition);
     }
 
     @Override
     public ResultData selectAllWatchlist() {
         Map<String, Object> condition = new HashMap<>();
-        condition.put("status", LeadsUtils.LeadsStatus.PASS.getIndex());
+        condition.put("statusLessAndEqual", LeadsUtils.WatchlistStatus.QUARTERLY.getIndex());
+        condition.put("statusBiggerAndEqual", LeadsUtils.WatchlistStatus.NOT_TRACK.getIndex());
+        return select(condition);
+    }
+
+    @Override
+    public ResultData selectAllPass() {
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("status", LeadsUtils.PassStatus.PASS.getIndex());
         return select(condition);
     }
 

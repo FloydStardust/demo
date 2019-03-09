@@ -39,6 +39,11 @@ public class LeadsController {
         return leadsService.selectAllWatchlist();
     }
 
+    @GetMapping("/pass")
+    public ResultData allPass(){
+        return leadsService.selectAllPass();
+    }
+
     @PostMapping
     public ResultData create(@RequestBody Leads leads){
         if(leads.getUid()==0){
@@ -55,8 +60,8 @@ public class LeadsController {
         return leadsService.updateLeads(leads);
     }
 
-    @GetMapping("/status")
-    public ResultData getAllStatus(){
-        return leadsService.fetchStatusField();
+    @GetMapping("/status/{current}")
+    public ResultData getNextStatus(@PathVariable int current){
+        return leadsService.fetchStatusField(current);
     }
 }

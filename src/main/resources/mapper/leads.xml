@@ -4,17 +4,21 @@
         <result property="uid" column="uid" />
         <result property="name" column="name" />
         <result property="source" column="source" />
-        <result property="investPartner" column="investPartner" />
+        <result property="partner" column="partner" />
         <result property="manager" column="manager" />
         <result property="company" column="company" />
         <result property="industry" column="industry" />
         <result property="location" column="location" />
         <result property="summary" column="summary" />
         <result property="description" column="description" />
+        <result property="revenue" column="revenue" />
+        <result property="netIncome" column="net_income" />
         <result property="status" column="status" />
         <result property="lastChange" column="last_change" />
         <result property="next" column="next" />
         <result property="sourceReason" column="source_reason" />
+        <result property="specialConcern" column="special_concern" />
+        <result property="parkReason" column="park_reason" />
         <result property="passReason" column="pass_reason" />
         <result property="meetingRecord" column="meeting_record" />
         <result property="bpRecord" column="bp_record" />
@@ -22,11 +26,12 @@
 
     <insert id="insert" parameterType="com.example.entity.Leads">
       insert into `vkc`.`leads`
-      (`name`, source, investPartner, manager, company, industry, `location`, summary, description, `status`, last_change,
-      `next`, `source_reason`, `pass_reason`, `meeting_record`, `bp_record`)
+      (`name`, source, partner, manager, company, industry, `location`, summary, description, revenue, net_income,
+      `status`, last_change, `next`, `source_reason`, `special_concern`, `park_reason`, `pass_reason`, `meeting_record`, `bp_record`)
       values
-      (#{name}, #{source}, #{investPartner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{description},
-      #{status}, #{lastChange}, #{next}, #{sourceReason}, #{passReason}, #{meetingRecord}, #{bpRecord})
+      (#{name}, #{source}, #{partner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{description},
+       #{revenue}, #{netIncome}, #{status}, #{lastChange}, #{next}, #{sourceReason}, #{specialConcern}, #{parkReason},
+       #{passReason}, #{meetingRecord}, #{bpRecord})
     </insert>
 
     <update id="update" parameterType="com.example.entity.Leads">
@@ -36,7 +41,7 @@
             `name` = #{name},
         </if>
         source = #{source},
-        investPartner = #{investPartner},
+        partner = #{partner},
         manager = #{manager},
         <if test="company != null">
             company = #{company},
@@ -45,11 +50,23 @@
         `location` = #{location},
         summary = #{summary},
         description = #{description},
+        <if test="revenue != null">
+            revenue = #{revenue},
+        </if>
+        <if test="netIncome != null">
+            net_income = #{netIncome},
+        </if>
         `status` = #{status},
         last_change = #{lastChange},
         `next` = #{next}
         <if test="sourceReason != null">
           , `source_reason` = #{sourceReason}
+        </if>
+        <if test="specialConcern != null">
+            , `special_concern` = #{specialConcern}
+        </if>
+        <if test="parkReason != null">
+            , `park_reason` = #{parkReason}
         </if>
         <if test="passReason != null">
             , `pass_reason` = #{passReason}
@@ -68,8 +85,8 @@
         <if test="source != null">
             and `source` = #{source}
         </if>
-        <if test="investPartner != null">
-            and `investPartner` = #{investPartner}
+        <if test="partner != null">
+            and `partner` = #{partner}
         </if>
         <if test="manager != null">
             and `manager` = #{manager}
@@ -97,9 +114,9 @@
               and `status` <= #{statusLessAndEqual}
             ]]>
         </if>
-        <if test="statusBiggerThan != null">
+        <if test="statusBiggerAndEqual != null">
             <![CDATA[
-              and `status` > #{statusBiggerThan}
+              and `status` >= #{statusBiggerAndEqual}
             ]]>
         </if>
         order by last_change

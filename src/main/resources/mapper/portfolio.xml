@@ -32,18 +32,19 @@
         <result property="returnMultiple" column="return_multiple" />
         <result property="irr" column="irr" />
         <result property="valueEvidence" column="value_evidence" />
+        <result property="financeData" column="finance_data" />
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.Portfolio">
       insert into `vkc`.`portfolio`
       (`name`, fund_id, `date`, share_type, invest_type, board_num, round, invest_partner, money_type, invest_num, invest_ratio,
       current_ratio, `source`, partner, manager, boarder, industry, sector, location, register_location, `intro`, exit_status,
-      exit_type, exit_time, value_achieved, value_achieving, total_value, return_multiple, irr, value_evidence)
+      exit_type, exit_time, value_achieved, value_achieving, total_value, return_multiple, irr, value_evidence, finance_data)
       values
       (#{name}, #{fundId}, #{date}, #{shareType}, #{investType}, #{boardNum}, #{round}, #{investPartner}, #{moneyType},
       #{investNum}, #{investRatio}, #{currentRatio}, #{source}, #{partner}, #{manager}, #{boarder}, #{industry}, #{sector},
       #{location}, #{registerLocation}, #{intro}, #{exitStatus}, #{exitType}, #{exitTime}, #{valueAchieved}, #{valueAchieving},
-      #{totalValue}, #{returnMultiple}, #{irr}, #{valueEvidence})
+      #{totalValue}, #{returnMultiple}, #{irr}, #{valueEvidence}, #{financeData})
     </insert>
 
     <update id="update" parameterType="com.example.entity.Portfolio">
@@ -84,7 +85,8 @@
         total_value = #{totalValue},
         return_multiple = #{returnMultiple},
         irr = #{irr},
-        value_evidence = #{valueEvidence}
+        value_evidence = #{valueEvidence},
+        finance_data = #{financeData}
         where uid = #{uid}
     </update>
 

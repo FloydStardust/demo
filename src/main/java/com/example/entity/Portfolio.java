@@ -39,6 +39,7 @@ public class Portfolio extends Entity{
     private double returnMultiple;
     private double irr;
     private String valueEvidence;
+    private boolean financeData;
 
     public int getUid() {
         return uid;
@@ -287,5 +288,13 @@ public class Portfolio extends Entity{
 
     public void setExitType(String exitType) {
         this.exitType = exitType;
+    }
+
+    public boolean getFinanceData() {
+        return financeData;
+    }
+
+    public void setFinanceData(boolean financeData) {
+        this.financeData = financeData;
     }
 }

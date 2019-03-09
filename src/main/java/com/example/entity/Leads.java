@@ -9,7 +9,7 @@ import java.util.Date;
 public class Leads extends Entity {
     private int uid;
     private String name;
-    private int source;
+    private String source;
     private int partner;
     private int manager;
     private String company;
@@ -17,10 +17,14 @@ public class Leads extends Entity {
     private String location;
     private String summary;
     private String description;
+    private String revenue;
+    private String netIncome;
     private int status;
     private Date lastChange;
-    private int next;
+    private String next;
     private String sourceReason;
+    private String specialConcern;
+    private String parkReason;
     private String passReason;
     private String meetingRecord;
     private String bpRecord;
@@ -41,11 +45,11 @@ public class Leads extends Entity {
         this.name = name;
     }
 
-    public int getSource() {
+    public String getSource() {
         return source;
     }
 
-    public void setSource(int source) {
+    public void setSource(String source) {
         this.source = source;
     }
 
@@ -121,11 +125,11 @@ public class Leads extends Entity {
         this.lastChange = lastChange;
     }
 
-    public int getNext() {
+    public String getNext() {
         return next;
     }
 
-    public void setNext(int next) {
+    public void setNext(String next) {
         this.next = next;
     }
 
@@ -159,5 +163,37 @@ public class Leads extends Entity {
 
     public void setBpRecord(String bpRecord) {
         this.bpRecord = bpRecord;
+    }
+
+    public String getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(String revenue) {
+        this.revenue = revenue;
+    }
+
+    public String getNetIncome() {
+        return netIncome;
+    }
+
+    public void setNetIncome(String netIncome) {
+        this.netIncome = netIncome;
+    }
+
+    public String getParkReason() {
+        return parkReason;
+    }
+
+    public void setParkReason(String parkReason) {
+        this.parkReason = parkReason;
+    }
+
+    public String getSpecialConcern() {
+        return specialConcern;
+    }
+
+    public void setSpecialConcern(String specialConcern) {
+        this.specialConcern = specialConcern;
     }
 }

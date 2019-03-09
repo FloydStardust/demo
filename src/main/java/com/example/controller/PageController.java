@@ -78,6 +78,12 @@ public class PageController {
 		return "leads";
 	}
 
+	@GetMapping("pass")
+	public String pass(Model model){
+		model.addAttribute("type", LeadsUtils.LeadsType.PASS);
+		return "leads";
+	}
+
 	@GetMapping("schedule")
 	public String schedule(){
 		return "schedule";

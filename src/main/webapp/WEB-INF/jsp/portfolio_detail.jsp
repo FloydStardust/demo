@@ -126,9 +126,10 @@
                         </a>
                         <!-- Sub menu -->
                         <ul>
-                            <li><a id="pipeline_link" href="<%=request.getContextPath()%>/leads">Leads</a></li>
-                            <li><a id="leads_link" href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
-                            <li><a id="watch_link" href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li id="leads_link"><a href="<%=request.getContextPath()%>/leads">Leads</a></li>
+                            <li id="pipeline_link"><a href="<%=request.getContextPath()%>/pipeline">Pipeline</a></li>
+                            <li id="watch_link"><a href="<%=request.getContextPath()%>/watchlist">Watchlist</a></li>
+                            <li id="pass_link"><a href="<%=request.getContextPath()%>/pass">Pass</a></li>
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
