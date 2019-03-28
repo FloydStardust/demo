@@ -25,7 +25,7 @@ function register() {
         }
     });
 
-    xhr.open("POST", "http://localhost:8080/auth/register");
+    xhr.open("POST", "/auth/register");
 
     xhr.send(data);
 }

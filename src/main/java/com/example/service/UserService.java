@@ -14,5 +14,7 @@ public interface UserService {
 
     ResultData create(User user);
 
+    ResultData update(User user);
+
     ResultData findAll();
 }

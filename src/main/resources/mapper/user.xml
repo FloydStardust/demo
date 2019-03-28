@@ -13,6 +13,10 @@
         VALUES ( #{userName}, #{password}, #{blockFlag}, #{createAt})
     </insert>
 
+    <update id="update" parameterType="com.example.entity.User">
+        UPDATE `vkc`.`user` SET password = #{password} WHERE id = #{id}
+    </update>
+
     <select id="query" parameterType="java.util.Map" resultMap="user">
         SELECT id, user_name, password, block_flag, create_time
         FROM `vkc`.`user`

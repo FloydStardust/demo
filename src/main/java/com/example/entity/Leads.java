@@ -16,10 +16,13 @@ public class Leads extends Entity {
     private String industry;
     private String location;
     private String summary;
+    private String founder;
+    private String kp;
     private String description;
     private String revenue;
     private String netIncome;
     private int status;
+    private int consulting;
     private Date lastChange;
     private String next;
     private String sourceReason;
@@ -195,5 +198,29 @@ public class Leads extends Entity {
 
     public void setSpecialConcern(String specialConcern) {
         this.specialConcern = specialConcern;
+    }
+
+    public String getFounder() {
+        return founder;
+    }
+
+    public void setFounder(String founder) {
+        this.founder = founder;
+    }
+
+    public String getKp() {
+        return kp;
+    }
+
+    public void setKp(String kp) {
+        this.kp = kp;
+    }
+
+    public int getConsulting() {
+        return consulting;
+    }
+
+    public void setConsulting(int consulting) {
+        this.consulting = consulting;
     }
 }

@@ -1,13 +1,15 @@
 package com.example.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.example.entity.User;
 import com.example.service.UserService;
 import com.example.util.CurrentUserHelper;
+import com.example.util.Encryption;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Description: demo
@@ -22,18 +24,32 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResultData getAll(){
+    public ResultData getAll() {
         return userService.findAll();
     }
 
     @GetMapping("/current")
-    public ResultData getCurrent(){
+    public ResultData getCurrent() {
         ResultData resultData = new ResultData();
-        if(currentUserHelper.currentUser() == null){
+        if (currentUserHelper.currentUser() == null) {
             resultData.setResponseCode(ResponseCode.RESPONSE_NULL);
-        }else {
+        } else {
             resultData.setResponseCode(ResponseCode.RESPONSE_OK);
             resultData.setData(currentUserHelper.currentUser());
+        }
+        return resultData;
+    }
+
+    @PutMapping
+    public ResultData update(@RequestBody User user) {
+        ResultData resultData = new ResultData();
+        if (user.getPassword() != null) {
+            user.setId(currentUserHelper.currentUser().getId());
+            user.setPassword(Encryption.md5(user.getPassword()));
+            return userService.update(user);
+        }else {
+            resultData.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            resultData.setDescription("Update user error");
         }
         return resultData;
     }

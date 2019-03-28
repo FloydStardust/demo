@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * User: xxh
+ * User: Floyd
  * Date: 2019/1/27
  * Time: 11:17 AM
  */
@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ResultData create(User user) {
 		return userDao.insertUser(user);
+	}
+
+	@Override
+	public ResultData update(User user) {
+		return userDao.update(user);
 	}
 
 	@Override

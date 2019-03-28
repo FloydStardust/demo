@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Leads;
+import com.example.entity.MeetingRecords;
 import com.example.service.LeadsService;
 import com.example.util.CurrentUserHelper;
 import com.example.util.ResultData;
@@ -8,6 +9,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -26,6 +28,8 @@ public class LeadsController {
 
     @GetMapping
     public ResultData allLeads(){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        System.out.println(df.format(new Date()) + ": "+currentUserHelper.currentUser().getUserName() + " has been logged");
         return leadsService.selectAllLeads();
     }
 
@@ -60,8 +64,24 @@ public class LeadsController {
         return leadsService.updateLeads(leads);
     }
 
+    @GetMapping("/consulting")
+    public ResultData getConsultingStatus(){
+        return leadsService.fetchConsultingStatus();
+    }
+
     @GetMapping("/status/{current}")
     public ResultData getNextStatus(@PathVariable int current){
         return leadsService.fetchStatusField(current);
+    }
+
+    @GetMapping("/records/{id}")
+    public ResultData getMeetingRecord(@PathVariable int id){
+        return leadsService.selectMeetingRecords(id);
+    }
+
+    @PostMapping("/records/{id}")
+    public ResultData addMeetingRecord(@RequestBody MeetingRecords meetingRecords){
+        meetingRecords.setUser(currentUserHelper.currentUser().getUserName());
+        return leadsService.addMeetingRecords(meetingRecords);
     }
 }

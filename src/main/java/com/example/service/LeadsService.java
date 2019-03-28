@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Leads;
+import com.example.entity.MeetingRecords;
 import com.example.util.ResultData;
 
 /**
@@ -27,4 +28,9 @@ public interface LeadsService {
 
     ResultData fetchStatusField(int currentStatus);
 
+    ResultData fetchConsultingStatus();
+
+    ResultData selectMeetingRecords(int leadsId);
+
+    ResultData addMeetingRecords(MeetingRecords meetingRecords);
 }

@@ -51,6 +51,19 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	}
 
 	@Override
+	public ResultData update(User user) {
+		ResultData result = new ResultData();
+		try {
+			sqlSession.insert("vkc.user.update", user);
+			result.setData(user);
+		} catch (Exception e) {
+			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+			result.setDescription(e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
 	public ResultData queryUsers(List<Integer> ids) {
 		ResultData result = new ResultData();
 		try {

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.bootstrap.min.css" type="text/css"/>
 	  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.bootstrap.min.css" type="text/css"/>
 	  <link rel="stylesheet" href="<%=request.getContextPath()%>/css/editor.bootstrap.min.css" type="text/css"/>
+      <link rel="stylesheet" href="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.css" type="text/css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -71,8 +72,8 @@
 	                      <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
-	                          <li><a href="profile.html">Profile</a></li>
-	                          <li><a href="logout">Logout</a></li>
+								<li><a href="<%=request.getContextPath()%>/password">密码修改</a></li>
+								<li><a href="<%=request.getContextPath()%>/logout">Logout</a></li>
 	                        </ul>
 	                      </li>
 	                    </ul>
@@ -89,7 +90,7 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <%--<li><a href="index"> Dashboard</a></li>--%>
-					<li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
+					<li><a href="<%=request.getContextPath()%>#"> Portfolio</a></li>
 					<li class="submenu">
 						<a href="#">
 							<i class="glyphicon glyphicon-list"></i> PLW
@@ -146,7 +147,7 @@
 						<div class="form-group row">
 							<label for="addModalDate" class="col-sm-2 col-form-label">日期</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="addModalDate" placeholder="yyyy-MM-dd(如：2019/1/1，无需添加0)">
+								<input type="text" class="form-control" id="addModalDate" placeholder="yyyy-MM-dd(如：2019-1-1，无需添加0)">
 							</div>
 						</div>
 
@@ -214,6 +215,7 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
 
 
     <script src="<%=request.getContextPath()%>/js/custom.js"></script>
@@ -306,7 +308,9 @@
 					$("#addModalContent").val(data.event);
 					$("#addSchedule").addClass("update");
 				} else {
-					window.alert("只能修改自己的日程！");
+                    swal({
+                        title: '只能修改自己的日程！', type: 'warning', confirmButtonText: '返回'
+                    });
 				}
 			});
 		}
@@ -339,12 +343,19 @@
 					xhr.setRequestHeader("authorization", "Bearer " + token);
 				}
 			}).done(function (data) {
-				if (data.responseCode == "RESPONSE_OK"){
-					alert("添加成功！");
-					window.location.reload();
-				} else {
-					alert(data.description);
-				}
+                if (data.responseCode == "RESPONSE_OK"){
+                    swal({
+                        title: '添加成功', type: 'success', confirmButtonText: 'OK'
+                    }).then(function(result){
+                        window.location.reload();
+                    });
+                } else {
+                    swal({
+                        title: '参数错误', type: 'error', confirmButtonText: '返回'
+                    }).then(function(result){
+                        window.location.reload();
+                    });
+                }
 			});
 		}
 

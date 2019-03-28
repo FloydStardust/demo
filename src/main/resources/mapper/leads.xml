@@ -10,10 +10,13 @@
         <result property="industry" column="industry" />
         <result property="location" column="location" />
         <result property="summary" column="summary" />
+        <result property="founder" column="founder" />
+        <result property="kp" column="kp" />
         <result property="description" column="description" />
         <result property="revenue" column="revenue" />
         <result property="netIncome" column="net_income" />
         <result property="status" column="status" />
+        <result property="consulting" column="consulting" />
         <result property="lastChange" column="last_change" />
         <result property="next" column="next" />
         <result property="sourceReason" column="source_reason" />
@@ -26,12 +29,12 @@
 
     <insert id="insert" parameterType="com.example.entity.Leads">
       insert into `vkc`.`leads`
-      (`name`, source, partner, manager, company, industry, `location`, summary, description, revenue, net_income,
-      `status`, last_change, `next`, `source_reason`, `special_concern`, `park_reason`, `pass_reason`, `meeting_record`, `bp_record`)
+      (`name`, source, partner, manager, company, industry, `location`, summary, `founder`, `kp`, description, revenue, net_income,
+      `status`,`consulting`, last_change, `next`, `source_reason`, `special_concern`, `park_reason`, `pass_reason`, `meeting_record`, `bp_record`)
       values
-      (#{name}, #{source}, #{partner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{description},
-       #{revenue}, #{netIncome}, #{status}, #{lastChange}, #{next}, #{sourceReason}, #{specialConcern}, #{parkReason},
-       #{passReason}, #{meetingRecord}, #{bpRecord})
+      (#{name}, #{source}, #{partner}, #{manager}, #{company}, #{industry}, #{location}, #{summary}, #{founder}, #{kp},
+       #{description}, #{revenue}, #{netIncome}, #{status}, #{consulting}, #{lastChange}, #{next}, #{sourceReason},
+       #{specialConcern}, #{parkReason}, #{passReason}, #{meetingRecord}, #{bpRecord})
     </insert>
 
     <update id="update" parameterType="com.example.entity.Leads">
@@ -49,6 +52,8 @@
         industry = #{industry},
         `location` = #{location},
         summary = #{summary},
+        `founder` = #{founder},
+        `kp` = #{kp},
         description = #{description},
         <if test="revenue != null">
             revenue = #{revenue},
@@ -57,6 +62,7 @@
             net_income = #{netIncome},
         </if>
         `status` = #{status},
+        `consulting` = #{consulting},
         last_change = #{lastChange},
         `next` = #{next}
         <if test="sourceReason != null">

@@ -1,7 +1,9 @@
 package com.example.service.impl;
 
 import com.example.dao.LeadsDao;
+import com.example.dao.MeetingRecordsDao;
 import com.example.entity.Leads;
+import com.example.entity.MeetingRecords;
 import com.example.service.LeadsService;
 import com.example.util.CurrentUserHelper;
 import com.example.util.LeadsUtils;
@@ -24,6 +26,8 @@ public class LeadsServiceImpl implements LeadsService {
 
     @Autowired
     private LeadsDao leadsDao;
+    @Autowired
+    private MeetingRecordsDao meetingRecordsDao;
 
     @Override
     public ResultData addLeads(Leads leads) {
@@ -114,6 +118,29 @@ public class LeadsServiceImpl implements LeadsService {
         resultData.setResponseCode(ResponseCode.RESPONSE_OK);
         resultData.setData(status);
         return resultData;
+    }
+
+    @Override
+    public ResultData fetchConsultingStatus() {
+        ResultData resultData = new ResultData();
+        Map<Integer, String> status = new HashMap<>();
+        status.putAll(EnumSet.allOf(LeadsUtils.ConsultingStatus.class).stream().
+                collect(Collectors.toMap(LeadsUtils.ConsultingStatus::getIndex, LeadsUtils.ConsultingStatus::getName)));
+        resultData.setData(status);
+        resultData.setResponseCode(ResponseCode.RESPONSE_OK);
+        return resultData;
+    }
+
+    @Override
+    public ResultData selectMeetingRecords(int leadsId) {
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("leadsId", leadsId);
+        return meetingRecordsDao.select(condition);
+    }
+
+    @Override
+    public ResultData addMeetingRecords(MeetingRecords meetingRecords) {
+        return meetingRecordsDao.insert(meetingRecords);
     }
 
 }

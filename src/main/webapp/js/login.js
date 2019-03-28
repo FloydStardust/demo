@@ -19,7 +19,7 @@ function login() {
             var response = JSON.parse(this.responseText);
             var access_token = response.access_token;
             setCookie("access_token", access_token, 7);
-            window.location.href = "/portfolio";
+            window.location.href = "/home";
         }
     });
 

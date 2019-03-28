@@ -18,6 +18,8 @@ public interface UserDao {
 
 	ResultData insertUser(User user);
 
+	ResultData update(User user);
+
 	ResultData queryUsers(List<Integer> ids);
 
 	ResultData selectAll();

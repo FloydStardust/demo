@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.entity.User;
 import com.example.service.LeadsService;
 import com.example.service.PortfolioService;
 import com.example.service.UserService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Floyd
@@ -26,10 +29,17 @@ public class PageController {
 
 	@Autowired
 	private PortfolioService portfolioService;
+	@Autowired
+	private LeadsService leadsService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "register")
 	public String register(ModelMap model) {
 		return "signup";
+	}
+
+	@GetMapping("password")
+	public String update(Model model){
+		return "password";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "login")
@@ -39,11 +49,15 @@ public class PageController {
 
 	@GetMapping("home")
 	public String home(){
-		return "forward:/schedule";
+//		if(currentUserHelper.currentUser() != null){
+//			System.out.println(currentUserHelper.currentUser().getUserName() + "is logging");
+//		}
+		return "forward:/leads";
 	}
 
 	@GetMapping("portfolio")
 	public String portfolio(Model model){
+
 		ResultData result = portfolioService.getAddPortfolioFields();
 		if(result.getResponseCode() ==  ResponseCode.RESPONSE_OK){
 			model.addAttribute("fields", JSON.toJSONString(result.getData()));

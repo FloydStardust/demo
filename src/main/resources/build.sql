@@ -145,10 +145,13 @@ CREATE TABLE `leads` (
   `industry` VARCHAR (45) ,
   `location` VARCHAR (45) ,
   `summary` VARCHAR (45) ,
+  `founder` VARCHAR (45) ,
+  `kp` VARCHAR (45) ,
   `description` varchar(65532),
   `revenue` varchar(45),
   `net_income` varchar(45),
   `status` int(11) NOT NULL DEFAULT 0,
+  `consulting` int(11) DEFAULT 0,
   `last_change` datetime NOT NULL,
   `next` varchar(45),
   `source_reason` varchar(65532),
@@ -157,6 +160,21 @@ CREATE TABLE `leads` (
   `pass_reason` varchar(65532),
   `meeting_record` varchar(45),
   `bp_record` varchar(45),
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+/**
+  会见记录表
+ */
+CREATE TABLE `meeting_records` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `leads_id` int(11) NOT NULL,
+  `user` VARCHAR (45) NOT NULL,
+  `date` datetime NOT NULL,
+  `person` VARCHAR (45) NOT NULL,
+  `content` varchar(65532),
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)

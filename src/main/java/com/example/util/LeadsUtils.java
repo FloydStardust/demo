@@ -25,8 +25,8 @@ public class LeadsUtils {
      */
     public enum LeadsStatus{
         BP("BP", 4), SENIOR("见过高管",5), FOUNDER("见过创始人", 6),
-        MEETING("上过周会", 7), AFTER_MEETING("上过周会观察中", 8), TS("TS", 9),
-        DD("转入Pipeline", 10);
+        MEETING("上过周会", 7), AFTER_MEETING("上过周会观察中", 8), PRICING("报价", 9),
+        TS("TS", 10), DD("转入Pipeline", 11);
 
         private String name;
         private int index;
@@ -52,8 +52,9 @@ public class LeadsUtils {
         }
     }
     public enum PipelineStatus{
-        DD("DD", 10), IC("IC汇报", 11), INVESTED("签约", 12),
-        PAYING("付款", 13);
+        DD("DD", 11), DD_BRIEFING("DD_Briefing", 12), MODEL("模型搭建", 13),
+        DOCUMENT("文本阶段", 14), IC("已上IC", 15),
+        INVESTED("签约", 16), PAYING("付款", 17);
 
         private String name;
         private int index;
@@ -79,7 +80,7 @@ public class LeadsUtils {
         }
     }
     public enum WatchlistStatus{
-        NOT_TRACK("未跟踪", 14), MONTHLY("月度跟踪", 15), QUARTERLY("季度跟踪", 16);
+        NOT_TRACK("未跟踪", 18), MONTHLY("月度跟踪", 19), QUARTERLY("季度跟踪", 20);
 
         private String name;
         private int index;
@@ -130,7 +131,7 @@ public class LeadsUtils {
         }
     }
     public enum ParkStatus {
-        PARK("PARK", 14);
+        PARK("PARK", 18);
 
         private String name;
         private int index;
@@ -156,7 +157,7 @@ public class LeadsUtils {
         }
     }
     public enum PassStatus{
-        PASS("PASS", 18);
+        PASS("PASS", 22);
 
         private String name;
         private int index;
@@ -181,5 +182,30 @@ public class LeadsUtils {
             this.index = index;
         }
     }
+    public enum ConsultingStatus{
+        NO("不提供", 0), YES("提供", 1);
 
+        private String name;
+        private int index;
+        ConsultingStatus(String name, int index){
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+    }
 }
