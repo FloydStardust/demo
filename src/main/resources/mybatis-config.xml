@@ -13,5 +13,8 @@
         <mapper resource="mapper/financial_track.xml"/>
         <mapper resource="mapper/leads.xml"/>
         <mapper resource="mapper/meeting_records.xml"/>
+        <mapper resource="mapper/myauth.xml"/>
+        <mapper resource="mapper/project.xml"/>
+        <mapper resource="mapper/vendor.xml"/>
     </mappers>
 </configuration>

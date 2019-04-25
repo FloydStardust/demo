@@ -36,7 +36,10 @@
         body {
             font-family: "Microsoft YaHei";
         }
-        th, td { white-space: nowrap; }
+        .font-bold {
+            font-weight: bold;
+        }
+        /*th, td { white-space: nowrap; }*/
 
 
         /*table{*/
@@ -57,7 +60,7 @@
             <div class="col-md-5">
                 <!-- Logo -->
                 <div class="logo">
-                    <h1><a href="index.html">VKC-CRM管理系统</a></h1>
+                    <h1><a href="#">VKC-CRM管理系统</a></h1>
                 </div>
             </div>
             <div class="col-md-5">
@@ -112,6 +115,7 @@
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
             </div>
         </div>
@@ -432,7 +436,7 @@
     <div class="container">
 
         <div class="copy text-center">
-            Copyright 2014 <a href='#'>Website</a>
+            Copyright <a href="http://www.vkc-partners.com/">VKC</a>, 2019
         </div>
 
     </div>
@@ -445,9 +449,7 @@
 <!-- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- <script src="vendors/datatables/js/jquery.dataTables.min.js"></script> -->
-<!-- <script src="vendors/datatables/dataTables.bootstrap.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.min.js"></script>
 
 <!-- datables-js引入-Floyd -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -486,10 +488,10 @@
                         if(row.financeData){
                             return '<a href="'+basepath+'/portfolio/' + row.uid + '">'+ row.name+ '</a>';
                         }else{
-                            return '<a href="#">'+ row.name+ '</a>';
+                            return row.name;
                         }
                     },
-                    width: '80%'
+                    className: 'font-bold', width: '80%'
                 },
                 { data: "fundName" }, { data: "date" }, { data: "shareType" }, { data: "investType" },
                 { data: "boardNum" }, { data: "round" }, { data: "partner" }, { data: "moneyType" }, 
@@ -515,10 +517,11 @@
                         return (row.irr*100).toFixed(2) + '%';
                     } }, { data: "valueEvidence" }
             ],
-            fixedColumns: true,
+            fixedColumns: true, iDisplayLength: 10,
             searching: true, // 可搜索
             order: [[2, 'desc']], scrollX: true,	// 水平滚动条
             scrollCollapse: true, autoWidth: false,
+
         });
         // 在第一列添加序号
         // t.on( 'order.dt search.dt', function () {

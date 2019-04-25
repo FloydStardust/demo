@@ -13,6 +13,8 @@ public interface FinancialTrackDao {
 
     ResultData selectManualTrack(Map<String, Object> condition);
 
+    ResultData selectTrack(Map<String, Object> condition);
+
     ResultData selectRawTrack(Map<String, Object> condition);
 
     ResultData selectByUid(int uid);

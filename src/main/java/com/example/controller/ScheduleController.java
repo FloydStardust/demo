@@ -7,10 +7,14 @@ import com.example.util.CurrentUserHelper;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import com.example.util.ScheduleUtils;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,7 +37,7 @@ public class ScheduleController {
 				|| Objects.isNull(schedule.getEnd()) || Objects.isNull(schedule.getContent())) {
 			ResultData result = new ResultData();
 			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-			result.setDescription("参数错误");
+			result.setDescription("日程内容和时间不能为空！");
 			return result;
 		}
 		if(schedule.getUid()==0)
@@ -54,12 +58,28 @@ public class ScheduleController {
 
 	@PostMapping("list")
 	public ResultData list(@RequestBody ScheduleQueryParam param) {
-		return scheduleService.fetchSchedule(param);
+		return scheduleService.fetchSchedule(null);
 	}
 
 	@GetMapping("week")
 	public ResultData list() {
 		return scheduleService.fetchScheduleWeekly();
+	}
+
+	@GetMapping("query")
+	public ResultData queryByParam(HttpServletRequest request){
+		Map<String, Object> condition = new HashMap<>();
+
+		String[] tempStart = request.getParameter("start").split("/");
+		String[] tempEnd = request.getParameter("end").split("/");
+		LocalDate start = LocalDate.of(Integer.valueOf(tempStart[0]), Integer.valueOf(tempStart[1]),
+				Integer.valueOf(tempStart[2]));
+		LocalDate end = LocalDate.of(Integer.valueOf(tempEnd[0]), Integer.valueOf(tempEnd[1]),
+				Integer.valueOf(tempEnd[2]));
+		condition.put("startDate", start);
+		condition.put("endDate", end);
+		condition.put("person", Integer.valueOf(request.getParameter("user")));
+		return scheduleService.fetchSchedule(condition);
 	}
 
 	@GetMapping("time_split")

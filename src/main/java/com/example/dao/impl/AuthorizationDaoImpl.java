@@ -1,65 +1,30 @@
 package com.example.dao.impl;
 
+import com.example.dao.AuthorizationDao;
 import com.example.dao.BaseDao;
-import com.example.dao.FinancialTrackDao;
-import com.example.entity.FinancialTrack;
+import com.example.entity.Authorization;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Description:
- * Created by Floyd on 2019/2/21 16:51
+ * Created by Floyd on 2019/4/4 12:51
  */
 @Repository
-public class FinancialTrackDaoImpl extends BaseDao implements FinancialTrackDao {
-
+public class AuthorizationDaoImpl extends BaseDao implements AuthorizationDao {
     @Override
-    public ResultData selectManualTrack(Map<String, Object> condition) {
+    public ResultData select(Map<String, Object> condition) {
         ResultData result = new ResultData();
         try{
-            List<FinancialTrack> list = sqlSession.selectList("vkc.financial_track.selectManualTrack", condition);
-            if (list.isEmpty()){
+            List<Authorization> list = sqlSession.selectList("vkc.myauth.select", condition);
+            if (list.isEmpty()) {
                 result.setResponseCode(ResponseCode.RESPONSE_NULL);
             } else {
-                result.setData(list);
-            }
-        } catch (Exception e){
-            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-            result.setDescription(e.getMessage());
-        }
-        return result;
-    }
-
-    @Override
-    public ResultData selectTrack(Map<String, Object> condition) {
-        ResultData result = new ResultData();
-        try{
-            List<FinancialTrack> list = sqlSession.selectList("vkc.financial_track.selectTrack", condition);
-            if (list.isEmpty()){
-                result.setResponseCode(ResponseCode.RESPONSE_NULL);
-            } else {
-                result.setData(list);
-            }
-        } catch (Exception e){
-            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-            result.setDescription(e.getMessage());
-        }
-        return result;
-    }
-
-    @Override
-    public ResultData selectRawTrack(Map<String, Object> condition) {
-        ResultData result = new ResultData();
-        try{
-            List<FinancialTrack> list = sqlSession.selectList("vkc.financial_track.selectRawTrack", condition);
-            if (list.isEmpty()){
-                result.setResponseCode(ResponseCode.RESPONSE_NULL);
-            } else {
+                result.setResponseCode(ResponseCode.RESPONSE_OK);
                 result.setData(list);
             }
         } catch (Exception e){
@@ -73,7 +38,7 @@ public class FinancialTrackDaoImpl extends BaseDao implements FinancialTrackDao 
     public ResultData selectByUid(int uid) {
         ResultData result = new ResultData();
         try{
-            List<FinancialTrack> list = sqlSession.selectList("vkc.financial_track.selectByUid", uid);
+            List<Authorization> list = sqlSession.selectList("vkc.myauth.selectByUid", uid);
             if (list.isEmpty()){
                 result.setResponseCode(ResponseCode.RESPONSE_NULL);
             } else {
@@ -87,10 +52,34 @@ public class FinancialTrackDaoImpl extends BaseDao implements FinancialTrackDao 
     }
 
     @Override
-    public ResultData insert(FinancialTrack track) {
+    public ResultData insert(Authorization authorization) {
         ResultData result = new ResultData();
         try {
-            sqlSession.insert("vkc.financial_track.insert", track);
+            sqlSession.insert("vkc.myauth.insert", authorization);
+        } catch (Exception e) {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData update(Authorization authorization) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("vkc.myauth.update", authorization);
+        } catch (Exception e) {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData delete(int uid) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.delete("vkc.myauth.delete", uid);
         } catch (Exception e) {
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());

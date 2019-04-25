@@ -12,10 +12,11 @@ import java.sql.Date;
 public class Schedule extends Entity {
 	private int uid;
 	private Date date;
-	private int start;
-	private int end;
+	private String start;
+	private String end;
 
 	private int creatorId;
+	private int person;
 	private String content;
 	private String venue;
 
@@ -59,19 +60,27 @@ public class Schedule extends Entity {
 		this.venue = venue;
 	}
 
-	public int getEnd() {
+	public String getEnd() {
 		return end;
 	}
 
-	public void setEnd(int end) {
+	public void setEnd(String end) {
 		this.end = end;
 	}
 
-	public int getStart() {
+	public String getStart() {
 		return start;
 	}
 
-	public void setStart(int start) {
+	public void setStart(String start) {
 		this.start = start;
+	}
+
+	public int getPerson() {
+		return person;
+	}
+
+	public void setPerson(int person) {
+		this.person = person;
 	}
 }

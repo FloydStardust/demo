@@ -46,4 +46,10 @@
         ORDER BY `user_name` ASC
     </select>
 
+    <select id="selectByUid" resultMap="user">
+        SELECT `id`, `user_name`, password, block_flag, create_time
+        FROM `vkc`.`user`
+        WHERE block_flag = 0 AND `id`= #{uid}
+    </select>
+
 </mapper>

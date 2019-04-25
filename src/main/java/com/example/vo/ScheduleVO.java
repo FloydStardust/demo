@@ -17,10 +17,11 @@ import java.util.Map;
  */
 public class ScheduleVO {
 	private int id;
+	private int pid;
 	private String username;
 	private String date;
-	private double start;
-	private double end;
+	private String start;
+	private String end;
 	private String venue;
 	private String event;
 
@@ -69,6 +70,7 @@ public class ScheduleVO {
 
 	public ScheduleVO(Schedule schedule) {
 		this.id = schedule.getUid();
+		this.pid = schedule.getPerson();
 		this.date = formatDate(schedule.getDate().toLocalDate());
 		this.event = schedule.getContent();
 		this.venue = schedule.getVenue();
@@ -83,19 +85,27 @@ public class ScheduleVO {
 		return day + " " + week;
 	}
 
-	public double getStart() {
+	public String getStart() {
 		return start;
 	}
 
-	public void setStart(double start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 
-	public double getEnd() {
+	public String getEnd() {
 		return end;
 	}
 
-	public void setEnd(double end) {
+	public void setEnd(String end) {
 		this.end = end;
+	}
+
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int personId) {
+		this.pid = personId;
 	}
 }

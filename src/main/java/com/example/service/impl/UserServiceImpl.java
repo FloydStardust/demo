@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
+import com.example.dao.AuthorizationDao;
 import com.example.dao.UserDao;
+import com.example.entity.Authorization;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.example.util.ResponseCode;
@@ -24,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private AuthorizationDao authorizationDao;
 
 	@Override
 	public ResultData findByName(String name) {
@@ -69,5 +73,25 @@ public class UserServiceImpl implements UserService {
 			return result;
 		}
 		return null;
+	}
+
+	@Override
+	public ResultData getAuthorization(int userId) {
+		Map<Integer, String> authorizers = new HashMap<>();
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("authorizee", userId);
+		ResultData newResult = new ResultData();
+		ResultData resultData = authorizationDao.select(condition);
+		if(resultData.getResponseCode() == ResponseCode.RESPONSE_NULL){
+			newResult.setResponseCode(ResponseCode.RESPONSE_NULL);
+		} else {
+			for(Authorization authorization : (List<Authorization>)resultData.getData()){
+				User authorizer = (User) userDao.selectByUid(authorization.getAuthorizer()).getData();
+				authorizers.put(authorizer.getId(), authorizer.getUserName());
+			}
+			newResult.setData(authorizers);
+			newResult.setResponseCode(ResponseCode.RESPONSE_OK);
+		}
+		return newResult;
 	}
 }

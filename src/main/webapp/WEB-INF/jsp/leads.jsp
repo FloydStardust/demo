@@ -45,6 +45,13 @@
         .font-bold {
             font-weight: bold;
         }
+        .text-wrap {
+            white-space: normal;
+        }
+        .width-250 {
+            width: 250px;
+        }
+
     </style>
 </head>
 <body>
@@ -54,7 +61,7 @@
             <div class="col-md-5">
                 <!-- Logo -->
                 <div class="logo">
-                    <h1><a href="index.html">VKC-CRM管理系统</a></h1>
+                    <h1><a href="#">VKC-CRM管理系统</a></h1>
                 </div>
             </div>
             <div class="col-md-5">
@@ -110,6 +117,7 @@
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
             </div>
         </div>
@@ -143,21 +151,21 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <label for="addModalName" class="col-sm-2 col-form-label">项目名称</label>
+                        <label for="addModalName" class="col-sm-2 col-form-label">项目名称*</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addModalName" placeholder="Project Name">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalSource" class="col-sm-2 col-form-label">项目来源</label>
+                        <label for="addModalSource" class="col-sm-2 col-form-label">项目来源*</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addModalSource" placeholder="">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalPartner" class="col-sm-2 col-form-label">项目Leader</label>
+                        <label for="addModalPartner" class="col-sm-2 col-form-label">项目Leader*</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalPartner">
                             </select>
@@ -165,10 +173,24 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalManager" class="col-sm-2 col-form-label">项目执行人</label>
+                        <label for="addModalManager" class="col-sm-2 col-form-label">项目执行人*</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalManager">
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="addModalCompany" class="col-sm-2 col-form-label">公司名称*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addModalCompany" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="addModalIndustry" class="col-sm-2 col-form-label">所属行业</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="addModalIndustry" placeholder="">
                         </div>
                     </div>
 
@@ -183,20 +205,6 @@
                         <label for="addModalNetIncome" class="col-sm-2 col-form-label">净利规模</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="addModalNetIncome" placeholder="">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="addModalCompany" class="col-sm-2 col-form-label">公司名称</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addModalCompany" placeholder="">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="addModalIndustry" class="col-sm-2 col-form-label">所属行业</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="addModalIndustry" placeholder="">
                         </div>
                     </div>
 
@@ -236,7 +244,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="addModalStatus" class="col-sm-2 col-form-label">目前进展</label>
+                        <label for="addModalStatus" class="col-sm-2 col-form-label">目前进展*</label>
                         <div class="col-sm-10">
                             <select class="form-control" id="addModalStatus">
                             </select>
@@ -284,7 +292,7 @@
                 <h3 class="modal-title" id="addMeetingTitle">添加会见记录</h3>
             </div>
             <div class="modal-body">
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-striped table-bordered nowrap"
+                <table class="table table-bordered table-condensed"
                        id="meetingRecordsTable" style="width: 100%;">
                 </table>
                 <form>
@@ -363,7 +371,7 @@
     <div class="container">
 
         <div class="copy text-center">
-            Copyright <a href='#'> Floyd, 2019 </a>
+            Copyright <a href="http://www.vkc-partners.com/">VKC</a>, 2019
         </div>
 
     </div>
@@ -376,6 +384,8 @@
 <!-- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.min.js"></script>
+
 <!-- datables-js引入-Floyd -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
@@ -418,6 +428,7 @@
                 xhr.setRequestHeader("authorization", "Bearer " + token);
             }
         }).done(function (data) {
+            console.log(data);
             if(data.responseCode == "RESPONSE_OK"){
                 status = data.data;
                 $.ajax({
@@ -452,11 +463,13 @@
         });
 
         $('.modal').on('hidden.bs.modal', function () {
-            $(this).find("input,textarea,select")
-                .val('')
-                .end();
-            $(this).removeAttr("data-id");
-            $("#addLeads").removeClass("update");
+            if($("#addModal").attr("data-id")){
+                $(this).find("input,textarea,select")
+                    .val('')
+                    .end();
+                $("#addModal").removeAttr("data-id");
+                $("#addLeads").removeClass("update");
+            }
         });
     });
     
@@ -535,7 +548,7 @@
                         }, orderable: false, title: "BP"   }
                 ],
                 fixedColumns: { leftColumns: 2 }, searching: true, // 可搜索
-                order: [[11, 'desc']], autoWidth: false,
+                order: [[15, 'desc']], autoWidth: false, iDisplayLength: 10,
                 scrollX: true,	scrollCollapse: true
             });
         }else if(type == 1){
@@ -599,7 +612,7 @@
                         }, orderable: false, title: "BP" }
                 ],
                 fixedColumns: { leftColumns: 2 }, searching: true, // 可搜索
-                order: [[9, 'desc']], autoWidth: false,
+                order: [[13, 'desc']], autoWidth: false, iDisplayLength: 25,
                 scrollX: true,	scrollCollapse: true
             });
         }else if(type == 2){
@@ -665,7 +678,7 @@
                         }, orderable: false, title: "BP" }
                 ],
                 fixedColumns: { leftColumns: 2 }, searching: true, // 可搜索
-                order: [[11, 'desc']], autoWidth: false,
+                order: [[15, 'desc']], autoWidth: false, iDisplayLength: 25,
                 scrollX: true,	scrollCollapse: true
             });
         }else if(type == 3){
@@ -723,7 +736,7 @@
                         }, orderable: false, title: "BP" }
                 ],
                 fixedColumns: { leftColumns: 2 }, searching: true, // 可搜索
-                order: [[10, 'desc']], autoWidth: false,
+                order: [[13, 'desc']], autoWidth: false, iDisplayLength: 25,
                 scrollX: true,	scrollCollapse: true
             });
         }
@@ -791,9 +804,16 @@
                         return row.content;
                     }, title: "会见内容" }
             ],
-            searching: false, destroy: true
+            columnDefs: [
+                {
+                    render: function (data, type, full, meta) {
+                        return "<div class='text-wrap'>" + data + "</div>";
+                    }, targets: 3
+                }
+            ],
+            deferRender: true, searching: false, destroy: true, info: false,
             // order: [[10, 'desc']], autoWidth: false,
-            // scrollX: true,	scrollCollapse: true
+            // scrollX: true,	scrollCollapse: true, autoWidth: false,
         });
         $("#addMeetingModal").attr("data-id", id);
     }
@@ -900,9 +920,7 @@
                 });
             } else {
                 swal({
-                    title: '参数错误', type: 'error', confirmButtonText: '返回'
-                }).then(function(result){
-                    window.location.reload();
+                    title: '参数错误', text: data.description, type: 'error', confirmButtonText: '返回'
                 });
             }
         });
@@ -935,6 +953,14 @@
             "lastChange": new Date().getTime(),
             "next": $("#addModalNext").val(),
         };
+
+        if(form["name"] =="" || form["source"] =="" || form["partner"] ==0 || form["manager"]==0 || form["company"]==""
+            || form["status"]==0){
+            swal({
+                title: "带*的字段必须填写！", type: 'warning', confirmButtonText: '返回'
+            });
+            return;
+        }
         if(type == 0 || type == 2){
             form["revenue"] = $("#addModalRevenue").val();
             form["netIncome"] = $("#addModalNetIncome").val();
@@ -975,9 +1001,7 @@
                 });
             } else {
                 swal({
-                    title: '参数错误', type: 'error', confirmButtonText: '返回'
-                }).then(function(result){
-                    window.location.reload();
+                    title: '参数错误', text: data.description, type: 'error', confirmButtonText: '返回'
                 });
             }
         });

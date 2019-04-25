@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.entity.User;
+import com.example.service.FundService;
 import com.example.service.LeadsService;
 import com.example.service.PortfolioService;
 import com.example.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.jws.WebParam;
 import java.util.Map;
 
 /**
@@ -29,8 +31,6 @@ public class PageController {
 
 	@Autowired
 	private PortfolioService portfolioService;
-	@Autowired
-	private LeadsService leadsService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "register")
 	public String register(ModelMap model) {
@@ -101,6 +101,17 @@ public class PageController {
 	@GetMapping("schedule")
 	public String schedule(){
 		return "schedule";
+	}
+
+	@GetMapping("vendor")
+	public String vendor(){
+		return "vendor";
+	}
+
+	@GetMapping("vendor/project/{id}")
+	public String vendor(@PathVariable int id, Model model){
+		model.addAttribute("projectId", id);
+		return "vendor_detail";
 	}
 
 }

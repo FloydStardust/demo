@@ -14,12 +14,13 @@ CREATE TABLE `vkc`.`user` (
 /**
   日程表
  */
-CREATE TABLE `schedule` (
+CREATE TABLE `schedules` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `creator_id` varchar(45) NOT NULL,
+  `creator_id` int(11) NOT NULL,
+  `person` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `start` int(11) NOT NULL,
-  `end` int(11) NOT NULL,
+  `start` varchar(45) NOT NULL,
+  `end` varchar(45) NOT NULL,
   `venue` varchar(45) NOT NULL,
   `content` longtext NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -150,7 +151,7 @@ CREATE TABLE `leads` (
   `description` varchar(65532),
   `revenue` varchar(45),
   `net_income` varchar(45),
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT 4,
   `consulting` int(11) DEFAULT 0,
   `last_change` datetime NOT NULL,
   `next` varchar(45),
@@ -180,6 +181,49 @@ CREATE TABLE `meeting_records` (
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
 
-ALTER TABLE `vkc`.`schedule`
-ADD COLUMN `venue` VARCHAR(45) NULL AFTER `creatorId`;
+/**
+  授权表
+ */
+CREATE TABLE `authorization` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `authorizer` int(11) NOT NULL,
+  `authorizee` int(11) NOT NULL,
+  `level` int(11) NOT NULL DEFAULT 0,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
 
+/**
+  进入DD阶段的项目
+ */
+CREATE TABLE `project` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `fund` int(11) NOT NULL,
+  `name` VARCHAR (45) NOT NULL,
+  `manager` VARCHAR (45) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+
+/**
+  第三方中介机构
+ */
+CREATE TABLE `vendor` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `project` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `name` VARCHAR (45) NOT NULL,
+  `partner` VARCHAR (45) ,
+  `partner_contact` VARCHAR (45),
+  `conductor` VARCHAR (45) ,
+  `conductor_contact` VARCHAR (45),
+  `business_type` VARCHAR (45) ,
+  `charge` VARCHAR (45) NOT NULL,
+  `cost_bearer` VARCHAR (45) ,
+  `comment` VARCHAR (65532),
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;

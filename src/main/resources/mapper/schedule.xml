@@ -6,22 +6,26 @@
         <result property="start" column="start" />
         <result property="end" column="end" />
         <result property="creatorId" column="creator_id" />
+        <result property="person" column="person" />
         <result property="content" column="content" />
         <result property="venue" column="venue" />
     </resultMap>
 
     <insert id="insert" parameterType="com.example.entity.Schedule">
-      insert into `vkc`.`schedule`
-      (`date`, `start`, `end`, creator_id, `content`, `venue`)
+      insert into `vkc`.`schedules`
+      (`date`, `start`, `end`, creator_id, `person`, `content`, `venue`)
       values
-      (#{date}, #{start}, #{end}, #{creatorId}, #{content}, #{venue})
+      (#{date}, #{start}, #{end}, #{creatorId}, #{person}, #{content}, #{venue})
     </insert>
     
     <update id="update" parameterType="com.example.entity.Schedule">
-        update `vkc`.`schedule`
+        update `vkc`.`schedules`
         set
         <if test="date != null">
             `date` = #{date},
+        </if>
+        <if test="creatorId != null">
+            `creator_id` = #{creatorId},
         </if>
         <if test="start != null">
             start = #{start},
@@ -39,12 +43,15 @@
     </update>
 
     <select id="select" resultMap="schedule" parameterType="java.util.Map">
-        select `uid`, `date`, `start`, `end`, `creator_id`, `content`, `venue`
+        select `uid`, `date`, `start`, `end`, `creator_id`, `person`, `content`, `venue`
         from
-        `vkc`.`schedule`
+        `vkc`.`schedules`
         where block_flag = 0
         <if test="creatorId != null">
             and creator_id = #{creatorId}
+        </if>
+        <if test="person != null">
+            and `person` = #{person}
         </if>
         <if test="date != null">
             and `date` = #{date}
@@ -67,15 +74,15 @@
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer">
-        update `vkc`.`schedule` set
+        update `vkc`.`schedules` set
         block_flag = 1
         where uid = #{uid}
     </delete>
 
     <select id="selectByUid" resultMap="schedule">
-        select `uid`, `date`, `start`, `end`, `creatorId`, `content`, `venue`
+        select `uid`, `date`, `start`, `end`, `creator_id`, `person`, `content`, `venue`
         from
-        `vkc`.`schedule`
+        `vkc`.`schedules`
         where block_flag = 0 and uid = #{uid}
     </select>
 

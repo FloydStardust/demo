@@ -1,0 +1,55 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.myauth">
+    <resultMap id="myauth" type="com.example.entity.Authorization">
+        <result property="uid" column="uid" />
+        <result property="authorizer" column="authorizer" />
+        <result property="authorizee" column="authorizee" />
+        <result property="level" column="level" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Authorization">
+      insert into `vkc`.`authorization`
+      (`authorizer`, `authorizee`, `level`)
+      values
+      (#{authorizer}, #{authorizee}, #{level})
+    </insert>
+    
+    <update id="update" parameterType="com.example.entity.Authorization">
+        update `vkc`.`authorization`
+        set
+        <if test="level != null">
+            `level` = #{level}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <select id="select" resultMap="myauth" parameterType="java.util.Map">
+        select `uid`, `authorizer`, `authorizee`, `level`
+        from
+        `vkc`.`authorization`
+        where block_flag = 0
+        <if test="authorizer != null">
+            and authorizer = #{authorizer}
+        </if>
+        <if test="authorizee != null">
+            and `authorizee` = #{authorizee}
+        </if>
+        <if test="level != null">
+            and `level` = #{level}
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`authorization` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+    <select id="selectByUid" resultMap="myauth">
+        select `uid`, `authorizer`, `authorizee`, `level`
+        from
+        `vkc`.`authorization`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+</mapper>

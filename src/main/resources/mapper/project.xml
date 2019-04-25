@@ -1,0 +1,56 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.project">
+    <resultMap id="project" type="com.example.entity.Project">
+        <result property="uid" column="uid" />
+        <result property="name" column="name" />
+        <result property="fund" column="fund" />
+        <result property="manager" column="manager" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Project">
+      insert into `vkc`.`project`
+      (`name`, `fund`, `manager`)
+      values
+      (#{name}, #{fund}, #{manager})
+    </insert>
+
+    <select id="select" resultMap="project" parameterType="java.util.Map">
+        select `uid`, `name`, `fund`, `manager`
+        from
+        `vkc`.`project`
+        where block_flag = 0
+        <if test="uid != null">
+            and `uid` = #{uid}
+        </if>
+        <if test="fund != null">
+            and `fund` = #{fund}
+        </if>
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+        <if test="manager != null">
+            and `manager` = #{mnager}
+        </if>
+    </select>
+
+    <update id="update" parameterType="com.example.entity.Project">
+        update `vkc`.`project`
+        set
+        <if test="fund != null">
+            `fund` = #{fund}
+        </if>
+        <if test="name != null">
+            , `name` = #{name}
+        </if>
+        <if test="manager != null">
+            , `manager` = #{manager}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`project` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+</mapper>

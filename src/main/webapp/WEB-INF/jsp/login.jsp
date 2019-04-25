@@ -25,7 +25,7 @@
 	           <div class="col-md-12">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="index.html">VKC-CRM管理系统</a></h1>
+	                 <h1><a href="#">VKC-CRM管理系统</a></h1>
 	              </div>
 	           </div>
 	        </div>
@@ -62,7 +62,8 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.min.js"></script>
+	<script src="js/custom.js"></script>
     <script src="js/login.js"></script>
     <script src="js/cookieHelper.js"></script>
   </body>

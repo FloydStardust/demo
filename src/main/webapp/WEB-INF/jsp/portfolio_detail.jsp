@@ -77,7 +77,7 @@
             <div class="col-md-5">
                 <!-- Logo -->
                 <div class="logo">
-                    <h1><a href="index.html">VKC-CRM管理系统</a></h1>
+                    <h1><a href="#">VKC-CRM管理系统</a></h1>
                 </div>
             </div>
             <div class="col-md-5">
@@ -133,6 +133,7 @@
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
             </div>
         </div>
@@ -823,7 +824,7 @@
     <div class="container">
 
         <div class="copy text-center">
-            Copyright <a href='#'> Floyd, 2019 </a>
+            Copyright <a href="http://www.vkc-partners.com/">VKC</a>, 2019
         </div>
 
     </div>
@@ -836,6 +837,7 @@
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.min.js"></script>
 
 <script src="<%=request.getContextPath()%>/js/custom.js"></script>
 <script src="<%=request.getContextPath()%>/js/cookieHelper.js"></script>

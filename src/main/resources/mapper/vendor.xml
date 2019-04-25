@@ -1,0 +1,88 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.vendor">
+    <resultMap id="vendor" type="com.example.entity.Vendor">
+        <result property="uid" column="uid" />
+        <result property="project" column="project" />
+        <result property="type" column="type" />
+        <result property="name" column="name" />
+        <result property="partner" column="partner" />
+        <result property="partnerContact" column="partner_contact" />
+        <result property="conductor" column="conductor" />
+        <result property="conductorContact" column="conductor_contact" />
+        <result property="businessType" column="business_type" />
+        <result property="charge" column="charge" />
+        <result property="costBearer" column="cost_bearer" />
+        <result property="comment" column="comment" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.Vendor">
+      insert into `vkc`.`vendor`
+      (`project`, `type`, `name`, `partner`, partner_contact, `conductor`,
+      conductor_contact, business_type, `charge`, cost_bearer, `comment`)
+      values
+      (#{project}, #{type}, #{name}, #{partner}, #{partnerContact}, #{conductor},
+      #{conductorContact}, #{businessType}, #{charge}, #{costBearer}, #{comment})
+    </insert>
+
+    <select id="select" resultMap="vendor" parameterType="java.util.Map">
+        select `uid`, `project`, `type`, `name`, `partner`, partner_contact, `conductor`,
+        conductor_contact, business_type, `charge`, cost_bearer, `comment`
+        from
+        `vkc`.`vendor`
+        where block_flag = 0
+        <if test="project != null">
+            and `project` = #{project}
+        </if>
+        <if test="type != null">
+            and `type` = #{type}
+        </if>
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+    </select>
+
+    <update id="update" parameterType="com.example.entity.Vendor">
+        update `vkc`.`vendor`
+        set
+        <if test="project != null">
+            `project` = #{project}
+        </if>
+        <if test="type != null">
+            , `type` = #{type}
+        </if>
+        <if test="name != null">
+            , `name` = #{name}
+        </if>
+        <if test="partner != null">
+            , `partner` = #{partner}
+        </if>
+        <if test="partnerContact != null">
+            , `partner_contact` = #{partnerContact}
+        </if>
+        <if test="conductor != null">
+            , `conductor` = #{conductor}
+        </if>
+        <if test="conductorContact != null">
+            , `conductor_contact` = #{conductorContact}
+        </if>
+        <if test="businessType != null">
+            , `business_type` = #{businessType}
+        </if>
+        <if test="charge != null">
+            , `charge` = #{charge}
+        </if>
+        <if test="costBearer != null">
+            , `cost_bearer` = #{costBearer}
+        </if>
+        <if test="comment != null">
+            , `comment` = #{comment}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`vendor` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+</mapper>

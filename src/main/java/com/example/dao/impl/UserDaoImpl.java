@@ -2,6 +2,7 @@ package com.example.dao.impl;
 
 import com.example.dao.BaseDao;
 import com.example.dao.UserDao;
+import com.example.entity.Authorization;
 import com.example.entity.User;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
@@ -88,6 +89,23 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 				result.setResponseCode(ResponseCode.RESPONSE_NULL);
 			}
 			result.setData(list);
+		} catch (Exception e) {
+			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+			result.setDescription(e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public ResultData selectByUid(int uid) {
+		ResultData result = new ResultData();
+		try {
+			List<User> list = sqlSession.selectList("vkc.user.selectByUid", uid);
+			if (list.isEmpty()) {
+				result.setResponseCode(ResponseCode.RESPONSE_NULL);
+			} else {
+				result.setData(list.get(0));
+			}
 		} catch (Exception e) {
 			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
 			result.setDescription(e.getMessage());

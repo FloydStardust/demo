@@ -50,10 +50,10 @@ public class LeadsController {
 
     @PostMapping
     public ResultData create(@RequestBody Leads leads){
+        leads.setLastChange(new Date());
         if(leads.getUid()==0){
             return leadsService.addLeads(leads);
         } else {
-            leads.setLastChange(new Date());
             return leadsService.updateLeads(leads);
         }
 

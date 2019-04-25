@@ -17,4 +17,6 @@ public interface UserService {
     ResultData update(User user);
 
     ResultData findAll();
+
+    ResultData getAuthorization(int userId);
 }

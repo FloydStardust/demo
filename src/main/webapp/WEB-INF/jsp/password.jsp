@@ -58,6 +58,16 @@
 		</div>
 	</div>
 
+	<footer>
+		<div class="container">
+
+			<div class="copy text-center">
+				Copyright <a href='#'>Floyd Wen</a>, 2019
+			</div>
+
+		</div>
+	</footer>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

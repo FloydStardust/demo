@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Description: demo
  * Created by Floyd on 2019/2/28 13:33
@@ -36,6 +39,30 @@ public class UserController {
         } else {
             resultData.setResponseCode(ResponseCode.RESPONSE_OK);
             resultData.setData(currentUserHelper.currentUser());
+        }
+        return resultData;
+    }
+
+    @GetMapping("/all")
+    public ResultData getAllUser() {
+        ResultData resultData = new ResultData();
+        if (currentUserHelper.currentUser() == null) {
+            resultData.setResponseCode(ResponseCode.RESPONSE_NULL);
+        } else {
+            resultData.setResponseCode(ResponseCode.RESPONSE_OK);
+            Map<String, Object> data = new HashMap<>();
+            data.put("current", currentUserHelper.currentUser());
+            data.put("all", userService.findAll().getData());
+            resultData.setData(data);
+        }
+        return resultData;
+    }
+
+    @GetMapping("/authorization")
+    public ResultData getAuthorization() {
+        ResultData resultData = new ResultData();
+        if (currentUserHelper.currentUser() != null) {
+            return userService.getAuthorization(currentUserHelper.currentUser().getId());
         }
         return resultData;
     }

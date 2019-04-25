@@ -59,20 +59,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public ResultData updateSchedule(Schedule schedule) {
-		if (!permissionCheck(schedule.getUid())) {
-			ResultData result = new ResultData();
-			result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-			result.setDescription("无权限操作");
-			return result;
-		} else {
-			return scheduleDao.update(schedule);
-		}
+		return scheduleDao.update(schedule);
 	}
 
 	@Override
-	public ResultData fetchSchedule(ScheduleQueryParam param) {
-		Map<String, Object> condition = new HashMap<>();
-		return scheduleDao.select(condition);
+	public ResultData fetchSchedule(Map<String, Object> condition) {
+		ResultData result = scheduleDao.select(condition);
+		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+			List<Schedule> list = (List<Schedule>) result.getData();
+			List<ScheduleVO> data = new ArrayList<>();
+			for (Schedule schedule : list) {
+				ScheduleVO scheduleVO = new ScheduleVO(schedule);
+				scheduleVO.setUsername(currentUserHelper.currentUser().getUserName());
+				data.add(scheduleVO);
+			}
+			result.setData(data);
+		}
+		return result;
 	}
 
 	@Override
@@ -81,20 +84,20 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 		LocalDate today = LocalDate.now();
 		LocalDate monday = today.with(DayOfWeek.MONDAY);
-		LocalDate sunday = today.with(DayOfWeek.SUNDAY);
+		LocalDate nextSunday = (today.with(DayOfWeek.SUNDAY)).plusWeeks(1);
 		condition.put("startDate", monday);
-		condition.put("endDate", sunday);
+		condition.put("endDate", nextSunday);
 		ResultData result = scheduleDao.select(condition);
 
 		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
 			List<Schedule> list = (List<Schedule>) result.getData();
-			List<Integer> userIds = list.stream().map(Schedule::getCreatorId).collect(Collectors.toList());
+			List<Integer> userIds = list.stream().map(Schedule::getPerson).collect(Collectors.toList());
 			Map<Integer, String> userMap = ((List<User>) userService.findByIds(userIds).getData()).stream()
 					.collect(Collectors.toMap(User::getId, User::getUserName));
 			List<ScheduleVO> data = new ArrayList<>();
 			for (Schedule schedule : list) {
 				ScheduleVO scheduleVO = new ScheduleVO(schedule);
-				scheduleVO.setUsername(userMap.get(schedule.getCreatorId()));
+				scheduleVO.setUsername(userMap.get(schedule.getPerson()));
 				data.add(scheduleVO);
 			}
 			result.setData(data);
@@ -106,12 +109,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		ResultData result = scheduleDao.selectByUid(scheduleId);
 		if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
 			Schedule schedule = (Schedule) result.getData();
-			return schedule.getCreatorId() == currentUserHelper.currentUser().getId();
+			return schedule.getCreatorId() == currentUserHelper.currentUser().getId()
+					|| schedule.getPerson() == currentUserHelper.currentUser().getId();
 		} else {
 			return false;
 		}
 	}
-
-
-
 }

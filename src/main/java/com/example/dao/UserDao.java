@@ -23,4 +23,6 @@ public interface UserDao {
 	ResultData queryUsers(List<Integer> ids);
 
 	ResultData selectAll();
+
+	ResultData selectByUid(int uid);
 }

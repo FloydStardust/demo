@@ -307,14 +307,14 @@ public class PortfolioServiceImpl implements PortfolioService {
                      */
                     int startDate = (latestTrack.getDate()/100) * 100;
                     int endDate = (latestTrack.getDate()/100 + 1) * 100;
-                    List<Object> ytdData = genYTDColumn(titles, startDate, endDate);
+                    List<Object> ytdData = genYTDColumn(titles, uid, startDate, endDate);
                     if(ytdData != null){
                         column = new FinancialStatementVo((latestTrack.getDate()/100) + "YTD", ytdData);
                         data.add(column); firstNColumns++;
                     }
                     startDate = startDate - 100;
                     endDate = startDate + latestTrack.getDate() % 100;
-                    List<Object> lastYTDData = genYTDColumn(titles, startDate, endDate);
+                    List<Object> lastYTDData = genYTDColumn(titles, uid, startDate, endDate);
                     if(lastYTDData != null){
                         column = new FinancialStatementVo((startDate/100) + "YTD", lastYTDData);
                         data.add(column); firstNColumns++;
@@ -325,14 +325,13 @@ public class PortfolioServiceImpl implements PortfolioService {
                     }
                 }
 
-
-
                 /**
-                 * load this year budget number
+                 * load history data
                  */
-
-
-                for(FinancialTrack track : tracks){
+                condition = new HashMap<>();
+                condition.put("portfolioId", uid);
+                ResultData resultData1 = financialTrackDao.selectTrack(condition);
+                for(FinancialTrack track : (List<FinancialTrack>)resultData1.getData()){
                     FinancialStatementVo thisColumn = new FinancialStatementVo(track.getName(),
                             fetchColumnData(titles, track.getUid()));
                     data.add(thisColumn);
@@ -362,11 +361,12 @@ public class PortfolioServiceImpl implements PortfolioService {
         return null;
     }
 
-    private List<Object> genYTDColumn(List<FinancialTitle> titles, int start, int end){
+    private List<Object> genYTDColumn(List<FinancialTitle> titles, int portfolioId, int start, int end){
         List<Object> ytdData = new ArrayList<>();
         Map<String, Object> condition = new HashMap<>();
         condition.put("startDate", start);
         condition.put("endDate", end);
+        condition.put("portfolioId", portfolioId);
         ResultData ytdTrackResult = financialTrackDao.selectRawTrack(condition);
         if(ytdTrackResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
             List<FinancialTrack> ytdTracks = (List<FinancialTrack>) ytdTrackResult.getData();
