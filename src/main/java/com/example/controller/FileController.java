@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Leads;
+import com.example.util.LPUtils;
 import com.example.util.LeadsUtils;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
@@ -44,6 +45,16 @@ public class FileController {
         return saveFile(file, path);
     }
 
+    @PostMapping("/lp/{id}")
+    public ResultData singleLpRecordUpload(@RequestParam(value = "file") MultipartFile file, @PathVariable int id){
+        String basePath = LPUtils.MEETING_RECORDS + id;
+        System.out.println(file);
+        findDir(basePath);
+//        Path path = Paths.get(basePath + "\\" + file.getOriginalFilename());
+        Path path = Paths.get(basePath + "/" + file.getOriginalFilename());
+        return saveFile(file, path);
+    }
+
     @GetMapping("/download/{type}/{id}")
     public void download(HttpServletResponse response, @PathVariable String type, @PathVariable int id){
         String dirc = "";
@@ -53,6 +64,8 @@ public class FileController {
 //            subZipPath =
         }else if(type.equals("record")){
             dirc = LeadsUtils.UPLOAD_RECORD_PATH + id;
+        }else if(type.equals("lp")){
+            dirc = LPUtils.MEETING_RECORDS + id;
         }
         File directoryFile = new File(dirc);
         File[] fileList = directoryFile.listFiles();

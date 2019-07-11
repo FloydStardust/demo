@@ -11,7 +11,6 @@ public class LeadsUtils {
 //    public static String UPLOAD_BP_PATH = "D:\\crm_files\\bp\\";
     public static String UPLOAD_BP_PATH = "/root/crm/upload/bp/";
 
-
     public static class LeadsType {
         public static int LEADS = 0;
         public static int PIPELINE = 1;

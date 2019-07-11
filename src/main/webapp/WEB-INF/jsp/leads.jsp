@@ -102,7 +102,7 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <%--<li><a href="index"> Dashboard</a></li>--%>
-                    <li><a href="<%=request.getContextPath()%>#"> Portfolio</a></li>
+                    <li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li class="submenu open">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
@@ -117,13 +117,14 @@
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lp">LP</a></li>
                     <li><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-md-10">
             <div class="content-box-large">
-                <div class="panel-heading clearfix">
+                <div class="panel-heading clearfix" id="bigTitle">
                     <div class="panel-title pull-left"><h3 id="page_name">Pipeline List</h3></div>
                     <div class="pull-right">
                         <button type="button" class="btn btn-primary hidden" id="addModalBtn" onclick="addNewModal()">添加 Leads</button>
@@ -453,8 +454,23 @@
                                 $.each(data.data, function (index, value) {
                                     users[value.id] = value.userName;
                                 });
-                                loadAddModalFields(users, status, consulting);
-                                loadTable(users, status, consulting);
+                                $.ajax({
+                                    url: basepath + '/api/leads/auth',
+                                    type: 'GET',
+                                    contentType:"application/json",
+                                    beforeSend: function (xhr) {
+                                        xhr.setRequestHeader("authorization", "Bearer " + token);
+                                    }
+                                }).done(function (data) {
+                                    console.log(data);
+                                    if (data.responseCode == "RESPONSE_OK"){
+                                        loadAddModalFields(users, status, consulting);
+                                        loadTable(users, status, consulting);
+                                    } else {
+                                        $("#bigTitle").html('<div class="panel-title pull-left"><h2>对不起，你暂无此模块权限</h2></div>');
+                                        $("#container").html('');
+                                    }
+                                });
                             }
                         });
                     }

@@ -1,0 +1,48 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.lpMeetingRecords">
+    <resultMap id="lpMeetingRecords" type="com.example.entity.LPMeetingRecords">
+        <result property="uid" column="uid" />
+        <result property="lpId" column="lp_id" />
+        <result property="user" column="user" />
+        <result property="date" column="date" />
+        <result property="person" column="person" />
+        <result property="content" column="content" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.LPMeetingRecords">
+      insert into `vkc`.`lp_meeting_records`
+      (lp_id, `user`, `date`, person, content)
+      values
+      (#{lpId}, #{user}, #{date}, #{person}, #{content})
+    </insert>
+
+    <select id="select" resultMap="lpMeetingRecords" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`lp_meeting_records`
+        where block_flag = 0
+        <if test="lpId != null">
+            and `lp_id` = #{lpId}
+        </if>
+        <if test="user != null">
+            and `user` = #{user}
+        </if>
+        <if test="date != null">
+            and `date` = #{date}
+        </if>
+        <if test="person != null">
+            and `person` = #{person}
+        </if>
+        <if test="content != null">
+            and content = #{content}
+        </if>
+        order by `date` DESC
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`lp_meeting_records` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+</mapper>

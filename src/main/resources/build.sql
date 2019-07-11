@@ -227,3 +227,36 @@ CREATE TABLE `vendor` (
   `block_flag` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+/**
+  LP
+ */
+CREATE TABLE `lp` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR (45) NOT NULL,
+  `full_name` VARCHAR (45) ,
+  `base` VARCHAR (45),
+  `kp` VARCHAR (45) ,
+  `kp_tel` VARCHAR (45),
+  `kp_email` VARCHAR (45) ,
+  `connector` VARCHAR (45),
+  `connector_tel` VARCHAR (45) ,
+  `connector_email` VARCHAR (45) ,
+  `importance`  VARCHAR (45),
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;
+/**
+  LP 会见记录表
+ */
+CREATE TABLE `lp_meeting_records` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `lp_id` int(11) NOT NULL,
+  `user` VARCHAR (45) NOT NULL,
+  `date` datetime NOT NULL,
+  `person` VARCHAR (45) NOT NULL,
+  `content` varchar(18845),
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block_flag` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ;

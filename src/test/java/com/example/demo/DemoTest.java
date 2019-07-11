@@ -30,12 +30,10 @@ public class DemoTest {
 
 	@Test
 	public void test1() {
-		File file = new File("D:\\crm_files\\record\\1");
-		for (File file1 : file.listFiles()){
-			System.out.println(file1.getName());
-			System.out.println(file1.getPath());
-			System.out.println(file1.getAbsolutePath());
-		}
+		Map<String, Object> condition = new HashMap<>();
+		condition.put("id", "123");
+		condition.put("id", "345");
+		System.out.println(condition);
 	}
 
 	@Test

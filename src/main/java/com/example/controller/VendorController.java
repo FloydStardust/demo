@@ -3,11 +3,15 @@ package com.example.controller;
 import com.example.entity.Project;
 import com.example.entity.Vendor;
 import com.example.service.VendorService;
+import com.example.util.CurrentUserHelper;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import com.example.util.VendorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description:
@@ -18,10 +22,27 @@ import org.springframework.web.bind.annotation.*;
 public class VendorController {
     @Autowired
     private VendorService vendorService;
-
+    @Autowired
+    private CurrentUserHelper currentUserHelper;
     @GetMapping
     public ResultData vendorList(){
         return vendorService.getVendorListVo();
+    }
+
+    @GetMapping("/auth")
+    public ResultData getAuth(){
+        ResultData resultData = new ResultData();
+        List<Integer> nonAuthes = new ArrayList<Integer>(){{
+            add(25);
+
+        }};
+        int currentUser = currentUserHelper.currentUser().getId();
+        if(nonAuthes.contains(currentUser)) {
+            resultData.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }else {
+            resultData.setResponseCode(ResponseCode.RESPONSE_OK);
+        }
+        return resultData;
     }
 
     @PostMapping()

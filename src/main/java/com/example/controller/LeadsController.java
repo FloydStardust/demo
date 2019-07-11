@@ -4,13 +4,16 @@ import com.example.entity.Leads;
 import com.example.entity.MeetingRecords;
 import com.example.service.LeadsService;
 import com.example.util.CurrentUserHelper;
+import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Description: demo
@@ -25,6 +28,22 @@ public class LeadsController {
 
     @Autowired
     private CurrentUserHelper currentUserHelper;
+
+    @GetMapping("/auth")
+    public ResultData getAuth(){
+        ResultData resultData = new ResultData();
+        List<Integer> nonAuthes = new ArrayList<Integer>(){{
+            add(25);
+
+        }};
+        int currentUser = currentUserHelper.currentUser().getId();
+        if(nonAuthes.contains(currentUser)) {
+            resultData.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }else {
+            resultData.setResponseCode(ResponseCode.RESPONSE_OK);
+        }
+        return resultData;
+    }
 
     @GetMapping
     public ResultData allLeads(){

@@ -114,4 +114,9 @@ public class PageController {
 		return "vendor_detail";
 	}
 
+	@GetMapping("lp")
+	public String lp(){
+		return "lp";
+	}
+
 }

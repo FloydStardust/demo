@@ -3,11 +3,14 @@ package com.example.controller;
 import com.example.entity.Portfolio;
 import com.example.service.FundService;
 import com.example.service.PortfolioService;
+import com.example.util.CurrentUserHelper;
 import com.example.util.ResponseCode;
 import com.example.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,6 +25,29 @@ public class PortfolioController {
     private PortfolioService portfolioService;
     @Autowired
     private FundService fundService;
+    @Autowired
+    private CurrentUserHelper currentUserHelper;
+
+    @GetMapping("/auth")
+    public ResultData getAuth(){
+        ResultData resultData = new ResultData();
+        List<Integer> authes = new ArrayList<Integer>(){{
+            add(4);
+            add(5);
+            add(6);
+            add(7);
+            add(8);
+            add(17);
+            add(28);
+        }};
+        int currentUser = currentUserHelper.currentUser().getId();
+        if(authes.contains(currentUser)) {
+            resultData.setResponseCode(ResponseCode.RESPONSE_OK);
+        }else {
+            resultData.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
+        return resultData;
+    }
 
     @GetMapping("/fund")
     public ResultData getAllFund(){

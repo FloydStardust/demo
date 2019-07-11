@@ -115,13 +115,14 @@
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lp">LP</a></li>
                     <li><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-md-10">
             <div class="content-box-large">
-                <div class="panel-heading clearfix">
+                <div class="panel-heading clearfix" id="bigTitle">
                     <div class="panel-title pull-left"><h3>已投项目列表(RMB K)</h3></div>
                     <div class="pull-right">
                         <button type="button" class="btn btn-primary" id="addModalBtn" data-toggle="modal" data-target="#addModal">添加项目</button>
@@ -465,8 +466,23 @@
     let table;
 
     $(document).ready(function(){
-        loadPortfolioTable();
-        loadAddModalFields();
+        $.ajax({
+            url: basepath + '/api/portfolio/auth',
+            type: 'GET',
+            contentType:"application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            console.log(data);
+            if (data.responseCode == "RESPONSE_OK"){
+                loadPortfolioTable();
+                loadAddModalFields();
+            } else {
+                $("#bigTitle").html('<div class="panel-title pull-left"><h2>对不起，你暂无此模块权限</h2></div>');
+                $("#container").html('');
+            }
+        });
     });
 
     /**
@@ -591,7 +607,6 @@
      * 加载add portfolio modal 中的各个<select>字段
      */
     function loadAddModalFields() {
-        console.log(fields);
         let options = []
         $.each(fields.funds, function (k, v) {
             options.push("<option value='" + k + "'>" + v + "</option>");

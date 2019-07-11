@@ -89,7 +89,7 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <%--<li><a href="index"> Dashboard</a></li>--%>
-					<li><a href="<%=request.getContextPath()%>#"> Portfolio</a></li>
+					<li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
 					<li class="submenu">
 						<a href="#">
 							<i class="glyphicon glyphicon-list"></i> PLW
@@ -104,13 +104,14 @@
 						</ul>
 					</li>
 					<li class="current"><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lp">LP</a></li>
                     <li><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
              </div>
 		  </div>
 		  <div class="col-md-10">
   			<div class="content-box-large">
-  				<div class="panel-heading clearfix">
+  				<div class="panel-heading clearfix" id="bigTitle">
 					<div class="panel-title pull-left"><h3 id="scheduleDate">VKC日程安排-按用户名筛选</h3></div>
 					<div class="pull-right">
 						<button type="button" class="btn btn-warning" id="addOthersModalBtn" onclick="addOthersModalShow()">录入他人日程</button>

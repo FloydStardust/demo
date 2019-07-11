@@ -1,0 +1,110 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vkc.lp">
+    <resultMap id="lp" type="com.example.entity.LP">
+        <result property="uid" column="uid" />
+        <result property="name" column="name" />
+        <result property="fullName" column="full_name" />
+        <result property="base" column="base" />
+        <result property="kp" column="kp" />
+        <result property="kpTel" column="kp_tel" />
+        <result property="kpEmail" column="kp_email" />
+        <result property="connector" column="connector" />
+        <result property="connectorTel" column="connector_tel" />
+        <result property="connectorEmail" column="connector_email" />
+        <result property="importance" column="importance" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.entity.LP">
+      insert into `vkc`.`lp`
+      (`name`, full_name, `base`, `kp`, kp_tel, kp_email, `connector`, connector_tel, connector_email, importance)
+      values
+      (#{name}, #{fullName}, #{base}, #{kp}, #{kpTel}, #{kpEmail}, #{connector}, #{connectorTel}, #{connectorEmail}, #{importance})
+    </insert>
+
+    <update id="update" parameterType="com.example.entity.LP">
+        update `vkc`.`lp`
+        set
+        <if test="name != null">
+            `name` = #{name}
+        </if>
+        <if test="fullName != null">
+            , `full_name` = #{fullName}
+        </if>
+        <if test="base != null">
+            , `base` = #{base}
+        </if>
+        <if test="kp != null">
+            , `kp` = #{kp}
+        </if>
+        <if test="kpTel != null">
+            , `kp_tel` = #{kpTel}
+        </if>
+        <if test="kpEmail != null">
+            , `kp_email` = #{kpEmail}
+        </if>
+        <if test="connector != null">
+            , `connector` = #{connector}
+        </if>
+        <if test="connectorTel != null">
+            , `connector_tel` = #{connectorTel}
+        </if>
+        <if test="connectorEmail != null">
+            , `connector_email` = #{connectorEmail}
+        </if>
+        <if test="importance != null">
+            , `importance` = #{importance}
+        </if>
+        where uid = #{uid}
+    </update>
+
+    <select id="select" resultMap="lp" parameterType="java.util.Map">
+        select *
+        from
+        `vkc`.`lp`
+        where block_flag = 0
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+        <if test="fullName != null">
+            and `full_name` = #{fullName}
+        </if>
+        <if test="base != null">
+            and `base` = #{base}
+        </if>
+        <if test="kp != null">
+            and `kp` = #{kp}
+        </if>
+        <if test="kpTel != null">
+            and `kp_tel` = #{kpTel}
+        </if>
+        <if test="kpEmail != null">
+            and `kp_email` = #{kpEmail}
+        </if>
+        <if test="connector != null">
+            and `connector` = #{connector}
+        </if>
+        <if test="connectorTel != null">
+            and `connector_tel` = #{connectorTel}
+        </if>
+        <if test="connectorEmail != null">
+            and `connector_email` = #{connectorEmail}
+        </if>
+        <if test="importance != null">
+            and `importance` = #{importance}
+        </if>
+    </select>
+
+    <select id="selectByUid" resultMap="lp">
+        select *
+        from
+        `vkc`.`lp`
+        where block_flag = 0 and uid = #{uid}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        update `vkc`.`lp` set
+        block_flag = 1
+        where uid = #{uid}
+    </delete>
+
+</mapper>

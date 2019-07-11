@@ -16,5 +16,7 @@
         <mapper resource="mapper/myauth.xml"/>
         <mapper resource="mapper/project.xml"/>
         <mapper resource="mapper/vendor.xml"/>
+        <mapper resource="mapper/lp.xml"/>
+        <mapper resource="mapper/lp_meeting_records.xml"/>
     </mappers>
 </configuration>

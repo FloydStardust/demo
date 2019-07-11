@@ -86,8 +86,8 @@
         `vkc`.`leads`
         where block_flag = 0
         <if test="name != null">
-            and `name` = #{name}
-        </if>
+        and `name` = #{name}
+    </if>
         <if test="source != null">
             and `source` = #{source}
         </if>

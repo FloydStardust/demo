@@ -103,7 +103,7 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <%--<li><a href="index"> Dashboard</a></li>--%>
-                    <li><a href="<%=request.getContextPath()%>#"> Portfolio</a></li>
+                    <li><a href="<%=request.getContextPath()%>/portfolio"> Portfolio</a></li>
                     <li class="submenu">
                         <a href="#">
                             <i class="glyphicon glyphicon-list"></i> PLW
@@ -118,13 +118,14 @@
                         </ul>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/schedule">Schedule</a></li>
+                    <li><a href="<%=request.getContextPath()%>/lp">LP</a></li>
                     <li class="current"><a href="<%=request.getContextPath()%>/vendor">Vendor</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-md-10">
             <div class="content-box-large">
-                <div class="panel-heading clearfix">
+                <div class="panel-heading clearfix" id="bigTitle">
                     <div class="panel-title pull-left"><h3 id="page_name">Vendor List</h3></div>
                     <div class="pull-right">
                         <button type="button" class="btn btn-primary" id="addProjectModalBtn" onclick="addNewProjectModal()">1.添加项目</button>
@@ -334,9 +335,23 @@
     let table;
 
     $(document).ready(function(){
-        loadVendorList();
+        $.ajax({
+            url: basepath + '/api/vendor/auth',
+            type: 'GET',
+            contentType:"application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("authorization", "Bearer " + token);
+            }
+        }).done(function (data) {
+            console.log(data);
+            if (data.responseCode == "RESPONSE_OK"){
+                loadVendorList();
+            } else {
+                $("#bigTitle").html('<div class="panel-title pull-left"><h2>对不起，你暂无此模块权限</h2></div>');
+                $("#container").html('');
+            }
+        });
     });
-
 
     function loadVendorList() {
         table = $('#dataTable').DataTable({

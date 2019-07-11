@@ -160,7 +160,7 @@
                             <a id="OP-tab" data-toggle="tab" href="#OP" role="tab" aria-controls="OP">业务报表</a>
                         </li>
                         <li role="presentation">
-                            <a id="modify-tab"  data-toggle="tab" href="#modify" role="tab" aria-controls="modify">信息修改</a>
+                            <a id="exit-tab"  data-toggle="tab" href="#exit" role="tab" aria-controls="exit">退出信息</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="detailTabContent">
@@ -809,9 +809,65 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="modify" role="tabpanel">
-                            <h2 class="col-md-12">该功能暂未开放，Floyd持续coding...(〃∀〃)</h2>
-                        </div>
+                        <div class="tab-pane fade" id="exit" role="tabpanel">
+                            <div class="row col-md-12">
+                                <div class="col-md-6 panel-success">
+                                    <div class="content-box-header panel-heading">
+                                        <div class="panel-title pull-left">上市退出信息</div>
+                                        <div class="panel-title pull-right"><a id="changeBtn" style="cursor:pointer;"
+                                                                               onclick="change()">修改</a></div>
+                                    </div>
+                                    <div class="content-box-large box-with-header">
+                                        <form>
+                                            <div class="form-group row">
+                                                <label for="ipo_date" class="col-sm-4 col-md-4 col-form-label">上市日期：</label>
+                                                <div class="col-sm-8 col-md-8" id="ipo_date">
+                                                    <%--<input type="text" class="form-control" id="financialName" placeholder="e.g.PwC">--%>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="cost_per_share" class="col-sm-4 col-md-4 col-form-label">每股成本价：</label>
+                                                <div class="col-sm-8 col-md-8" id="cost_per_share">
+                                                    <%--<input type="text" class="form-control" id="addVendorModalPartner" placeholder="Vendor Partner">--%>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="quantity" class="col-sm-4 col-md-4 col-form-label">持股数量：</label>
+                                                <div class="col-sm-8 col-md-8" id="quantity">
+                                                    <%--<input type="text" class="form-control" id="financialPartnerContact" placeholder="Vendor Partner Contact">--%>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="lockup" class="col-sm-4 col-md-4 col-form-label">禁售期：</label>
+                                                <div class="col-sm-8 col-md-8" id="lockup">
+                                                    <%--<input type="text" class="form-control" id="financialConductor" placeholder="Vendor Conductor">--%>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="exit_time" class="col-sm-4 col-md-4 col-form-label">法定退出时间：</label>
+                                                <div class="col-sm-8 col-md-8" id="exit_time">
+                                                    <%--<input type="text" class="form-control" id="financialConductorContact" placeholder="Vendor Conductor Contact">--%>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="exit_ratio" class="col-sm-4 col-md-4 col-form-label">法定退出比例：</label>
+                                                <div class="col-sm-8 col-md-8" id="exit_ratio">
+                                                    <%--<input type="text" class="form-control" id="addVendorModalBusinessType" placeholder="e.g.FDD">--%>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-success hidden" id="update" onclick="update()">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                     </div>
                 </div>
             </div>
